@@ -1,0 +1,36 @@
+name: Verify PDF/A-1B compatibility
+
+on:
+  push:
+    branches:
+      - master
+      - pdfa-1b
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  veralidate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Compile PDF
+        run: >
+          docker run --rm -t -v "$(pwd):/workdir" 
+          texlive/texlive@sha256:889f8293c444060ef8470cf5f5764c7efcdcc831c8c856a4363cf00929c95426
+          pdflatex -halt-on-error main.tex
+      - name: Verify PDF
+        run: >
+          docker run --rm -t -v "$(pwd):/data" 
+          ghcr.io/verapdf/cli@sha256:26a57c6711ae1d59f987f34ca411f87d8078e3ae75bb90671fcece957b75dcee
+          -f 1b main.pdf > report.xml
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: outputs
+          path:
+            main.pdf
+            main.log
+            report.xml
+
