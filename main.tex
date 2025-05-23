@@ -1,0 +1,85 @@
+% Template for Degree Programme in Computer Science and Engineering Diploma Thesis v1.3.2019
+% Authors: Mika Korhonen (original author), Pekka Pietikäinen, Christian Wieser, Teemu Tokola, Juha Kylmänen, Tuomas Holmberg and Tuomas Varanka.
+% If you make any improvements to this template, please contact teemu.tokola@oulu.fi
+%
+% CHANGELOG
+% 2023-01-31: Track changes has been turned on - TTo
+% 2023-06-15: Improvements to avoid missing filling in some details: TODO's added to template (TTo)
+% 2023-06-15: Changes to foreword, clarifications to indicate template is also for Bachelor thesis  (TTo)
+% 2023-06-15: Example of a CC-BY figure added with reference in the footnotes (TTo)
+
+
+\documentclass[a4paper, 12pt, titlepage]{dithesis}
+\usepackage{import}
+\usepackage{di}
+
+
+%%%%%%%%%%%%%%%%%%%%%%% SET YOUR INFORMATION HERE %%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{TODO: Bachelor's and Diploma Thesis Guide}
+%Finnish title, not required for foreign students
+\otsikko{TODO: Kandidaatintyön ja diplomityön teko-ohjeet}
+
+\firstname{TODO: Programme}
+\lastname{TODO: Committee}
+
+% Please choose the correct type of thesis and the language used
+\thesis{Master} % {Bachelor | Master}
+\thesislanguage{english} % {finnish | english}
+
+%Names of other authors can be added here
+\firstnametwo{}
+\lastnametwo{}
+\firstnamethree{}
+\lastnamethree{}
+
+%Do not remove or comment the extra names if you do not need them, leave them empty instead
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\headertitlecap automatically creates headers with TitleCaps (Capitalizes the First Letter in Each Word) for H0, H2, and H3. Words not to be capitalized can be changed in di.sty
+\headertitlecap
+
+\begin{document}
+    \maketitlepage %Create the title page
+    
+    %If you are writing your thesis in Finnish you can change the order of abstract/tiivistelmä
+    %If you are a foreign student you can remove the Finnish abstract (tiivistelmä)
+    \input{Chapters/abstract}
+    
+    \input{Chapters/tiivistelma}
+    
+    \contents %Insert table of contents
+    
+    \input{Chapters/foreword}
+    
+    \input{Chapters/abbreviations}
+    
+    
+    \chapter{Introduction} %Set the name of a new chapter
+        \label{introduction} %Create a label for referencing purposes (\charef{.})
+        \pagenumbers
+        \input{Chapters/introduction} %Input the contents of the chapter from a separate file
+    
+    \chapter{General outline for thesis projects}
+        \label{relatedwork}
+        \input{Chapters/relatedwork}
+    
+    \chapter{Thesis writing instructions}
+        \label{implementation}
+        \input{Chapters/implementation}
+    
+    \chapter{The literary structure of a thesis}
+        \label{experiments}
+        \input{Chapters/experiments}
+    
+    \chapter{Summary}
+        \label{summary}
+        \input{Chapters/summary}
+
+    \bibliographystyle{\biblanguage}
+    \bibliography{citations}
+    
+    \chapter{Appendices}
+        \input{Chapters/appendices}
+
+\end{document}
