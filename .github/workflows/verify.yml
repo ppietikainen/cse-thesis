@@ -23,6 +23,8 @@ jobs:
       - name: Compile LaTeX document
         run: >
           pdflatex -halt-on-error main.tex
+          biber --validate-datamodel main
+          pdflatex -halt-on-error main.tex
       - name: Verify PDF
         run: >
           docker run --rm -t -v "$(pwd):/data" 

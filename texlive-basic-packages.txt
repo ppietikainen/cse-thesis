@@ -9,6 +9,7 @@ chngcntr              # Allows resetting counters (e.g., figures per chapter); s
 collection-fontsrecommended # Fonts
 datetime2             # ✅ Modern date/time formatting package; recommended.
 datetime2-finnish     # Locale module for datetime2 to support Finnish.
+datetime2-english     # Locale module for datetime2 to support English.
 hyphen-finnish        # Finnish hyphenation patterns; used with babel.
 import                # Supports modular document structure; enables nested \input.
 lastpage              # Enables 'Page X of Y' in headers/footers; still useful.

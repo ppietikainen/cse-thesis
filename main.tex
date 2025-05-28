@@ -10,9 +10,7 @@
 
 
 \documentclass[a4paper, 12pt, titlepage]{dithesis}
-
 \usepackage{di}
-
 %%%%%%%%%%%%%%%%%%%%% SET YOUR INFORMATION HERE %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{TODO: Bachelor's and Diploma Thesis Guide}
@@ -23,13 +21,14 @@
 
 % Please choose the correct type of thesis and the language used
 \thesis{Master} % {Bachelor | Master}
-\thesislanguage{finnish} % {finnish | english}
+\thesislanguage{english} % {finnish | english}
 
 %Names of other authors can be added here
-\firstnametwo{Testi}
-\lastnametwo{Teekkari}
-\firstnamethree{Kolmas}
-\lastnamethree{Kirjoittaja}
+\firstnametwo{}
+\lastnametwo{}
+\firstnamethree{}
+\lastnamethree{}
+
 
 %Do not remove or comment the extra names if you do not need them, leave them empty instead
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -38,18 +37,23 @@
 \headertitlecap
 
 \begin{document}
-    \selectlanguage{\getlanguage}
-    \maketitlepage %Create the title page
-    % Abstract order (no language switching here)
     \if@finnish
-    
+        \selectlanguage{finnish}
+    \else
+        \selectlanguage{english}
+    \fi
+
+    \maketitlepage %Create the title page
+
+    \if@finnish    
         \input{Chapters/tiivistelma}
         \input{Chapters/abstract}
+        \selectlanguage{finnish}
     \else
         \input{Chapters/abstract}
         \input{Chapters/tiivistelma}
+        \selectlanguage{english}
     \fi
-    \selectlanguage{\getlanguage}
     \contents %Insert table of contents
     \input{Chapters/foreword}
     \input{Chapters/abbreviations}
