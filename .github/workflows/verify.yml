@@ -21,7 +21,9 @@ jobs:
         with:
           package-file: texlive-basic-packages.txt
       - name: Compile LaTeX document
-        run: >
+        run: |
+          pdflatex -halt-on-error main.tex
+          biber --validate-datamodel main
           pdflatex -halt-on-error main.tex
       - name: Verify PDF
         run: >

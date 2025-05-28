@@ -15,7 +15,6 @@
 % 
 \ProvidesPackage{di}
 
-\usepackage[english,finnish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}  
 \usepackage{newtxtext, newtxmath}
@@ -44,7 +43,36 @@
 \usepackage[linesnumbered, ruled]{algorithm2e}
 \usepackage{chngcntr}
 \usepackage[pdfa]{hyperref}
+\hypersetup{breaklinks=true}
 \tolerance=500
+
+\usepackage{import}
+\usepackage[a-1b,mathxmp]{pdfx}
+
+\providecommand{\thesislanguage}{english} 
+
+\usepackage[backend=biber,
+  refsection=section,
+  style=ieee,
+  doi=true,
+  urldate=long,
+  url=true]{biblatex}
+
+\DefineBibliographyStrings{finnish}{
+  %artno       = Art\adddot\addspace no\adddot      ,
+  %chapter     = ch\adddot                          ,
+  %editor      = Ed\adddot                          ,
+  %editors     = Eds\adddot                         ,
+  %mathesis    = M\adddot S\adddot\addspace thesis  ,
+  %patentjp    = Japanese Patent                    ,
+  %patentus    = U\adddot S\adddot\addspace Patent  ,
+  %phdthesis   = Ph\adddot D\adddot\addspace dissertation,
+  %presentedat = presented at the\addspace          ,
+  %techreport  = Tech\adddot\addspace Rep\adddot    ,
+  url         = [Online]\adddot\addspace Saatavilla ,
+  urlseen     = Viitattu\addcolon
+}
+
 
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{lastpage,ifthen, xstring}
@@ -194,7 +222,6 @@
 \newcommand{\lastnametwo}[1]{\gdef\@lastnametwo{#1}}
 \newcommand{\firstnamethree}[1]{\gdef\@firstnamethree{#1}}
 \newcommand{\lastnamethree}[1]{\gdef\@lastnamethree{#1}}
-\newcommand{\valvoja}[1]{\gdef\@valvoja{#1}}
 \newcommand{\otsikko}[1]{\gdef\@otsikko{#1}
 	\gdef\@isotsikko{\MakeUppercase{#1}}}
 
@@ -213,56 +240,79 @@
 \newcommand{\keywords}{\lskip Keywords: }
 
 \newcommand{\thesis}[1]{\gdef\@thesis{#1}}
-\newcommand{\thesislanguage}[1]{\gdef\@thesislanguage{#1}}
 \newcommand{\getthesis}{\@thesis}
 
-\newcommand{\getlanguage}{\@thesislanguage}
-
 \newcommand{\headertitlecap}{
-    \ifthenelse{\equal{\@thesislanguage}{english}}
-    {
+    \ifthenelse{\equal{\thesislanguage}{english}}{
         \let\oldsection\section
         \let\oldsubsection\subsection
-        \renewcommand{\section}[1]{\oldsection{\texorpdfstring{\titlecap{##1}}{##1}}{}}
-        \renewcommand{\subsection}[1]{\oldsubsection{\texorpdfstring{\titlecap{##1}}{##1}}{}}
-    }
-    {}
+        \renewcommand{\section}[1]{\oldsection{\texorpdfstring{\titlecap{##1}}{##1}}}
+        \renewcommand{\subsection}[1]{\oldsubsection{\texorpdfstring{\titlecap{##1}}{##1}}}
+    }{}
 }
+
+
+\newcommand{\facultyname}{}
+\newcommand{\degreeprogramme}{}
+\newcommand{\thesistypetitle}{}
+\newcommand{\maintitle}{}
+\newcommand{\universityname}{}
+\newcommand{\pagelabel}{}
+\newcommand{\headerforeword}{}
+\newcommand{\headerabbreviations}{}
+\newcommand{\tocname}{}
+\newcommand{\mybibname}{}
+\newcommand{\cityname}{}
+\newcommand{\universitylogo}{Figures/logo-en.png}
+
+\ifthenelse{\equal{\thesislanguage}{finnish}}{%
+  \renewcommand{\facultyname}{TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA}
+  \renewcommand{\degreeprogramme}{Tietotekniikan tutkinto-ohjelma}
+  \renewcommand{\thesistypetitle}{\ifthenelse{\equal{\@thesis}{Master}}{Diplomityö}{Kandidaatintyö}}
+  \renewcommand{\maintitle}{\MakeUppercase{\@otsikko}}
+  \renewcommand{\universityname}{Oulun yli\-opis\-to}
+  \renewcommand{\pagelabel}{s.}
+  \renewcommand{\headerforeword}{ALKULAUSE}
+  \renewcommand{\headerabbreviations}{LYHENTEIDEN JA MERKKIEN SELITYKSET}
+  \renewcommand{\tocname}{SISÄLLYSLUETTELO}
+  \renewcommand{\mybibname}{VIITTEET}
+  \renewcommand{\cityname}{Oulussa }
+  \renewcommand{\universitylogo}{Figures/logo-fi.png}
+}{
+  \renewcommand{\facultyname}{FACULTY OF INFORMATION TECHNOLOGY AND ELECTRICAL ENGINEERING}
+  \renewcommand{\degreeprogramme}{Degree Programme in Computer Science and Engineering}
+  \renewcommand{\thesistypetitle}{\getthesis's Thesis}
+  \renewcommand{\maintitle}{\MakeUppercase{\@title}}
+  \renewcommand{\universityname}{University of Oulu}
+  \renewcommand{\pagelabel}{p.}
+  \renewcommand{\headerforeword}{FOREWORD}
+  \renewcommand{\headerabbreviations}{LIST OF ABBREVIATIONS AND SYMBOLS}
+  \renewcommand{\tocname}{TABLE OF CONTENTS}
+  \renewcommand{\mybibname}{REFERENCES}
+  \renewcommand{\cityname}{Oulu, }
+}
+
+% --- End centralized definitions ---
 
 %Title page
 \newcommand{\maketitlepage}{
-    \sloppy
+  \sloppy
+  \ifthenelse{\equal{\thesislanguage}{finnish}}{
+    \selectlanguage{english}
+  } {
+    \selectlanguage{english}
+    }
     \begin{titlepage}
-       \DTMdefboolkey{finnish}{showdayofmonth}[false]{}
-       \DTMdefboolkey{en-GB}{showdayofmonth}[false]{}
-
-    	\centering{\includegraphics*[width=0.22\textwidth]{Figures/logo.png}\\}
-    	\ifthenelse{\equal{\@thesislanguage}{english}}
-    	{
-            \selectlanguage{english}
-    	    {\sffamily\fontsize{8}{10pt}\selectfont FACULTY OF INFORMATION TECHNOLOGY AND ELECTRICAL ENGINEERING\\}
-        	\vspace{70 mm}
-        	{\textbf{\fontsize{16}{19pt}\selectfont \getauthorstitle}\\}
-        	\vspace{12 mm}
-        	{\textbf{\fontsize{18}{22pt}\selectfont\MakeUppercase \@title \\}}
-        	\vfill
-        	{\fontsize{14}{17}\selectfont \getthesis's Thesis \\Degree Programme in Computer Science and Engineering \\ \DTMToday \\}
-        	\vspace{1cm}
-    	}
-    	{
-            \selectlanguage{finnish}
-        	{\sffamily\fontsize{9}{1pt}\selectfont TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA\\}
-        	\vspace{70 mm}
-        	{\textbf{\fontsize{16}{19pt}\selectfont \getauthorstitle}\\}
-        	\vspace{12 mm}
-        	{\textbf{\fontsize{18}{22pt}\selectfont\MakeUppercase \@otsikko \\}}
-        	\vfill
-        	{\fontsize{14}{17}\selectfont \ifthenelse{\equal{\@thesis}{Master}}
-            	{Diplomityö}
-            	{Kandidaatintyö} 
-        	\\ Tietotekniikan tutkinto-ohjelma \\ \DTMToday \\}
-        	\vspace{1cm}
-    	}
+        \centering
+        \includegraphics*[width=0.22\textwidth]{\universitylogo}\\
+        {\sffamily\fontsize{8}{10pt}\selectfont \facultyname\\}
+        \vspace{70 mm}
+        {\textbf{\fontsize{16}{19pt}\selectfont \getauthorstitle}\\}
+        \vspace{12 mm}
+        {\textbf{\fontsize{18}{22pt}\selectfont \maintitle \\}}
+        \vfill
+        {\fontsize{14}{17}\selectfont \thesistypetitle \\ \degreeprogramme \\ \DTMToday \\}
+        \vspace{1cm}
     \end{titlepage}
 }
 
@@ -270,19 +320,14 @@
 %Table of contents
 \newcommand{\contents}{
     \newpage
-	\ifthenelse{\equal{\@thesislanguage}{finnish}}{
-		\renewcommand{\contentsname}{SIS\"ALLYSLUETTELO}%
-		\addtocontents{toc}{\protect\contentsline{chapter}{SIS\"ALLYSLUETTELO}{}{page.\thepage} }
-		}{
-		\renewcommand{\contentsname}{TABLE OF CONTENTS}%
-		\addtocontents{toc}{\protect\contentsline{chapter}{TABLE OF CONTENTS}{}{page.\thepage} }
-		}
-		\newlength{\temp}
-		\setlength{\temp}{\parskip}
-		\setlength{\parskip}{0mm} 
-		\tableofcontents
-		\setlength{\parskip}{\temp}
-	}
+    \renewcommand{\contentsname}{\tocname}%
+    \addtocontents{toc}{\protect\contentsline{chapter}{\tocname}{}{page.\thepage} }
+    \newlength{\temp}
+    \setlength{\temp}{\parskip}
+    \setlength{\parskip}{0mm} 
+    \tableofcontents
+    \setlength{\parskip}{\temp}
+}
 
 \setcounter{tocdepth}{2}
 \renewcommand{\cfttoctitlefont}{\hfill\normalfont\large\bfseries}
@@ -299,13 +344,13 @@
 	\newpage
 	\addtocontents{toc}{\protect\contentsline{chapter}{ABSTRACT}{}{page.\thepage}}
 	{{\getauthorsabstract (\the\year) \titlecap{\@title}.} University of Oulu, Degree Programme in Computer Science and Engineering, \pageref{LastPage}~p.}
-	\abschapter*{ABSTRACT} \bf}{}
+	\abschapter*{ABSTRACT} \bf}
 
 \newenvironment{tiivistelma}{
-	\newpage \selectlanguage{finnish}
+	\newpage 
 	\addtocontents{toc}{\protect\contentsline{chapter}{TIIVISTELM\"A}{}{page.\thepage}}
 	{{\getauthorsabstract (\the\year) \@otsikko .} Oulun yli\-opis\-to, Tietotekniikan tutkinto-ohjelma, \pageref{LastPage}~s.}
-	\abschapter*{TIIVISTELM\"A} \bf}{\selectlanguage{english}}
+	\abschapter*{TIIVISTELM\"A} \bf}
 
 %chapters without page numbering
 \newcommand{\header}[1]{
@@ -410,7 +455,7 @@ Byte& \byte{0}&\byte{1} &\byte{2} & \byte{3} \\
 
 %bibliography
 \renewenvironment{thebibliography}[1]
-     {\IfEq{\@thesislanguage}{english}{\dichapter{REFERENCES}}{\dichapter{VIITTEET}}
+     {\dichapter{\mybibname}
       \list{\@biblabel{\@arabic\c@enumiv}}%
            {\settowidth\labelwidth{\@biblabel{#1}}%
             \leftmargin\labelwidth
@@ -486,9 +531,7 @@ Byte& \byte{0}&\byte{1} &\byte{2} & \byte{3} \\
 \newcommand{\signature}{
     \DTMlangsetup[en-GB]{monthyearsep={,\space}}
     \par\lskip[1]\hspace{0.0cm}
-    \ifthenelse{\equal{\@thesislanguage}{english}}
-    {\begin{flushleft} Oulu, \DTMToday \end{flushleft}}
-    {\begin{flushleft} Oulussa \DTMToday \end{flushleft}}
+    \begin{flushleft} \cityname \DTMToday \end{flushleft}
     \par \lskip[0]\hspace{0.0cm}
     \ifthenelse{\equal{\@firstnametwo}{}}
     {\begin{flushleft} \@firstname\ \@lastname \end{flushleft}}
@@ -509,17 +552,6 @@ Byte& \byte{0}&\byte{1} &\byte{2} & \byte{3} \\
     }
 }
 
-\begingroup
-\makeatletter
-\g@addto@macro{\UrlSpecials}{%
-  \endlinechar=13 \catcode\endlinechar=12
-  \do\%{\Url@percent}\do\^^M{\break}}
- \catcode13=12 %
- \gdef\Url@percent{\@ifnextchar^^M{\@gobble}{\mathbin{\mathchar`\%}}}%
-\endgroup %
-
-% set automatically space after equation correctly
-\makeatletter
 \g@addto@macro{\normalsize}{%
     \setlength{\abovedisplayskip}{0pt}
     \setlength{\abovedisplayshortskip}{0pt}
@@ -533,6 +565,3 @@ Byte& \byte{0}&\byte{1} &\byte{2} & \byte{3} \\
 \newcommand{\tabref}[1]{Table \ref{#1}}
 \newcommand{\charef}[1]{Chapter \ref{#1}}
 \newcommand{\secref}[1]{Section \ref{#1}}
-
-% set bibliography language
-
