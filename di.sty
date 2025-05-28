@@ -43,6 +43,7 @@
 \usepackage[linesnumbered, ruled]{algorithm2e}
 \usepackage{chngcntr}
 \usepackage[pdfa]{hyperref}
+\hypersetup{breaklinks=true}
 \tolerance=500
 
 \usepackage{import}
@@ -551,17 +552,6 @@ Byte& \byte{0}&\byte{1} &\byte{2} & \byte{3} \\
     }
 }
 
-\begingroup
-\makeatletter
-\g@addto@macro{\UrlSpecials}{%
-  \endlinechar=13 \catcode\endlinechar=12
-  \do\%{\Url@percent}\do\^^M{\break}}
- \catcode13=12 %
- \gdef\Url@percent{\@ifnextchar^^M{\@gobble}{\mathbin{\mathchar`\%}}}%
-\endgroup %
-\makeatother
-% set automatically space after equation correctly
-\makeatletter
 \g@addto@macro{\normalsize}{%
     \setlength{\abovedisplayskip}{0pt}
     \setlength{\abovedisplayshortskip}{0pt}
