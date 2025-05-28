@@ -9,7 +9,7 @@
 % 2023-06-15: Example of a CC-BY figure added with reference in the footnotes (TTo)
 
 
-\documentclass[a4paper, 12pt, titlepage]{dithesis}
+\documentclass[a4paper, 12pt, titlepage]{report}
 
 \usepackage[english,finnish]{babel}
 
@@ -46,7 +46,8 @@
 
 \begin{document}
     \maketitlepage
-
+    \pagenumbering{arabic}
+    \setcounter{page}{1}
     \ifthenelse{\equal{\thesislanguage}{finnish}}{
         \input{Chapters/tiivistelma}
         \selectlanguage{english}

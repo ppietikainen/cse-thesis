@@ -75,8 +75,19 @@
 
 
 \NeedsTeXFormat{LaTeX2e}
+\RequirePackage{appendix}
+\renewcommand{\thechapter}{Appendix \arabic{chapter}}  % Custom numbering
+\renewcommand{\appendixname}{Appendix}
+
+\RequirePackage{chngcntr}
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
+
 \RequirePackage{lastpage,ifthen, xstring}
+
 \RequirePackage{tocloft}
+\setlength{\cftchapnumwidth}{3em}
+\setlength{\cftbeforechapskip}{1em}
 
 \widowpenalty10000
 \clubpenalty10000
@@ -276,7 +287,7 @@
   \renewcommand{\headerabbreviations}{LYHENTEIDEN JA MERKKIEN SELITYKSET}
   \renewcommand{\tocname}{SISÄLLYSLUETTELO}
   \renewcommand{\mybibname}{VIITTEET}
-  \renewcommand{\cityname}{Oulussa,}
+  \renewcommand{\cityname}{Oulussa,\ }
   \renewcommand{\universitylogo}{Figures/logo-fi.png}
 }{
   \renewcommand{\facultyname}{FACULTY OF INFORMATION TECHNOLOGY AND ELECTRICAL ENGINEERING}
@@ -289,7 +300,7 @@
   \renewcommand{\headerabbreviations}{LIST OF ABBREVIATIONS AND SYMBOLS}
   \renewcommand{\tocname}{TABLE OF CONTENTS}
   \renewcommand{\mybibname}{REFERENCES}
-  \renewcommand{\cityname}{Oulu}
+  \renewcommand{\cityname}{Oulu\ }
 }
 
 % --- End centralized definitions ---
@@ -314,6 +325,8 @@
         {\fontsize{14}{17}\selectfont \thesistypetitle \\ \degreeprogramme \\ \DTMToday \\}
         \vspace{1cm}
     \end{titlepage}
+    \cleardoublepage
+    \pagenumbering{gobble} 
 }
 
 \addtocontents{toc}{\protect\thispagestyle{empty}}
