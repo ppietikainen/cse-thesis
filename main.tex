@@ -10,15 +10,12 @@
 
 
 \documentclass[a4paper, 12pt, titlepage]{dithesis}
-\usepackage{import}
+
 \usepackage{di}
-\usepackage[a-1b,mathxmp]{pdfx}
 
-
-%%%%%%%%%%%%%%%%%%%%%%% SET YOUR INFORMATION HERE %%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%% SET YOUR INFORMATION HERE %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{TODO: Bachelor's and Diploma Thesis Guide}
-%Finnish title, not required for foreign students
 \otsikko{TODO: Kandidaatintyön ja diplomityön teko-ohjeet}
 
 \firstname{TODO: Programme}
@@ -26,13 +23,13 @@
 
 % Please choose the correct type of thesis and the language used
 \thesis{Master} % {Bachelor | Master}
-\thesislanguage{english} % {finnish | english}
+\thesislanguage{finnish} % {finnish | english}
 
 %Names of other authors can be added here
-\firstnametwo{}
-\lastnametwo{}
-\firstnamethree{}
-\lastnamethree{}
+\firstnametwo{Testi}
+\lastnametwo{Teekkari}
+\firstnamethree{Kolmas}
+\lastnamethree{Kirjoittaja}
 
 %Do not remove or comment the extra names if you do not need them, leave them empty instead
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -41,18 +38,20 @@
 \headertitlecap
 
 \begin{document}
+    \selectlanguage{\getlanguage}
     \maketitlepage %Create the title page
+    % Abstract order (no language switching here)
+    \if@finnish
     
-    %If you are writing your thesis in Finnish you can change the order of abstract/tiivistelmä
-    %If you are a foreign student you can remove the Finnish abstract (tiivistelmä)
-    \input{Chapters/abstract}
-    
-    \input{Chapters/tiivistelma}
-    
+        \input{Chapters/tiivistelma}
+        \input{Chapters/abstract}
+    \else
+        \input{Chapters/abstract}
+        \input{Chapters/tiivistelma}
+    \fi
+    \selectlanguage{\getlanguage}
     \contents %Insert table of contents
-    
     \input{Chapters/foreword}
-    
     \input{Chapters/abbreviations}
     
     
@@ -77,9 +76,8 @@
         \label{summary}
         \input{Chapters/summary}
 
-    \bibliographystyle{\biblanguage}
-    \bibliography{citations}
-    
+    \printbibliography[heading=bibnumbered, title=\mybibname]
+
     \chapter{Appendices}
         \input{Chapters/appendices}
 

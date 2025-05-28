@@ -46,6 +46,46 @@
 \usepackage[pdfa]{hyperref}
 \tolerance=500
 
+\usepackage{import}
+\usepackage[a-1b,mathxmp]{pdfx}
+
+\usepackage[backend=biber,
+  refsection=section,
+  style=ieee,
+  doi=true,
+  urldate=long,
+  url=true]{biblatex}
+\addbibresource{citations.bib}
+
+% Format the access date
+\DeclareFieldFormat{urldate}{%
+  \if@finnish
+    Haettu: \space#1%
+  \else
+    Accessed: \space#1%
+  \fi\adddot%
+}
+
+% Remove "url:" label
+\DeclareFieldFormat{url}{#1}
+
+% Print access date before [Online.]
+\renewbibmacro*{url+urldate}{%
+  \iffieldundef{url}{}{%
+    \iffieldundef{urldate}{}{%
+      \usebibmacro{urldate}%
+      \newunit\newblock
+    }%
+    \if@finnish
+      \ [Online.] Saatavilla: %
+    \else
+      \ [Online.] Available: %
+    \fi
+    \printfield{url}%
+  }%
+}
+
+
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{lastpage,ifthen, xstring}
 \RequirePackage{tocloft}
@@ -213,9 +253,14 @@
 \newcommand{\keywords}{\lskip Keywords: }
 
 \newcommand{\thesis}[1]{\gdef\@thesis{#1}}
-\newcommand{\thesislanguage}[1]{\gdef\@thesislanguage{#1}}
 \newcommand{\getthesis}{\@thesis}
 
+% --- Language Management ---
+\newif\if@finnish
+\newcommand{\thesislanguage}[1]{%
+  \gdef\@thesislanguage{#1}%
+  \ifthenelse{\equal{#1}{finnish}}{\@finnishtrue}{\@finnishfalse}%
+}
 \newcommand{\getlanguage}{\@thesislanguage}
 
 \newcommand{\headertitlecap}{
@@ -229,40 +274,66 @@
     {}
 }
 
+% --- Centralized language-dependent definitions ---
+
+\newcommand{\facultyname}{%
+  \if@finnish
+    TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA%
+  \else
+    FACULTY OF INFORMATION TECHNOLOGY AND ELECTRICAL ENGINEERING%
+  \fi
+}
+\newcommand{\degreeprogramme}{%
+  \if@finnish
+    Tietotekniikan tutkinto-ohjelma%
+  \else
+    Degree Programme in Computer Science and Engineering%
+  \fi
+}
+\newcommand{\thesistypetitle}{%
+  \if@finnish
+    \ifthenelse{\equal{\@thesis}{Master}}{Diplomityö}{Kandidaatintyö}%
+  \else
+    \getthesis's Thesis%
+  \fi
+}
+\newcommand{\maintitle}{%
+  \if@finnish \@otsikko \else \@title \fi
+}
+\newcommand{\universityname}{%
+  \if@finnish
+    Oulun yli\-opis\-to%
+  \else
+    University of Oulu%
+  \fi
+}
+\newcommand{\pagelabel}{%
+  \if@finnish s.\else p.\fi
+}
+\newcommand{\tocname}{%
+  \if@finnish SISÄLLYSLUETTELO \else TABLE OF CONTENTS\fi
+}
+
+\newcommand{\mybibname}{%
+  \if@finnish VIITTEET \else REFERENCES\fi
+}
+
+% --- End centralized definitions ---
+
 %Title page
 \newcommand{\maketitlepage}{
     \sloppy
     \begin{titlepage}
-       \DTMdefboolkey{finnish}{showdayofmonth}[false]{}
-       \DTMdefboolkey{en-GB}{showdayofmonth}[false]{}
-
-    	\centering{\includegraphics*[width=0.22\textwidth]{Figures/logo.png}\\}
-    	\ifthenelse{\equal{\@thesislanguage}{english}}
-    	{
-            \selectlanguage{english}
-    	    {\sffamily\fontsize{8}{10pt}\selectfont FACULTY OF INFORMATION TECHNOLOGY AND ELECTRICAL ENGINEERING\\}
-        	\vspace{70 mm}
-        	{\textbf{\fontsize{16}{19pt}\selectfont \getauthorstitle}\\}
-        	\vspace{12 mm}
-        	{\textbf{\fontsize{18}{22pt}\selectfont\MakeUppercase \@title \\}}
-        	\vfill
-        	{\fontsize{14}{17}\selectfont \getthesis's Thesis \\Degree Programme in Computer Science and Engineering \\ \DTMToday \\}
-        	\vspace{1cm}
-    	}
-    	{
-            \selectlanguage{finnish}
-        	{\sffamily\fontsize{9}{1pt}\selectfont TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA\\}
-        	\vspace{70 mm}
-        	{\textbf{\fontsize{16}{19pt}\selectfont \getauthorstitle}\\}
-        	\vspace{12 mm}
-        	{\textbf{\fontsize{18}{22pt}\selectfont\MakeUppercase \@otsikko \\}}
-        	\vfill
-        	{\fontsize{14}{17}\selectfont \ifthenelse{\equal{\@thesis}{Master}}
-            	{Diplomityö}
-            	{Kandidaatintyö} 
-        	\\ Tietotekniikan tutkinto-ohjelma \\ \DTMToday \\}
-        	\vspace{1cm}
-    	}
+        \centering
+        \includegraphics*[width=0.22\textwidth]{Figures/logo.png}\\
+        {\sffamily\fontsize{8}{10pt}\selectfont \facultyname\\}
+        \vspace{70 mm}
+        {\textbf{\fontsize{16}{19pt}\selectfont \getauthorstitle}\\}
+        \vspace{12 mm}
+        {\textbf{\fontsize{18}{22pt}\selectfont\MakeUppercase{\maintitle} \\}}
+        \vfill
+        {\fontsize{14}{17}\selectfont \thesistypetitle \\ \degreeprogramme \\ \DTMToday \\}
+        \vspace{1cm}
     \end{titlepage}
 }
 
@@ -270,19 +341,14 @@
 %Table of contents
 \newcommand{\contents}{
     \newpage
-	\ifthenelse{\equal{\@thesislanguage}{finnish}}{
-		\renewcommand{\contentsname}{SIS\"ALLYSLUETTELO}%
-		\addtocontents{toc}{\protect\contentsline{chapter}{SIS\"ALLYSLUETTELO}{}{page.\thepage} }
-		}{
-		\renewcommand{\contentsname}{TABLE OF CONTENTS}%
-		\addtocontents{toc}{\protect\contentsline{chapter}{TABLE OF CONTENTS}{}{page.\thepage} }
-		}
-		\newlength{\temp}
-		\setlength{\temp}{\parskip}
-		\setlength{\parskip}{0mm} 
-		\tableofcontents
-		\setlength{\parskip}{\temp}
-	}
+    \renewcommand{\contentsname}{\tocname}%
+    \addtocontents{toc}{\protect\contentsline{chapter}{\tocname}{}{page.\thepage} }
+    \newlength{\temp}
+    \setlength{\temp}{\parskip}
+    \setlength{\parskip}{0mm} 
+    \tableofcontents
+    \setlength{\parskip}{\temp}
+}
 
 \setcounter{tocdepth}{2}
 \renewcommand{\cfttoctitlefont}{\hfill\normalfont\large\bfseries}
