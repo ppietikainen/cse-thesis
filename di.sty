@@ -233,9 +233,9 @@
 \newcommand{\maketitlepage}{
     \sloppy
     \begin{titlepage}
-    	\centering{\includegraphics*[width=0.22\textwidth]{Figures/logo.png}\\}
     	\ifthenelse{\equal{\@thesislanguage}{english}}
     	{
+    	\centering{\includegraphics*[width=0.22\textwidth]{Figures/logo-en.png}\\}
             \selectlanguage{english}
     	    {\sffamily\fontsize{8}{10pt}\selectfont FACULTY OF INFORMATION TECHNOLOGY AND ELECTRICAL ENGINEERING\\}
         	\vspace{70 mm}
@@ -248,7 +248,8 @@
     	}
     	{
             \selectlanguage{finnish}
-        	{\sffamily\fontsize{9}{1pt}\selectfont TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA\\}
+    	\centering{\includegraphics*[width=0.22\textwidth]{Figures/logo-fi.png}\\}
+     	    {\sffamily\fontsize{9}{1pt}\selectfont TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA\\}
         	\vspace{70 mm}
         	{\textbf{\fontsize{16}{19pt}\selectfont \getauthorstitle}\\}
         	\vspace{12 mm}
