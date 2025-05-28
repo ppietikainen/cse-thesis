@@ -10,7 +10,11 @@
 
 
 \documentclass[a4paper, 12pt, titlepage]{dithesis}
+
+\usepackage[english,finnish]{babel}
+
 \usepackage{di}
+
 %%%%%%%%%%%%%%%%%%%%% SET YOUR INFORMATION HERE %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{TODO: Bachelor's and Diploma Thesis Guide}
@@ -21,7 +25,8 @@
 
 % Please choose the correct type of thesis and the language used
 \thesis{Master} % {Bachelor | Master}
-\thesislanguage{english} % {finnish | english}
+% Uncomment for Finnish thesis
+% \renewcommand{\thesislanguage}{finnish}
 
 %Names of other authors can be added here
 \firstnametwo{}
@@ -36,29 +41,30 @@
 %\headertitlecap automatically creates headers with TitleCaps (Capitalizes the First Letter in Each Word) for H0, H2, and H3. Words not to be capitalized can be changed in di.sty
 \headertitlecap
 
+% Add your bibliographies here. You can use several
+\addbibresource{citations.bib}
+
 \begin{document}
-    \if@finnish
-        \selectlanguage{finnish}
-    \else
-        \selectlanguage{english}
-    \fi
+    \maketitlepage
 
-    \maketitlepage %Create the title page
-
-    \if@finnish    
-        \input{Chapters/tiivistelma}
-        \input{Chapters/abstract}
-        \selectlanguage{finnish}
-    \else
-        \input{Chapters/abstract}
+    \ifthenelse{\equal{\thesislanguage}{finnish}}{
         \input{Chapters/tiivistelma}
         \selectlanguage{english}
-    \fi
+        \input{Chapters/abstract}
+        \selectlanguage{finnish}
+    } {
+        \input{Chapters/abstract}
+        \selectlanguage{finnish}
+        \input{Chapters/tiivistelma}
+        \selectlanguage{english}
+    }
     \contents %Insert table of contents
     \input{Chapters/foreword}
     \input{Chapters/abbreviations}
     
-    
+    %sets the dots for numbered chapters in table of contents
+    \addtocontents{toc}{\protect\renewcommand{\protect\cftchapleader}{\protect\cftdotfill{\cftdotsep}}}
+
     \chapter{Introduction} %Set the name of a new chapter
         \label{introduction} %Create a label for referencing purposes (\charef{.})
         \pagenumbers

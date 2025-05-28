@@ -165,9 +165,7 @@ Algorithms can be implemented simply using \LaTeX. An example of an algorithm is
 %For more documentation and examples of creating algorithms, see: http://ftp.acc.umu.se/mirror/CTAN/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf
 \vspace{7mm}
 \begin{algorithm}[H]
-\ifthenelse{\equal{\getlanguage}{finnish}}
-    {\renewcommand{\algorithmcfname}{Algoritmi}}
-    {}
+\iflanguage{finnish}{\renewcommand{\algorithmcfname}{Algoritmi}}
 \SetAlgoLined
 \DontPrintSemicolon
 \SetKwData{min}{min}

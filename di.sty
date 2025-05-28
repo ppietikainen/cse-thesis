@@ -15,7 +15,6 @@
 % 
 \ProvidesPackage{di}
 
-\usepackage[english,finnish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}  
 \usepackage{newtxtext, newtxmath}
@@ -49,13 +48,29 @@
 \usepackage{import}
 \usepackage[a-1b,mathxmp]{pdfx}
 
+\providecommand{\thesislanguage}{english} 
+
 \usepackage[backend=biber,
   refsection=section,
   style=ieee,
   doi=true,
   urldate=long,
   url=true]{biblatex}
-\addbibresource{citations.bib}
+
+\DefineBibliographyStrings{finnish}{
+  %artno       = Art\adddot\addspace no\adddot      ,
+  %chapter     = ch\adddot                          ,
+  %editor      = Ed\adddot                          ,
+  %editors     = Eds\adddot                         ,
+  %mathesis    = M\adddot S\adddot\addspace thesis  ,
+  %patentjp    = Japanese Patent                    ,
+  %patentus    = U\adddot S\adddot\addspace Patent  ,
+  %phdthesis   = Ph\adddot D\adddot\addspace dissertation,
+  %presentedat = presented at the\addspace          ,
+  %techreport  = Tech\adddot\addspace Rep\adddot    ,
+  url         = [Online]\adddot\addspace Saatavilla ,
+  urlseen     = Viitattu\addcolon
+}
 
 
 \NeedsTeXFormat{LaTeX2e}
@@ -206,7 +221,6 @@
 \newcommand{\lastnametwo}[1]{\gdef\@lastnametwo{#1}}
 \newcommand{\firstnamethree}[1]{\gdef\@firstnamethree{#1}}
 \newcommand{\lastnamethree}[1]{\gdef\@lastnamethree{#1}}
-\newcommand{\valvoja}[1]{\gdef\@valvoja{#1}}
 \newcommand{\otsikko}[1]{\gdef\@otsikko{#1}
 	\gdef\@isotsikko{\MakeUppercase{#1}}}
 
@@ -227,111 +241,74 @@
 \newcommand{\thesis}[1]{\gdef\@thesis{#1}}
 \newcommand{\getthesis}{\@thesis}
 
-% --- Language Management ---
-\newif\if@finnish
-\newcommand{\thesislanguage}[1]{%
-  \gdef\@thesislanguage{#1}%
-  \ifthenelse{\equal{#1}{finnish}}{\@finnishtrue}{\@finnishfalse}%
-}
-\newcommand{\getlanguage}{\@thesislanguage}
-
 \newcommand{\headertitlecap}{
-    \ifthenelse{\equal{\@thesislanguage}{english}}
-    {
+    \ifthenelse{\equal{\thesislanguage}{english}}{
         \let\oldsection\section
         \let\oldsubsection\subsection
-        \renewcommand{\section}[1]{\oldsection{\texorpdfstring{\titlecap{##1}}{##1}}{}}
-        \renewcommand{\subsection}[1]{\oldsubsection{\texorpdfstring{\titlecap{##1}}{##1}}{}}
-    }
-    {}
-}
-
-% Format the access date
-\DeclareFieldFormat{urldate}{%
-  \if@finnish
-    Haettu: \space#1%
-  \else
-    Accessed: \space#1%
-  \fi\adddot%
-}
-
-% Remove "url:" label
-\DeclareFieldFormat{url}{#1}
-
-% Print access date before [Online.]
-\renewbibmacro*{url+urldate}{%
-  \iffieldundef{url}{}{%
-    \iffieldundef{urldate}{}{%
-      \usebibmacro{urldate}%
-      \newunit\newblock
-    }%
-    \if@finnish
-      \ [Online.] Saatavilla: %
-    \else
-      \ [Online.] Available: %
-    \fi
-    \printfield{url}%
-  }%
+        \renewcommand{\section}[1]{\oldsection{\texorpdfstring{\titlecap{##1}}{##1}}}
+        \renewcommand{\subsection}[1]{\oldsubsection{\texorpdfstring{\titlecap{##1}}{##1}}}
+    }{}
 }
 
 
-% --- Centralized language-dependent definitions ---
+\newcommand{\facultyname}{}
+\newcommand{\degreeprogramme}{}
+\newcommand{\thesistypetitle}{}
+\newcommand{\maintitle}{}
+\newcommand{\universityname}{}
+\newcommand{\pagelabel}{}
+\newcommand{\headerforeword}{}
+\newcommand{\headerabbreviations}{}
+\newcommand{\tocname}{}
+\newcommand{\mybibname}{}
+\newcommand{\cityname}{}
+\newcommand{\universitylogo}{Figures/logo-en.png}
 
-\newcommand{\facultyname}{%
-  \if@finnish
-    TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA%
-  \else
-    FACULTY OF INFORMATION TECHNOLOGY AND ELECTRICAL ENGINEERING%
-  \fi
-}
-\newcommand{\degreeprogramme}{%
-  \if@finnish
-    Tietotekniikan tutkinto-ohjelma%
-  \else
-    Degree Programme in Computer Science and Engineering%
-  \fi
-}
-\newcommand{\thesistypetitle}{%
-  \if@finnish
-    \ifthenelse{\equal{\@thesis}{Master}}{Diplomityö}{Kandidaatintyö}%
-  \else
-    \getthesis's Thesis%
-  \fi
-}
-\newcommand{\maintitle}{%
-  \if@finnish \@otsikko \else \@title \fi
-}
-\newcommand{\universityname}{%
-  \if@finnish
-    Oulun yli\-opis\-to%
-  \else
-    University of Oulu%
-  \fi
-}
-\newcommand{\pagelabel}{%
-  \if@finnish s.\else p.\fi
-}
-\newcommand{\tocname}{%
-  \if@finnish SISÄLLYSLUETTELO \else TABLE OF CONTENTS\fi
-}
-
-\newcommand{\mybibname}{%
-  \if@finnish VIITTEET \else REFERENCES\fi
+\ifthenelse{\equal{\thesislanguage}{finnish}}{%
+  \renewcommand{\facultyname}{TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA}
+  \renewcommand{\degreeprogramme}{Tietotekniikan tutkinto-ohjelma}
+  \renewcommand{\thesistypetitle}{\ifthenelse{\equal{\@thesis}{Master}}{Diplomityö}{Kandidaatintyö}}
+  \renewcommand{\maintitle}{\MakeUppercase{\@otsikko}}
+  \renewcommand{\universityname}{Oulun yli\-opis\-to}
+  \renewcommand{\pagelabel}{s.}
+  \renewcommand{\headerforeword}{ALKULAUSE}
+  \renewcommand{\headerabbreviations}{LYHENTEIDEN JA MERKKIEN SELITYKSET}
+  \renewcommand{\tocname}{SISÄLLYSLUETTELO}
+  \renewcommand{\mybibname}{VIITTEET}
+  \renewcommand{\cityname}{Oulussa,}
+  \renewcommand{\universitylogo}{Figures/logo-fi.png}
+}{
+  \renewcommand{\facultyname}{FACULTY OF INFORMATION TECHNOLOGY AND ELECTRICAL ENGINEERING}
+  \renewcommand{\degreeprogramme}{Degree Programme in Computer Science and Engineering}
+  \renewcommand{\thesistypetitle}{\getthesis's Thesis}
+  \renewcommand{\maintitle}{\MakeUppercase{\@title}}
+  \renewcommand{\universityname}{University of Oulu}
+  \renewcommand{\pagelabel}{p.}
+  \renewcommand{\headerforeword}{FOREWORD}
+  \renewcommand{\headerabbreviations}{LIST OF ABBREVIATIONS AND SYMBOLS}
+  \renewcommand{\tocname}{TABLE OF CONTENTS}
+  \renewcommand{\mybibname}{REFERENCES}
+  \renewcommand{\cityname}{Oulu}
 }
 
 % --- End centralized definitions ---
 
 %Title page
 \newcommand{\maketitlepage}{
-    \sloppy
+  \sloppy
+  \ifthenelse{\equal{\thesislanguage}{finnish}}{
+    \selectlanguage{english}
+  } {
+    \selectlanguage{english}
+    }
     \begin{titlepage}
         \centering
-        \includegraphics*[width=0.22\textwidth]{Figures/logo.png}\\
+        \includegraphics*[width=0.22\textwidth]{\universitylogo}\\
         {\sffamily\fontsize{8}{10pt}\selectfont \facultyname\\}
         \vspace{70 mm}
         {\textbf{\fontsize{16}{19pt}\selectfont \getauthorstitle}\\}
         \vspace{12 mm}
-        {\textbf{\fontsize{18}{22pt}\selectfont\MakeUppercase{\maintitle} \\}}
+        {\textbf{\fontsize{18}{22pt}\selectfont \maintitle \\}}
         \vfill
         {\fontsize{14}{17}\selectfont \thesistypetitle \\ \degreeprogramme \\ \DTMToday \\}
         \vspace{1cm}
@@ -366,13 +343,13 @@
 	\newpage
 	\addtocontents{toc}{\protect\contentsline{chapter}{ABSTRACT}{}{page.\thepage}}
 	{{\getauthorsabstract (\the\year) \titlecap{\@title}.} University of Oulu, Degree Programme in Computer Science and Engineering, \pageref{LastPage}~p.}
-	\abschapter*{ABSTRACT} \bf}{}
+	\abschapter*{ABSTRACT} \bf}
 
 \newenvironment{tiivistelma}{
-	\newpage \selectlanguage{finnish}
+	\newpage 
 	\addtocontents{toc}{\protect\contentsline{chapter}{TIIVISTELM\"A}{}{page.\thepage}}
 	{{\getauthorsabstract (\the\year) \@otsikko .} Oulun yli\-opis\-to, Tietotekniikan tutkinto-ohjelma, \pageref{LastPage}~s.}
-	\abschapter*{TIIVISTELM\"A} \bf}{\selectlanguage{english}}
+	\abschapter*{TIIVISTELM\"A} \bf}
 
 %chapters without page numbering
 \newcommand{\header}[1]{
@@ -477,7 +454,7 @@ Byte& \byte{0}&\byte{1} &\byte{2} & \byte{3} \\
 
 %bibliography
 \renewenvironment{thebibliography}[1]
-     {\IfEq{\@thesislanguage}{english}{\dichapter{REFERENCES}}{\dichapter{VIITTEET}}
+     {\dichapter{\mybibname}
       \list{\@biblabel{\@arabic\c@enumiv}}%
            {\settowidth\labelwidth{\@biblabel{#1}}%
             \leftmargin\labelwidth
@@ -553,9 +530,7 @@ Byte& \byte{0}&\byte{1} &\byte{2} & \byte{3} \\
 \newcommand{\signature}{
     \DTMlangsetup[en-GB]{monthyearsep={,\space}}
     \par\lskip[1]\hspace{0.0cm}
-    \ifthenelse{\equal{\@thesislanguage}{english}}
-    {\begin{flushleft} Oulu, \DTMToday \end{flushleft}}
-    {\begin{flushleft} Oulussa \DTMToday \end{flushleft}}
+    \begin{flushleft} \cityname \DTMToday \end{flushleft}
     \par \lskip[0]\hspace{0.0cm}
     \ifthenelse{\equal{\@firstnametwo}{}}
     {\begin{flushleft} \@firstname\ \@lastname \end{flushleft}}
@@ -600,6 +575,3 @@ Byte& \byte{0}&\byte{1} &\byte{2} & \byte{3} \\
 \newcommand{\tabref}[1]{Table \ref{#1}}
 \newcommand{\charef}[1]{Chapter \ref{#1}}
 \newcommand{\secref}[1]{Section \ref{#1}}
-
-% set bibliography language
-
