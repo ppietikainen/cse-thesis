@@ -10,18 +10,25 @@
 
 
 \documentclass[a4paper, 12pt, titlepage]{report}
-
 \usepackage[english,finnish]{babel}
-
 \usepackage{di}
+
+\newcommand{\englishabstract}{
+This document provides general guidance for a degree student of Computer Science and Engineering in preparing his/her master's thesis. This guide defines the role of a thesis in the M.Sc. Degree, presents the actions to be taken in different phases of the thesis procedure and introduces the way that master’s thesis is written. The document has been formatted based on these guidelines to serve as an example how the thesis should look like.}
+
+\newcommand{\finnishabstract}{
+Näissä ohjeissa opastetaan valmistumisvaiheessa olevaa opiskelijaa diplomityön tekemisessä. Ohjeissa selvitetään työn asema diplomi-insinööritutkinnossa, kerrotaan toimenpiteet, joihin työn tekijän on ryhdyttävä työn eri vaiheissa, sekä määritellään yksityiskohtaisesti diplomityön kirjallinen rakenne. Ohje on muotoiltu noudattaen näitä kirjoitusohjeita ja toimii siten esimerkkinä, miltä diplomityön tulisi näyttää.}
+
+\renewcommand{\keywords}{M.Sc. degree, master’s thesis instructions, structure of a master’s thesis}
+\renewcommand{\avainsanat}{diplomi-insinöörin tutkinto, opinnäytetyön ohjeet, diplomityön rakenne}
 
 %%%%%%%%%%%%%%%%%%%%% SET YOUR INFORMATION HERE %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{TODO: Bachelor's and Diploma Thesis Guide}
 \otsikko{TODO: Kandidaatintyön ja diplomityön teko-ohjeet}
 
-\firstname{TODO: Programme}
-\lastname{TODO: Committee}
+\firstname{Author}
+\lastname{One}
 
 % Please choose the correct type of thesis and the language used
 \thesis{Master} % {Bachelor | Master}
@@ -29,13 +36,13 @@
 % \renewcommand{\thesislanguage}{finnish}
 
 %Names of other authors can be added here
-\firstnametwo{}
-\lastnametwo{}
-\firstnamethree{}
-\lastnamethree{}
-
-
+\firstnametwo{Author}
+\lastnametwo{Two}
+\firstnamethree{Author}
+\lastnamethree{Three}
 %Do not remove or comment the extra names if you do not need them, leave them empty instead
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\headertitlecap automatically creates headers with TitleCaps (Capitalizes the First Letter in Each Word) for H0, H2, and H3. Words not to be capitalized can be changed in di.sty
@@ -43,21 +50,34 @@
 
 % Add your bibliographies here. You can use several
 \addbibresource{citations.bib}
+\newenvironment{writexmpdata}
+  {\newwrite\myxmp \immediate\openout\myxmp=\jobname.xmpdata}
+  {\immediate\closeout\myxmp}
+
+% Usage
+\begin{writexmpdata}
+\immediate\write\myxmp{\string\Title{\maintitle}}
+\immediate\write\myxmp{\string\Author{\getauthors{, }}}
+\immediate\write\myxmp{\string\Language{en-GB}}
+\immediate\write\myxmp{\string\Keywords{\keywords}}
+\immediate\write\myxmp{\string\Publisher{University of Oulu}}
+\end{writexmpdata}
 
 \begin{document}
-    \maketitlepage
+
+\hypersetup{pageanchor=false}
+\maketitlepage
     \pagenumbering{arabic}
     \setcounter{page}{1}
+    \hypersetup{pageanchor=true}
     \ifthenelse{\equal{\thesislanguage}{finnish}}{
-        \input{Chapters/tiivistelma}
-        \selectlanguage{english}
-        \input{Chapters/abstract}
-        \selectlanguage{finnish}
+      \printtiivistelma
+      \printabstract
+      \selectlanguage{finnish}
     } {
-        \input{Chapters/abstract}
-        \selectlanguage{finnish}
-        \input{Chapters/tiivistelma}
-        \selectlanguage{english}
+      \printabstract
+      \printtiivistelma
+      \selectlanguage{english}
     }
     \contents %Insert table of contents
     \input{Chapters/foreword}
