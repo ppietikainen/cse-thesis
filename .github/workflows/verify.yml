@@ -1,0 +1,30 @@
+name: Verify PDF/A-1B compatibility
+
+on:
+  push:
+    branches:
+      - main
+      - devel
+  pull_request:
+    branches:
+      - main
+      - devel
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Install TexLive and dependencies
+        uses: teatimeguest/setup-texlive-action@v3
+        with:
+          package-file: texlive-basic-packages.txt
+      - name: Compile LaTeX document
+        run: >
+          pdflatex -halt-on-error main.tex
+      - name: Verify PDF
+        run: >
+          docker run --rm -t -v "$(pwd):/data" 
+          ghcr.io/verapdf/cli:latest
+          -f 1b main.pdf

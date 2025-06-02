@@ -43,7 +43,7 @@
 \usepackage{titletoc}
 \usepackage[linesnumbered, ruled]{algorithm2e}
 \usepackage{chngcntr}
-\usepackage{hyperref}
+\usepackage[pdfa]{hyperref}
 \tolerance=500
 
 \NeedsTeXFormat{LaTeX2e}
@@ -60,8 +60,8 @@
 % Change these "excluded words" if you are not satisfied with titlecaps
 %http://perspectivesandprotips.blogspot.com/2014/11/using-macros-with-titlecaps-in-latex.html
 \Resetlcwords
-\Addlcwords{a an the} 
-\Addlcwords{and but for or nor} 
+\Addlcwords{a an the}
+\Addlcwords{and but for or nor}
 \Addlcwords{aboard about above across %
   after against along amid among anti %
   around as at behind below % before
@@ -228,14 +228,14 @@
     }
     {}
 }
-    
+
 %Title page
 \newcommand{\maketitlepage}{
     \sloppy
     \begin{titlepage}
-    	\centering{\includegraphics*[width=0.22\textwidth]{Figures/uni_logo}\\}
     	\ifthenelse{\equal{\@thesislanguage}{english}}
     	{
+    	\centering{\includegraphics*[width=0.22\textwidth]{Figures/logo-en.png}\\}
             \selectlanguage{english}
     	    {\sffamily\fontsize{8}{10pt}\selectfont FACULTY OF INFORMATION TECHNOLOGY AND ELECTRICAL ENGINEERING\\}
         	\vspace{70 mm}
@@ -248,7 +248,8 @@
     	}
     	{
             \selectlanguage{finnish}
-        	{\sffamily\fontsize{9}{1pt}\selectfont TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA\\}
+    	\centering{\includegraphics*[width=0.22\textwidth]{Figures/logo-fi.png}\\}
+     	    {\sffamily\fontsize{9}{1pt}\selectfont TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA\\}
         	\vspace{70 mm}
         	{\textbf{\fontsize{16}{19pt}\selectfont \getauthorstitle}\\}
         	\vspace{12 mm}
