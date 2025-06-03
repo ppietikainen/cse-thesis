@@ -126,11 +126,7 @@ versus via with within without}
 \newcommand{\ie}{\textit{i.e.}}
 \newcommand{\eg}{\textit{e.g.}}
 \newcommand{\etc}{\textit{etc.}}
-
-\renewcommand{\@cite}[2]{%
-[{#1}\ifthenelse{\boolean{@tempswa}}{ #2}{}]}
-\newcommand{\pcite}[1]{\cite[.]{#1}}
-
+ 
 \def\@sect#1#2#3#4#5#6[#7]#8{%
   \ifnum #2>\c@secnumdepth
   \let\@svsec\@empty
@@ -170,7 +166,6 @@ versus via with within without}
 \DeclareMathSymbol{,}{\mathpunct}{letters}{"3B}
 \DeclareMathSymbol{.}{\mathord}{letters}{"3B}
 %\DeclareMathSymbol{\decimal}{\mathord}{letters}{"3A}
-\newcommand{\piste}{\text{.}}
 
 %chapter styles
 %
