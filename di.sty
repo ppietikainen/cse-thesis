@@ -423,40 +423,7 @@ versus via with within without}
   \dichapter*{#1}
 \addtocontents{toc}{\protect\contentsline{chapter}{#1}{}{page.\thepage} }}
 
-\newcommand{\bits}[2]{\multicolumn{#1}{c|}{{#2}} }
-\newcommand{\qw}[1] {\bits{32}{#1}}
-\newcommand{\word}[1] {\bits{16}{#1}}
-\newcommand{\byte}[1] {\bits{8}{#1}}
-\newcommand{\bit}[1] {\bits{1}{#1}}
 
-\newenvironment{protocolheader}[2]
-{
-  \setlength{\tabcolsep}{2 pt}%
-  \setlength{\doublerulesep}{0 pt}%
-  \par
-  \sbox{\TmpCaption}{#1}
-  \renewcommand{\TmpLabel}{\label{#2}}
-  \begin{table}[ht]
-    \begin{center}
-      \begin{tabular}{|c|cccccccccccccccccccccccccccccccc|}
-        \hline
-        Byte& \byte{0}&\byte{1} &\byte{2} & \byte{3} \\
-        & 7 &6&5&4&3&2&1&\multicolumn{1}{c|}{0}&7& 6 & 5 & 4 & 3 & 2
-        & 1 & \multicolumn{1}{c|}{0} & 7 & 6 & 5 & 4 & 3 & 2 & 1 &
-        \multicolumn{1}{c|}{0} &7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
-        \hline
-      }
-      {
-      \end{tabular}
-    \end{center}
-    \vspace{-1cm}
-    \begin{figure}[H]
-      \caption{\usebox{\TmpCaption}} \TmpLabel
-    \end{figure}
-
-  \end{table}
-
-}
 
 %page margins, and spacing
 \oddsidemargin2cm  % 1 in + 2 cm = 4.5 cm
