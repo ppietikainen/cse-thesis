@@ -376,44 +376,44 @@ versus via with within without}
   {{\getauthorsabstractacta\ (\the\year) \titlecap{\@title}.} University
     of Oulu, Degree Programme in Computer Science and Engineering,
   \pageref{LastPage}~p.}
-\abschapter*{ABSTRACT} \bf}
+\abschapter*{ABSTRACT}}
 
 \newenvironment{tiivistelmaacta}{
   \newpage
   \addtocontents{toc}{\protect\contentsline{chapter}{TIIVISTELM\"A}{}{page.\thepage}}
   {{\getauthorsabstractacta\ (\the\year) \@otsikko .} Oulun yli\-opis\-to,
   Tietotekniikan tutkinto-ohjelma, \pageref{LastPage}~s.}
-\abschapter*{TIIVISTELMÄ} \bf}
+\abschapter*{TIIVISTELMÄ}}
 
 % abstract / tiivistelmä (IEEE style)
 \newenvironment{abstractieee}{
   \newpage
   \addtocontents{toc}{\protect\contentsline{chapter}{ABSTRACT}{}{page.\thepage}}
   {\getauthorsabstractieee, ``\titlecap{\@title},'' \thesistypeenglish, Dept. of Computer Science, Univ. of Oulu, Oulu, Finland, \the\year.}
-\abschapter*{ABSTRACT} \bf}
+\abschapter*{ABSTRACT}}
 
 \newenvironment{tiivistelmaieee}{
   \newpage
   \addtocontents{toc}{\protect\contentsline{chapter}{TIIVISTELMÄ}{}{page.\thepage}}
   {\getauthorsabstractieee, ``\@otsikko,'' \thesistypefinnish, Tietotekniikan tutkinto-ohjelma, Oulun yliopisto, Oulu, Suomi, \the\year.}
-\abschapter*{TIIVISTELMÄ} \bf}
+\abschapter*{TIIVISTELMÄ}}
 
 % Commands to print abstracts
 \newcommand{\printabstract}{%
   \selectlanguage{english}
   \begin{abstractieee}
-    \englishabstract
+    {\bfseries \englishabstract
 
-    \printkeywords
+    \printkeywords}
   \end{abstractieee}
 }
 
 \newcommand{\printtiivistelma}{%
 \selectlanguage{finnish}  
   \begin{tiivistelmaieee}
-    \finnishabstract
+    {\bfseries \finnishabstract
 
-    \printavainsanat
+    \printavainsanat}
   \end{tiivistelmaieee}
 }
 
@@ -620,8 +620,8 @@ versus via with within without}
 \makeatother
 
 % Moved from dithesis.cls, eqref is from amsmath so renew
-\newcommand{\figref}[1]{Figure \ref{#1}}
-\renewcommand{\eqref}[1]{Equation (\ref{#1})}
-\newcommand{\tabref}[1]{Table \ref{#1}}
-\newcommand{\charef}[1]{Chapter \ref{#1}}
-\newcommand{\secref}[1]{Section \ref{#1}}
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+\renewcommand{\eqref}[1]{Equation~(\ref{#1})}
+\newcommand{\tabref}[1]{Table~\ref{#1}}
+\newcommand{\charef}[1]{Chapter~\ref{#1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}
