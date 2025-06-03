@@ -28,6 +28,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
 \usepackage{newtxtext, newtxmath}
 \usepackage{tabularx}
 \usepackage{graphicx}
@@ -53,6 +54,9 @@
 \usepackage{csquotes}
 \usepackage[linesnumbered, ruled]{algorithm2e}
 \usepackage{chngcntr}
+\usepackage{titlesec}
+\usepackage{etoolbox}
+
 \tolerance=500
 
 \usepackage{import}
@@ -71,18 +75,17 @@ url=true]{biblatex}
 \setlist[itemize,2]{label=\raisebox{0.2ex}{\tiny$\bullet$}}
 
 \DefineBibliographyStrings{finnish}{
-  %artno       = Art\adddot\addspace no\adddot      ,
-  %chapter     = ch\adddot                          ,
-  %editor      = Ed\adddot                          ,
-  %editors     = Eds\adddot                         ,
-  %mathesis    = M\adddot S\adddot\addspace thesis  ,
-  %patentjp    = Japanese Patent                    ,
-  %patentus    = U\adddot S\adddot\addspace Patent  ,
-  %phdthesis   = Ph\adddot D\adddot\addspace dissertation,
-  %presentedat = presented at the\addspace          ,
-  %techreport  = Tech\adddot\addspace Rep\adddot    ,
-  url         = [Online]\adddot\addspace Saatavilla ,
-  urlseen     = Viitattu\addcolon
+  chapter      = luku,
+  editor       = toim\adddot,
+  editors      = toim\adddot,
+  mathesis     = Pro gradu -tutkielma,
+  patentjp     = Japanin patentti,
+  patentus     = Yhdysvaltain patentti,
+  phdthesis    = Väitöskirja,
+  presentedat  = esitetty,
+  techreport   = Tekninen raportti,
+  url          = [Online]\adddot\addspace Saatavilla,
+  urlseen      = Viitattu\addcolon
 }
 
 \NeedsTeXFormat{LaTeX2e}
@@ -126,40 +129,49 @@ url=true]{biblatex}
   underneath unlike until up upon %
 versus via with within without}
 
-\def\@sect#1#2#3#4#5#6[#7]#8{%
-  \ifnum #2>\c@secnumdepth
-  \let\@svsec\@empty
-  \else
-  \refstepcounter{#1}%
-  \protected@edef\@svsec{\@seccntformat{#1}\relax}%
-  \fi
-  \@tempskipa #5\relax
-  \ifdim \@tempskipa>\z@
-  \begingroup
-  #6{%
-    \@hangfrom{\hskip #3\relax\@svsec}%
-  \interlinepenalty \@M #8\@@par}%
-  \endgroup
-  \csname #1mark\endcsname{#7}%
-  \addcontentsline{toc}{#1}{%
-    \ifnum #2>\c@secnumdepth \else
-    \protect\numberline{\csname the#1\endcsname.}%
-    \fi
-  #7}%
-  \else
-  \def\@svsechd{%
-    #6{\hskip #3\relax
-    \@svsec #8}%
-    \csname #1mark\endcsname{#7}%
-    \addcontentsline{toc}{#1}{%
-      \ifnum #2>\c@secnumdepth \else
-      \protect\numberline{\csname the#1\endcsname.}%
-      \fi
-  #7}}%
-  \fi
-\@xsect{#5}}
+\setcounter{secnumdepth}{3} % numbers up to \subsubsection by default
 
-\def\@seccntformat#1{\csname the#1\endcsname.\ \ }
+% Chapter
+\titleformat{\chapter}
+  [hang]
+  {\normalfont\bfseries\fontsize{14}{17}\selectfont\centering}
+  {\thechapter.}
+  {1em}
+  {\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{0pt}{\baselineskip}
+
+% Section
+\titleformat{\section}
+  [hang]
+  {\normalfont\bfseries\fontsize{12}{15}\selectfont}
+  {\thesection.}
+  {1em}
+  {}
+
+% Subsection
+\titleformat{\subsection}
+  [hang]
+  {\normalfont\bfseries\itshape}
+  {\thesubsection.}
+  {1em}
+  {}
+
+% Subsubsection
+\titleformat{\subsubsection}
+  [hang]
+  {\normalfont\itshape}
+  {\thesubsubsection.}
+  {1em}
+  {}
+
+% --------------------
+% Add period after number in TOC entries
+% --------------------
+
+\renewcommand{\cftchapaftersnum}{.}
+\renewcommand{\cftsecaftersnum}{.}
+\renewcommand{\cftsubsecaftersnum}{.}
+\renewcommand{\cftsubsubsecaftersnum}{.}
 
 %decimal comma
 \DeclareMathSymbol{,}{\mathpunct}{letters}{"3B}
@@ -170,40 +182,6 @@ versus via with within without}
 %
 % Inspired from here:
 % http://tex.stackexchange.com/questions/73242/problem-with-redefining-chapter-command
-\renewcommand*{\chapter}{%
-  \@ifstar{%
-    %\toks@\expandafter{\the\toks@*}%
-    \finalstar@chapter
-  }{
-    \final@chapter
-  }%
-}
-
-\newcommand*{\final@chapter}[1]{%
-  \dichapter{\texorpdfstring{\MakeUppercase{#1}}{#1}}
-}
-\newcommand*{\finalstar@chapter}[1]{%
-  \dichapter*{\texorpdfstring{\MakeUppercase{#1}}{#1}}
-}
-
-\newcommand{\dichapter}{
-  \clearpage
-  \@startsection
-  {chapter}%
-  {0}%
-  {0mm}%
-  {0mm}%
-  {\baselineskip}%
-{\normalfont\large\bfseries\centering\MakeUppercase}}%
-
-\newcommand{\abschapter}{
-  \@startsection
-  {chapter}%
-  {0}%
-  {0mm}%
-  {2\baselineskip}%
-  {\baselineskip}%
-{\normalfont\large\bfseries\centering}}%
 
 \renewcommand{\thechapter}{\arabic{chapter}}
 
@@ -369,80 +347,89 @@ versus via with within without}
 \setlength{\cftaftertoctitleskip}{8mm}
 \renewcommand{\cftdotsep}{0.2}
 
-% abstract / tiivistelmä (Acta style)
-\newenvironment{abstractacta}{
+\newenvironment{abstractpage}[2]{%
   \newpage
-  \addtocontents{toc}{\protect\contentsline{chapter}{ABSTRACT}{}{page.\thepage}}
-  {{\getauthorsabstractacta\ (\the\year) \titlecap{\@title}.} University
-    of Oulu, Degree Programme in Computer Science and Engineering,
-  \pageref{LastPage}~p.}
-\abschapter*{ABSTRACT}}
+  \addtocontents{toc}{\protect\contentsline{chapter}{#1}{}{page.\thepage}}
+  % Metadata first (not bold)
+  {#2\par\vspace{2em}}
+  % Heading, carefully scoped to avoid leaking bold style
+  {\begingroup
+    \centering
+    \normalfont\bfseries\fontsize{14}{17}\selectfont
+    \MakeUppercase{#1}\par
+    \endgroup
+    \vspace{1em}
+  }
+}{}
 
-\newenvironment{tiivistelmaacta}{
-  \newpage
-  \addtocontents{toc}{\protect\contentsline{chapter}{TIIVISTELM\"A}{}{page.\thepage}}
-  {{\getauthorsabstractacta\ (\the\year) \@otsikko .} Oulun yli\-opis\-to,
-  Tietotekniikan tutkinto-ohjelma, \pageref{LastPage}~s.}
-\abschapter*{TIIVISTELMÄ}}
+\newcommand{\englishabstractmetadata}{%
+  {\textbf{\getauthorsabstractacta\ (\the\year) \titlecap{\@title}}. University of Oulu, Degree Programme in Computer Science and Engineering, \pageref{LastPage}~p.}
+}
 
-% abstract / tiivistelmä (IEEE style)
-\newenvironment{abstractieee}{
-  \newpage
-  \addtocontents{toc}{\protect\contentsline{chapter}{ABSTRACT}{}{page.\thepage}}
+% Finnish metadata
+\newcommand{\finnishabstractmetadata}{%
+  {\textbf{\getauthorsabstractacta\ (\the\year) \@otsikko}. Oulun yli\-opis\-to, Tietotekniikan tutkinto-ohjelma, \pageref{LastPage}~s.}
+}
+
+% Shortcut commands
+\newcommand{\abstractenglish}{}
+\newcommand{\abstractfinnish}{\begin{abstractpage}{TIIVISTELMÄ}{\finnishabstractmetadata}}
+
+\newcommand{\englishabstractmetadataieee}{%
   {\getauthorsabstractieee, ``\titlecap{\@title},'' \thesistypeenglish, Dept. of Computer Science, Univ. of Oulu, Oulu, Finland, \the\year.}
-\abschapter*{ABSTRACT}}
+}
 
-\newenvironment{tiivistelmaieee}{
-  \newpage
-  \addtocontents{toc}{\protect\contentsline{chapter}{TIIVISTELMÄ}{}{page.\thepage}}
-  {\getauthorsabstractieee, ``\@otsikko,'' \thesistypefinnish, Tietotekniikan tutkinto-ohjelma, Oulun yliopisto, Oulu, Suomi, \the\year.}
-\abschapter*{TIIVISTELMÄ}}
+\newcommand{\finnishabstractmetadataieee}{%
+  {\getauthorsabstractieee, ``\@otsikko,'' \thesistypefinnish, Tietotekniikan koulutusohjelma, Oulun yliopisto, Oulu, Suomi, \the\year.}
+}
+
 
 % Commands to print abstracts
 \newcommand{\printabstract}{%
   \selectlanguage{english}
-  \begin{abstractieee}
+  \begin{abstractpage}{ABSTRACT}{\englishabstractmetadata}
     {\bfseries \englishabstract
 
     \printkeywords}
-  \end{abstractieee}
+  \end{abstractpage}
 }
 
 \newcommand{\printtiivistelma}{%
 \selectlanguage{finnish}  
-  \begin{tiivistelmaieee}
+\begin{abstractpage}{TIIVISTELMÄ}{\finnishabstractmetadata}
     {\bfseries \finnishabstract
 
     \printavainsanat}
-  \end{tiivistelmaieee}
+\end{abstractpage}
 }
 
 %chapters without page numbering
 \newcommand{\header}[1]{
-  \dichapter*{#1}
+  \chapter*{#1}
 \addtocontents{toc}{\protect\contentsline{chapter}{#1}{}{page.\thepage} }}
 
 
 
 %page margins, and spacing
-\oddsidemargin2cm  % 1 in + 2 cm = 4.5 cm
-\textwidth14.5cm
-\topmargin-1.5cm
-\marginparwidth0cm
-\marginparsep0cm
-\textheight24cm
+\oddsidemargin 1.96cm      % left margin = 4.5 cm
+\evensidemargin 1.96cm
+\topmargin -0.71cm      % top margin = 2.5 cm
+\textheight 24.2cm   
 
 %page numbering
 \pagestyle{empty}
 
 \newcommand{\pagenumbers}{
   \pagestyle{myheadings}
-\markright{} }
+  \makeatletter
+  \def\ps@plain{\ps@myheadings} % plain pages like chapters also top right
+  \makeatother
+} 
 
 %indentation and spacing between chapters
 
 %\parskip\baselineskip
-\parindent0.4cm
+\parindent0.5cm
 
 %dont indent the first row
 \let\@afterindenttrue\@afterindentfalse
@@ -454,6 +441,8 @@ versus via with within without}
 
 \renewcommand{\thetable}
 {\arabic{table}}
+
+\captionsetup[table]{position=above, justification=raggedright, singlelinecheck=off}
 
 \renewcommand{\@makecaption}[2]{%
   \vskip\abovecaptionskip
@@ -492,7 +481,7 @@ versus via with within without}
 
 %bibliography
 \renewenvironment{thebibliography}[1]
-{\dichapter{\mybibname}
+{\chapter{\mybibname}
   \list{\@biblabel{\@arabic\c@enumiv}}%
   {\settowidth\labelwidth{\@biblabel{#1}}%
     \leftmargin\labelwidth
