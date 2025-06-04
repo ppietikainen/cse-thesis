@@ -15,7 +15,8 @@
 
 \usepackage[type={CC}, modifier={by-nc-sa}, version={4.0}]{doclicense}
 
-\copyrighttext{Copyright \noexpand\textcopyright\ \number\year\ \getauthorsmetadata}
+\copyrighttext{Copyright \noexpand\textcopyright\ \number\year\ \getauthors{, }} {\textcopyright{} \number\year \getauthors{, }. Tämä teos on lisenssoitu \href{https://creativecommons.org/licenses/by-nc-nd/4.0/deed.fi}{CC BY-NC-SA 4.0} -käyttöluvalla.}
+
 
 \newcommand{\englishabstract}{
 This document provides general guidance for a degree student of Computer Science and Engineering in preparing his/her master's thesis. This guide defines the role of a thesis in the M.Sc. Degree, presents the actions to be taken in different phases of the thesis procedure and introduces the way that master’s thesis is written. The document has been formatted based on these guidelines to serve as an example how the thesis should look like.}
@@ -62,6 +63,8 @@ Näissä ohjeissa opastetaan valmistumisvaiheessa olevaa opiskelijaa diplomityö
     \pagenumbering{arabic}
     \setcounter{page}{1}
     \hypersetup{pageanchor=true}
+    \makecopyrightpage{}
+  
     \ifthenelse{\equal{\thesislanguage}{finnish}}{
       \printtiivistelma
       \printabstract
@@ -101,6 +104,7 @@ Näissä ohjeissa opastetaan valmistumisvaiheessa olevaa opiskelijaa diplomityö
 
     \printbibliography[heading=bibnumbered, title=\mybibname]
 
+    \startappendix
     \chapter{Appendices}
         \input{Chapters/appendices}
 

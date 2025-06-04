@@ -78,13 +78,39 @@
 \usepackage{import}              % For importing files (used in some thesis structures)
 \usepackage{colorprofiles}       % For PDF/A compliance (required for electronic thesis submission)
 
+\newcommand{\thesislanguage}{english}
+
+\RequirePackage{ifthen, xstring}
+
+\newcounter{NAllPages}
+\newcounter{NMainTxtPages}
+\newcounter{NAppdxPages}
+\newcommand*{\stor@maintxtpag@number}{%
+  \immediate\write\@auxout{\string\setcounter{NMainTxtPages}{\thepage-1}}%
+}
+
+\newcommand{\startappendix}{%
+\stor@maintxtpag@number%
+}
+
+\AtEndDocument{%
+  \immediate\write\@auxout{\string\setcounter{NAllPages}{\thepage}}%
+}
+
+\newcommand*{\shownumberofpages}{%
+  \arabic{NAllPages}
+%  \ifthenelse{\value{NMainTxtPages}=0}{\arabic{NAllPages}}%
+%  \ifnumequal{\value{NMainTxtPages}}{0}{\arabic{NAllPages}}%
+% 	{\arabic{NMainTxtPages}+\arabic{NAppdxPages}}%
+}%
+
+
 % --- Miscellaneous ---
 \tolerance=500                   % Typographic tolerance (for line breaking)
 
 \setlist[itemize,1]{label=\raisebox{0.2ex}{\tiny$\bullet$}}
 \setlist[itemize,2]{label=\raisebox{0.2ex}{\tiny$\bullet$}}
 
-% --- Bibliography strings for Finnish ---
 \DefineBibliographyStrings{finnish}{
   chapter      = luku,
   editor       = toim\adddot,
@@ -99,17 +125,18 @@
   urlseen      = Viitattu\addcolon
 }
 
-% --- Required packages for appendices, counters, and metadata ---
 \NeedsTeXFormat{LaTeX2e}
+\RequirePackage{appendix}
+\renewcommand{\thechapter}{Appendix \arabic{chapter}}  % Custom numbering
+\renewcommand{\appendixname}{Appendix}
 
-\RequirePackage{appendix}         % For appendix environments and naming
-\RequirePackage{chngcntr}         % For resetting counters (figures/tables per chapter)
-\RequirePackage{lastpage}         % For referencing the last page (used in metadata)
-\RequirePackage{ifthen}           % For conditional logic in macros
-\RequirePackage{xstring}          % For string manipulation in macros
-\RequirePackage{tocloft}          % Customization of TOC/LOF/LOT appearance
+\RequirePackage{chngcntr}
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
 
-% --- Page and float penalties, graphics path, and footnote counter ---
+\RequirePackage{ifthen, xstring}
+
+\RequirePackage{tocloft}
 \setlength{\cftchapnumwidth}{3em}
 \setlength{\cftbeforechapskip}{1em}
 
@@ -389,6 +416,13 @@ versus via with within without}
   \cleardoublepage
   \pagenumbering{gobble}
 }
+\newcommand{\makecopyrightpage}{%
+  \newpage
+  \thispagestyle{empty}%
+  \noindent%
+  \CopyrightText\par%
+  \cleardoublepage
+}%
 
 \addtocontents{toc}{\protect\thispagestyle{empty}}
 %Table of contents
@@ -431,12 +465,12 @@ versus via with within without}
 }{}
 
 \newcommand{\englishabstractmetadata}{%
-  {\textbf{\getauthorsabstractacta\ (\the\year) \titlecap{\@title}}. University of Oulu, Degree Programme in Computer Science and Engineering, \pageref{LastPage}~p.}
+  {\textbf{\getauthorsabstractacta\ (\the\year) \titlecap{\@title}}. University of Oulu, Degree Programme in Computer Science and Engineering, \shownumberofpages~p.}
 }
 
 % Finnish metadata
 \newcommand{\finnishabstractmetadata}{%
-  {\textbf{\getauthorsabstractacta\ (\the\year) \@otsikko}. Oulun yli\-opis\-to, Tietotekniikan tutkinto-ohjelma, \pageref{LastPage}~s.}
+  {\textbf{\getauthorsabstractacta\ (\the\year) \@otsikko}. Oulun yli\-opis\-to, Tietotekniikan tutkinto-ohjelma, \shownumberofpages~s.}
 }
 
 % Shortcut commands
@@ -455,6 +489,7 @@ versus via with within without}
 % Commands to print abstracts
 \newcommand{\printabstract}{%
   \selectlanguage{english}
+  \setcounter{NAppdxPages}{\value{NAllPages}-\value{NMainTxtPages}}
   \begin{abstractpage}{ABSTRACT}{\englishabstractmetadata}
     {\bfseries \englishabstract
 
@@ -464,6 +499,7 @@ versus via with within without}
 
 \newcommand{\printtiivistelma}{%
 \selectlanguage{finnish}  
+\setcounter{NAppdxPages}{\value{NAllPages}-\value{NMainTxtPages}}
 \begin{abstractpage}{TIIVISTELMÄ}{\finnishabstractmetadata}
     {\bfseries \finnishabstract
 
