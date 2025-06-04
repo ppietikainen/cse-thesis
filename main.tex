@@ -50,18 +50,6 @@ Näissä ohjeissa opastetaan valmistumisvaiheessa olevaa opiskelijaa diplomityö
 
 % Add your bibliographies here. You can use several
 \addbibresource{citations.bib}
-\newenvironment{writexmpdata}
-  {\newwrite\myxmp \immediate\openout\myxmp=\jobname.xmpdata}
-  {\immediate\closeout\myxmp}
-
-% Usage
-\begin{writexmpdata}
-\immediate\write\myxmp{\string\Title{\maintitle}}
-\immediate\write\myxmp{\string\Author{\getauthors{, }}}
-\immediate\write\myxmp{\string\Language{en-GB}}
-\immediate\write\myxmp{\string\Keywords{\keywords}}
-\immediate\write\myxmp{\string\Publisher{University of Oulu}}
-\end{writexmpdata}
 
 \begin{document}
 

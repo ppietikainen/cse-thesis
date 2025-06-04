@@ -61,8 +61,7 @@
 
 \usepackage{import}
 \usepackage{colorprofiles}
-\usepackage[a-1b,mathxmp]{pdfx}
-\providecommand{\thesislanguage}{english}
+\newcommand{\thesislanguage}{english}
 
 \usepackage[backend=biber,
   refsection=section,
@@ -109,6 +108,58 @@ url=true]{biblatex}
 \hbadness=99999
 \graphicspath{{Figures/}{../Figures/}}
 \counterwithout{footnote}{chapter}
+\usepackage[type={CC}, modifier={by-nc-sa}, version={4.0}]{doclicense}
+
+\newtoggle{writexmpdatafile}
+
+\toggletrue{writexmpdatafile}
+
+\newcommand{\CopyrightText}{}% variable; used for printing on page
+\newcommand{\MetaCopyrightText}{}%
+\newcommand{\pdfCopyrightURL}{}%
+\newcommand{\copyrighttext}[2]{%
+  \renewcommand{\MetaCopyrightText}{#1}%
+  \renewcommand{\CopyrightText}{#2}%
+  \ifdef{\doclicenseURL}{\renewcommand{\pdfCopyrightURL}{\doclicenseURL}}{}%
+}%
+
+\RequirePackage[a-1b,latxmp, mathxmp]{pdfx}[2017/05/18]% Produces PDF/A 1b, 2b and 3b
+                                           % compliant pdf
+  \RequirePackage{newfile}% Provides an easy interface for writing data into new
+						  % file (used to write metadata into file .xmpdata)
+
+\newcommand*{\spc}{\noexpand\sep}%
+
+\newcommand{\makemetadata}{%
+  \iftoggle{writexmpdatafile}{%
+    % Write the metadata into file .xmpdata, which is included in the PDF/A file
+	\newoutputstream{xmpdata}%
+	\openoutputfile{\jobname.xmpdata}{xmpdata}%
+	\addtostream{xmpdata}{\noexpand\Title {\maintitle}}%
+	\addtostream{xmpdata}{\noexpand\Author {\getauthorsmetadata}}%
+  \addtostream{xmpdata}{\noexpand\Copyright {\MetaCopyrightText}}%%
+ 	\addtostream{xmpdata}{\noexpand\CopyrightURL {\pdfCopyrightURL}}
+	\addtostream{xmpdata}{\noexpand\Subject {\englishabstract}}%
+	%\addtostream{xmpdata}{\noexpand\Keywords {\keywords}}%
+	\closeoutputstream{xmpdata}%
+  }{%
+    % Write the metadata directly into the pdf file via hyperref keywords
+	\renewcommand*{\spc}{; }%
+	\hypersetup{%
+	  pdftitle={\maintitle},%
+	  pdfauthor={\ThesisAuthor},%
+	  pdfsubject={\abstracttext},%
+	%  pdfcopyright={\MetaCopyrightText},%
+	  pdfkeywords={\keywords}%
+	}%
+  }%
+}%
+%
+\AtBeginDocument{%
+  \makemetadata%
+}%
+%
+
 
 % Change these "excluded words" if you are not satisfied with titlecaps
 %http://perspectivesandprotips.blogspot.com/2014/11/using-macros-with-titlecaps-in-latex.html
@@ -271,7 +322,7 @@ versus via with within without}
   \renewcommand{\facultyname}{TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA}
   \renewcommand{\degreeprogramme}{Tietotekniikan tutkinto-ohjelma}
   \renewcommand{\thesistypetitle}{\thesistypefinnish}
-  \renewcommand{\maintitle}{\MakeUppercase{\@otsikko}}
+  \renewcommand{\maintitle}{@otsikko}
   \renewcommand{\universityname}{Oulun yli\-opis\-to}
   \renewcommand{\pagelabel}{s.}
   \renewcommand{\headerforeword}{ALKULAUSE}
@@ -286,7 +337,7 @@ versus via with within without}
   \renewcommand{\degreeprogramme}{Degree Programme in Computer
   Science and Engineering}
   \renewcommand{\thesistypetitle}{\thesistypeenglish}
-  \renewcommand{\maintitle}{\MakeUppercase{\@title}}
+  \renewcommand{\maintitle}{\@title}
   \renewcommand{\universityname}{University of Oulu}
   \renewcommand{\pagelabel}{p.}
   \renewcommand{\headerforeword}{FOREWORD}
@@ -313,7 +364,7 @@ versus via with within without}
     \vspace{70 mm}
     {\textbf{\fontsize{16}{19pt}\selectfont \getauthorstitle}\\}
     \vspace{12 mm}
-    {\textbf{\fontsize{18}{22pt}\selectfont \maintitle \\}}
+    {\textbf{\fontsize{18}{22pt}\selectfont \MakeUppercase{\maintitle} \\}}
     \vfill
     {\fontsize{14}{17}\selectfont \thesistypetitle
     \\ \degreeprogramme \\ \DTMToday \\}
@@ -614,3 +665,47 @@ versus via with within without}
 \newcommand{\tabref}[1]{Table~\ref{#1}}
 \newcommand{\charef}[1]{Chapter~\ref{#1}}
 \newcommand{\secref}[1]{Section~\ref{#1}}
+
+%
+%% Creative Commons license Finnish translations for use with doclicense.sty.
+%% To be removed when Finnish is supported by doclicense. 
+\newcommand{\MyMetadataText}{\doclicense@lang@thisDoc \ \doclicense@type \ \doclicense@modifier \ \doclicense@version \ \doclicense@lang@word@license}
+%
+\makeatletter
+\AtEndPreamble{%
+   \@ifpackageloaded{doclicense}{%
+   \ifthenelse{\equal{\thesislanguage}{finnish}}{%
+	\def\doclicense@UrlLangPart{/deed.fi}%
+	\edef\doclicenseURL{% Set up the URL
+	\doclicense@baseUrlCC/%
+	licenses/%
+	\doclicense@modifier/%
+	\doclicense@versionUsed\doclicense@UrlLangPart%
+	}%
+%
+	\@namedef{doclicense@lang@thisDoc}{Tämä teos on lisensoitu}%
+	\@namedef{doclicense@lang@word@license}{ -käyttöluvalla}%
+%
+	\@namedef{doclicense@lang@lic@CC@code}{fi}%
+% Using: https://en.wikipedia.org/wiki/ISO_639-1
+%
+	\@namedef{doclicense@lang@lic@CC@zero@1.0}{CC0 1.0 Yleismaailmallinen}%
+%
+	\@namedef{doclicense@lang@lic@CC@by@3.0}{Nimeä 3.0 Ei sovitettu}%
+	\@namedef{doclicense@lang@lic@CC@by-sa@3.0}{Nimeä-JaaSamoin 3.0 Ei sovitettu}%
+	\@namedef{doclicense@lang@lic@CC@by-nd@3.0}{Nimeä-EiMuutoksia 3.0 Ei sovitettu}%
+	\@namedef{doclicense@lang@lic@CC@by-nc@3.0}{Nimeä-EiKaupallinen 3.0 Ei sovitettu}%
+	\@namedef{doclicense@lang@lic@CC@by-nc-sa@3.0}{Nimeä-EiKaupallinen-JaaSamoin 3.0 Ei sovitettu}%
+	\@namedef{doclicense@lang@lic@CC@by-nc-nd@3.0}{Nimeä-EiKaupallinen-EiMuutoksia 3.0 Ei sovitettu}%
+%
+	\@namedef{doclicense@lang@lic@CC@by@4.0}{Nimeä 4.0 Kansainvälinen}%
+	\@namedef{doclicense@lang@lic@CC@by-sa@4.0}{Nimeä-JaaSamoin 4.0 Kansainvälinen}%
+	\@namedef{doclicense@lang@lic@CC@by-nd@4.0}{Nimeä-EiMuutoksia 4.0 Kansainvälinen}%
+	\@namedef{doclicense@lang@lic@CC@by-nc@4.0}{Nimeä-EiKaupallinen 4.0 Kansainvälinen}%
+	\@namedef{doclicense@lang@lic@CC@by-nc-sa@4.0}{Nimeä-EiKaupallinen-JaaSamoin 4.0 Kansainvälinen}%
+	\@namedef{doclicense@lang@lic@CC@by-nc-nd@4.0}{Nimeä-EiKaupallinen-EiMuutoksia 4.0 Kansainvälinen}%
+  }{}
+  }
+  }
+   
+\makeatother
