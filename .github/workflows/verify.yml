@@ -28,5 +28,5 @@ jobs:
       - name: Verify PDF
         run: >
           docker run --rm -t -v "$(pwd):/data" 
-          ghcr.io/verapdf/cli@sha256:26a57c6711ae1d59f987f34ca411f87d8078e3ae75bb90671fcece957b75dcee
+          ghcr.io/verapdf/cli:latest
           -f 1b main.pdf
