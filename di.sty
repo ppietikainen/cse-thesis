@@ -7,7 +7,6 @@
 % If you make any improvements to this template, please contact
 % teemu.tokola@oulu.fi
 %
-%
 % CHANGELOG
 % 2023-01-31: Thnks to Miika Sikala
 %   row 133: \dichapter{\texorpdfstring{\MakeUppercase{#1}}{}} -->
@@ -26,52 +25,66 @@
 %
 \ProvidesPackage{di}
 
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage{newtxtext, newtxmath}
-\usepackage{tabularx}
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage{enumerate}
-\usepackage{placeins}
-\usepackage{fancybox}
-\usepackage{verbatim}
-\usepackage{longtable}
-%\usepackage[hyphens]{url}
-%\usepackage{boxedminipage}
-\usepackage{subcaption}
-\usepackage{multirow}
-\usepackage{amsfonts}
+% --- Encoding and fonts: Required for correct character rendering and thesis typography ---
+\usepackage[utf8]{inputenc}      % UTF-8 encoding for international characters
+\usepackage[T1]{fontenc}         % Output font encoding for accented characters
+\usepackage{lmodern}             % Latin Modern font as required by thesis typography
+\usepackage{newtxtext, newtxmath} % Improved text and math font for readability
 
-\usepackage[english=nohyphenation,finnish=nohyphenation]{hyphsubst}
-\usepackage[labelsep=period]{caption}
-\usepackage{enumitem}
-\usepackage[useregional=text, british]{datetime2}
-\usepackage{nth}
-\usepackage{titlecaps}
-\usepackage{titletoc}
-\usepackage{csquotes}
-\usepackage[linesnumbered, ruled]{algorithm2e}
-\usepackage{chngcntr}
-\usepackage{titlesec}
-\usepackage{etoolbox}
+% --- Language and hyphenation ---
+\usepackage[english,finnish]{babel} % Support for English and Finnish thesis (main.tex)
+\usepackage[english=nohyphenation,finnish=nohyphenation]{hyphsubst} % No hyphenation per instructions
 
-\tolerance=500
+% --- Typography, layout, and sectioning ---
+\usepackage{titlesec}            % Custom section/chapter formatting (font size, bold, spacing)
+\usepackage{titletoc}            % Custom table of contents formatting
+\usepackage{titlecaps}           % Title capitalization for headings as per instructions
+\usepackage{etoolbox}            % Utility for macro programming (used in title formatting)
+\usepackage{enumitem}            % Customization of itemize/enumerate (bullet style per instructions)
+\usepackage{chngcntr}            % For resetting counters (figures/tables per chapter)
+\usepackage{tocloft}             % Customization of TOC/LOF/LOT appearance
 
-\usepackage{import}
-\usepackage{colorprofiles}
-\newcommand{\thesislanguage}{english}
+% --- Figures, tables, and floats ---
+\usepackage{graphicx}            % Required for including figures
+\usepackage{float}               % Improved float placement (figures/tables as per instructions)
+\usepackage{placeins}            % Ensures floats stay within chapters/sections
+\usepackage{tabularx}            % Flexible tables (table layout as per instructions)
+\usepackage{longtable}           % Tables spanning multiple pages
+\usepackage{subcaption}          % Subfigures/subtables
+\usepackage{multirow}            % Multirow cells in tables
+\usepackage{fancybox}            % For boxed content (used in some thesis layouts)
+\usepackage{verbatim}            % For including verbatim text/code
 
+% --- Math and symbols ---
+\usepackage{amsfonts}            % Additional math fonts (for equations, as per instructions)
+
+% --- Algorithms ---
+\usepackage[linesnumbered, ruled]{algorithm2e} % For writing algorithms (see writing instructions)
+
+% --- Bibliography ---
 \usepackage[backend=biber,
   style=ieee,
   doi=true,
   urldate=long,
-url=true]{biblatex}
+  url=true]{biblatex}            % IEEE bibliography style, running numbering, BibLaTeX as required
+
+% --- Date and time ---
+\usepackage[useregional=text, british]{datetime2} % Date formatting for title page and signature
+
+% --- Quoting and citations ---
+\usepackage{csquotes}            % Recommended for correct quotation marks in citations
+
+% --- Utility and color profiles ---
+\usepackage{import}              % For importing files (used in some thesis structures)
+\usepackage{colorprofiles}       % For PDF/A compliance (required for electronic thesis submission)
+
+% --- Miscellaneous ---
+\tolerance=500                   % Typographic tolerance (for line breaking)
 
 \setlist[itemize,1]{label=\raisebox{0.2ex}{\tiny$\bullet$}}
 \setlist[itemize,2]{label=\raisebox{0.2ex}{\tiny$\bullet$}}
 
+% --- Bibliography strings for Finnish ---
 \DefineBibliographyStrings{finnish}{
   chapter      = luku,
   editor       = toim\adddot,
@@ -86,18 +99,17 @@ url=true]{biblatex}
   urlseen      = Viitattu\addcolon
 }
 
+% --- Required packages for appendices, counters, and metadata ---
 \NeedsTeXFormat{LaTeX2e}
-\RequirePackage{appendix}
-\renewcommand{\thechapter}{Appendix \arabic{chapter}}  % Custom numbering
-\renewcommand{\appendixname}{Appendix}
 
-\RequirePackage{chngcntr}
-\counterwithout{figure}{chapter}
-\counterwithout{table}{chapter}
+\RequirePackage{appendix}         % For appendix environments and naming
+\RequirePackage{chngcntr}         % For resetting counters (figures/tables per chapter)
+\RequirePackage{lastpage}         % For referencing the last page (used in metadata)
+\RequirePackage{ifthen}           % For conditional logic in macros
+\RequirePackage{xstring}          % For string manipulation in macros
+\RequirePackage{tocloft}          % Customization of TOC/LOF/LOT appearance
 
-\RequirePackage{lastpage,ifthen, xstring}
-
-\RequirePackage{tocloft}
+% --- Page and float penalties, graphics path, and footnote counter ---
 \setlength{\cftchapnumwidth}{3em}
 \setlength{\cftbeforechapskip}{1em}
 
@@ -181,6 +193,7 @@ versus via with within without}
 \setcounter{secnumdepth}{3} % numbers up to \subsubsection by default
 
 % Chapter
+% Commentary: Chapters are set in 14pt bold (bfseries), centered, uppercase. No space before, one baseline skip after.
 \titleformat{\chapter}
   [hang]
   {\normalfont\bfseries\fontsize{14}{17}\selectfont\centering}
@@ -190,29 +203,33 @@ versus via with within without}
 \titlespacing*{\chapter}{0pt}{0pt}{\baselineskip}
 
 % Section
+% Commentary: Sections are 12pt bold (bfseries), left-aligned, normal font, with 2 baseline skips before and 1 after.
 \titleformat{\section}
   [hang]
   {\normalfont\bfseries\fontsize{12}{15}\selectfont}
   {\thesection.}
   {1em}
   {}
+% (Spacing is set in \@startsection: 2\baselineskip before, \baselineskip after.)
 
 % Subsection
+% Commentary: Subsections are bold italic (bfseries, itshape), normal font size, with 2 baseline skips before and 1 after.
 \titleformat{\subsection}
   [hang]
   {\normalfont\bfseries\itshape}
   {\thesubsection.}
   {1em}
   {}
+% (Spacing is set in \@startsection: 2\baselineskip before, \baselineskip after.)
 
 % Subsubsection
+% Commentary: Subsubsections are italic (itshape), normal font size, with 2 baseline skips before and 1 after.
 \titleformat{\subsubsection}
   [hang]
   {\normalfont\itshape}
   {\thesubsubsection.}
   {1em}
   {}
-
 % --------------------
 % Add period after number in TOC entries
 % --------------------
@@ -348,6 +365,7 @@ versus via with within without}
 % --- End centralized definitions ---
 
 %Title page
+% Commentary: The title page is generated by \maketitlepage. Ensure correct faculty, degree, and title.
 \newcommand{\maketitlepage}{
   \sloppy
   \ifthenelse{\equal{\thesislanguage}{finnish}}{
@@ -374,6 +392,7 @@ versus via with within without}
 
 \addtocontents{toc}{\protect\thispagestyle{empty}}
 %Table of contents
+% Commentary: Use \contents to generate the table of contents. Only chapters from Introduction onwards are numbered.
 \newcommand{\contents}{
   \newpage
   \renewcommand{\contentsname}{\tocname}%
