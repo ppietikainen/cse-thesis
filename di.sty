@@ -133,6 +133,11 @@
 \RequirePackage{chngcntr}
 \counterwithout{figure}{chapter}
 \counterwithout{table}{chapter}
+\counterwithout{equation}{chapter}
+
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+\renewcommand{\theequation}{\arabic{equation}}
 
 \RequirePackage{ifthen, xstring}
 
@@ -217,7 +222,7 @@
   underneath unlike until up upon %
 versus via with within without}
 
-\setcounter{secnumdepth}{3} % numbers up to \subsubsection by default
+\setcounter{secnumdepth}{2} % numbers up to \subsection by default
 
 % Chapter
 % Commentary: Chapters are set in 14pt bold (bfseries), centered, uppercase. No space before, one baseline skip after.
@@ -228,6 +233,8 @@ versus via with within without}
   {1em}
   {\MakeUppercase}
 \titlespacing*{\chapter}{0pt}{0pt}{\baselineskip}
+% Remove indentation for the first paragraph after headings
+\patchcmd{\chapter}{\@afterindenttrue}{\@afterindentfalse}{}{}
 
 % Section
 % Commentary: Sections are 12pt bold (bfseries), left-aligned, normal font, with 2 baseline skips before and 1 after.
@@ -257,6 +264,7 @@ versus via with within without}
   {\thesubsubsection.}
   {1em}
   {}
+
 % --------------------
 % Add period after number in TOC entries
 % --------------------
@@ -530,92 +538,19 @@ versus via with within without}
   \makeatother
 } 
 
-%indentation and spacing between chapters
+\captionsetup[table]{
+  position=above,
+  justification=raggedright,
+  singlelinecheck=true,
+}
 
-%\parskip\baselineskip
-\parindent0.5cm
+% Figures
+\captionsetup[figure]{
+  justification=justified,  % full justification for long captions
+  singlelinecheck=true,     % short captions centered
+  % skip=\baselineskip
+}
 
-%dont indent the first row
-\let\@afterindenttrue\@afterindentfalse
-\@afterindentfalse
-
-%figures and tables
-\renewcommand{\thefigure}%numerilization
-{\arabic{figure}}
-
-\renewcommand{\thetable}
-{\arabic{table}}
-
-\captionsetup[table]{position=above, justification=raggedright, singlelinecheck=off}
-
-\renewcommand{\@makecaption}[2]{%
-  \vskip\abovecaptionskip
-  \sbox\@tempboxa{#1. #2}%
-  \ifdim \wd\@tempboxa >\hsize
-  #1. #2\par
-  \else
-  \global \@minipagefalse
-  \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}
-  \fi
-\vskip\belowcaptionskip}
-
-\newsavebox{\TmpCaption}
-\newcommand{\TmpLabel}{}
-
-\newenvironment{kuva}[2]
-{
-  \begin{figure}[ht]
-    \begin{center} \sbox{\TmpCaption}{#1}
-    \renewcommand{\TmpLabel}{\label{#2}}}
-    {\caption{\usebox{\TmpCaption}} \TmpLabel
-    \end{center}
-    \vspace{-\baselineskip}
-\end{figure}}
-
-\newenvironment{taulukko}[2]
-{
-  \begin{table}[ht]
-  \begin{center} \caption{#1} \label{#2} }
-    {
-    \end{center} \vspace{-\baselineskip}
-\end{table}}
-
-%equations
-\renewcommand{\theequation}{\arabic{equation}}
-
-%bibliography
-\renewenvironment{thebibliography}[1]
-{\chapter{\mybibname}
-  \list{\@biblabel{\@arabic\c@enumiv}}%
-  {\settowidth\labelwidth{\@biblabel{#1}}%
-    \leftmargin\labelwidth
-    \advance\leftmargin\labelsep
-    \@openbib@code
-    \usecounter{enumiv}%
-    \let\p@enumiv\@empty
-  \renewcommand\theenumiv{\@arabic\c@enumiv}}%
-  \sloppy
-  \clubpenalty4000
-  \@clubpenalty \clubpenalty
-  \widowpenalty4000%
-\sfcode`\.\@m}
-{\def\@noitemerr
-  {\@latex@warning{Empty `thebibliography' environment}}%
-\endlist}
-
-% caption
-\setlength\abovecaptionskip{0\p@} %\setlength\abovecaptionskip{\f@size\p@}
-\setlength\belowcaptionskip{0\p@}
-\long\def\@makecaption#1#2{%
-  \vskip\abovecaptionskip
-  \sbox\@tempboxa{#1. #2}%
-  \ifdim \wd\@tempboxa >\hsize
-  #1. #2\par
-  \else
-  \global \@minipagefalse
-  \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
-  \fi
-\vskip\belowcaptionskip}
 
 % algorithm
 %\renewcommand{\@algocf@capt@plain}{above}
