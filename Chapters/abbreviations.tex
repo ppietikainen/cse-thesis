@@ -1,7 +1,3 @@
-\ifthenelse{\equal{\getlanguage}{finnish}}
-    {\newcommand{\headerabbreviations}{LYHENTEIDEN JA MERKKIEN SELITYKSET}}
-    {\newcommand{\headerabbreviations}{LIST OF ABBREVIATIONS AND SYMBOLS}}
-    
 \header{\headerabbreviations}
 \setlongtables
 \begin{longtable}[l]{p{3cm}p{0.7\textwidth}}
@@ -36,10 +32,3 @@
 \end{longtable}
 \setcounter{table}{0}
 
-%sets the dots for numbered chapters in table of contents
-\addtocontents{toc}{\protect\renewcommand{\protect\cftchapleader}{\protect\cftdotfill{\cftdotsep}}}
-
-%sets bibliography language
-\ifthenelse{\equal{\getlanguage}{finnish}}
-    {\newcommand{\biblanguage}{di_fin}}
-    {\newcommand{\biblanguage}{di_eng}}

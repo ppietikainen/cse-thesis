@@ -9,53 +9,78 @@
 % 2023-06-15: Example of a CC-BY figure added with reference in the footnotes (TTo)
 
 
-\documentclass[a4paper, 12pt, titlepage]{dithesis}
-\usepackage{import}
+\documentclass[a4paper, 12pt, titlepage]{report}
+\usepackage[english,finnish]{babel}
 \usepackage{di}
-\usepackage[a-1b,mathxmp]{pdfx}
+
+\usepackage[type={CC}, modifier={by-nc-sa}, version={4.0}]{doclicense}
+
+\copyrighttext{Copyright \noexpand\textcopyright\ \number\year\ \getauthors{, }} {\textcopyright{} \number\year \getauthors{, }. Tämä teos on lisenssoitu \href{https://creativecommons.org/licenses/by-nc-nd/4.0/deed.fi}{CC BY-NC-SA 4.0} -käyttöluvalla.}
 
 
-%%%%%%%%%%%%%%%%%%%%%%% SET YOUR INFORMATION HERE %%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\englishabstract}{
+This document provides general guidance for a degree student of Computer Science and Engineering in preparing his/her master's thesis. This guide defines the role of a thesis in the M.Sc. Degree, presents the actions to be taken in different phases of the thesis procedure and introduces the way that master’s thesis is written. The document has been formatted based on these guidelines to serve as an example how the thesis should look like.}
+
+\newcommand{\finnishabstract}{
+Näissä ohjeissa opastetaan valmistumisvaiheessa olevaa opiskelijaa diplomityön tekemisessä. Ohjeissa selvitetään työn asema diplomi-insinööritutkinnossa, kerrotaan toimenpiteet, joihin työn tekijän on ryhdyttävä työn eri vaiheissa, sekä määritellään yksityiskohtaisesti diplomityön kirjallinen rakenne. Ohje on muotoiltu noudattaen näitä kirjoitusohjeita ja toimii siten esimerkkinä, miltä diplomityön tulisi näyttää.}
+
+\renewcommand{\keywords}{M.Sc. degree, master’s thesis instructions, structure of a master’s thesis}
+\renewcommand{\avainsanat}{diplomi-insinöörin tutkinto, opinnäytetyön ohjeet, diplomityön rakenne}
+
+%%%%%%%%%%%%%%%%%%%%% SET YOUR INFORMATION HERE %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{TODO: Bachelor's and Diploma Thesis Guide}
-%Finnish title, not required for foreign students
 \otsikko{TODO: Kandidaatintyön ja diplomityön teko-ohjeet}
 
-\firstname{TODO: Programme}
-\lastname{TODO: Committee}
+\firstname{Author}
+\lastname{One}
 
 % Please choose the correct type of thesis and the language used
 \thesis{Master} % {Bachelor | Master}
-\thesislanguage{english} % {finnish | english}
+% Uncomment for Finnish thesis
+% \renewcommand{\thesislanguage}{finnish}
 
 %Names of other authors can be added here
-\firstnametwo{}
-\lastnametwo{}
-\firstnamethree{}
-\lastnamethree{}
-
+\firstnametwo{Author}
+\lastnametwo{Two}
+\firstnamethree{Author}
+\lastnamethree{Three}
 %Do not remove or comment the extra names if you do not need them, leave them empty instead
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\headertitlecap automatically creates headers with TitleCaps (Capitalizes the First Letter in Each Word) for H0, H2, and H3. Words not to be capitalized can be changed in di.sty
 \headertitlecap
 
+% Add your bibliographies here. You can use several
+\addbibresource{citations.bib}
+
 \begin{document}
-    \maketitlepage %Create the title page
-    
-    %If you are writing your thesis in Finnish you can change the order of abstract/tiivistelmä
-    %If you are a foreign student you can remove the Finnish abstract (tiivistelmä)
-    \input{Chapters/abstract}
-    
-    \input{Chapters/tiivistelma}
-    
+
+\hypersetup{pageanchor=false}
+\maketitlepage
+    \pagenumbering{arabic}
+    \setcounter{page}{1}
+    \hypersetup{pageanchor=true}
+    \makecopyrightpage{}
+  
+    \ifthenelse{\equal{\thesislanguage}{finnish}}{
+      \printtiivistelma
+      \printabstract
+      \selectlanguage{finnish}
+    } {
+      \printabstract
+      \printtiivistelma
+      \selectlanguage{english}
+    }
     \contents %Insert table of contents
-    
     \input{Chapters/foreword}
-    
     \input{Chapters/abbreviations}
     
-    
+    %sets the dots for numbered chapters in table of contents
+    \addtocontents{toc}{\protect\renewcommand{\protect\cftchapleader}{\protect\cftdotfill{\cftdotsep}}}
+
     \chapter{Introduction} %Set the name of a new chapter
         \label{introduction} %Create a label for referencing purposes (\charef{.})
         \pagenumbers
@@ -77,9 +102,9 @@
         \label{summary}
         \input{Chapters/summary}
 
-    \bibliographystyle{\biblanguage}
-    \bibliography{citations}
-    
+    \printbibliography[heading=bibnumbered, title=\mybibname]
+
+    \startappendix
     \chapter{Appendices}
         \input{Chapters/appendices}
 
