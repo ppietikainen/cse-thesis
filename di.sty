@@ -64,7 +64,6 @@
 \newcommand{\thesislanguage}{english}
 
 \usepackage[backend=biber,
-  refsection=section,
   style=ieee,
   doi=true,
   urldate=long,
@@ -108,7 +107,6 @@ url=true]{biblatex}
 \hbadness=99999
 \graphicspath{{Figures/}{../Figures/}}
 \counterwithout{footnote}{chapter}
-\usepackage[type={CC}, modifier={by-nc-sa}, version={4.0}]{doclicense}
 
 \newtoggle{writexmpdatafile}
 
@@ -125,8 +123,8 @@ url=true]{biblatex}
 
 \RequirePackage[a-1b,latxmp, mathxmp]{pdfx}[2017/05/18]% Produces PDF/A 1b, 2b and 3b
                                            % compliant pdf
-  \RequirePackage{newfile}% Provides an easy interface for writing data into new
-						  % file (used to write metadata into file .xmpdata)
+\RequirePackage{newfile}% Provides an easy interface for writing data into new
+% file (used to write metadata into file .xmpdata)
 
 \newcommand*{\spc}{\noexpand\sep}%
 
@@ -144,14 +142,14 @@ url=true]{biblatex}
 	\closeoutputstream{xmpdata}%
   }{%
     % Write the metadata directly into the pdf file via hyperref keywords
-	\renewcommand*{\spc}{; }%
-	\hypersetup{%
-	  pdftitle={\maintitle},%
-	  pdfauthor={\ThesisAuthor},%
-	  pdfsubject={\abstracttext},%
+	%\renewcommand*{\spc}{; }%
+	%\hypersetup{%
+	%  pdftitle={\maintitle},%
+	%  pdfauthor={\ThesisAuthor},%
+	%  pdfsubject={\abstracttext},%
 	%  pdfcopyright={\MetaCopyrightText},%
-	  pdfkeywords={\keywords}%
-	}%
+	%  pdfkeywords={\keywords}%
+	%}%
   }%
 }%
 %
@@ -579,7 +577,7 @@ versus via with within without}
 }
 
 \newcommand{\getauthorsmetadata}{
-  \getauthors{,\ }%
+  \getauthors{\spc }%
 }
 
 % Returns the list of authors, separated by \sep
@@ -671,41 +669,4 @@ versus via with within without}
 %% To be removed when Finnish is supported by doclicense. 
 \newcommand{\MyMetadataText}{\doclicense@lang@thisDoc \ \doclicense@type \ \doclicense@modifier \ \doclicense@version \ \doclicense@lang@word@license}
 %
-\makeatletter
-\AtEndPreamble{%
-   \@ifpackageloaded{doclicense}{%
-   \ifthenelse{\equal{\thesislanguage}{finnish}}{%
-	\def\doclicense@UrlLangPart{/deed.fi}%
-	\edef\doclicenseURL{% Set up the URL
-	\doclicense@baseUrlCC/%
-	licenses/%
-	\doclicense@modifier/%
-	\doclicense@versionUsed\doclicense@UrlLangPart%
-	}%
-%
-	\@namedef{doclicense@lang@thisDoc}{Tämä teos on lisensoitu}%
-	\@namedef{doclicense@lang@word@license}{ -käyttöluvalla}%
-%
-	\@namedef{doclicense@lang@lic@CC@code}{fi}%
-% Using: https://en.wikipedia.org/wiki/ISO_639-1
-%
-	\@namedef{doclicense@lang@lic@CC@zero@1.0}{CC0 1.0 Yleismaailmallinen}%
-%
-	\@namedef{doclicense@lang@lic@CC@by@3.0}{Nimeä 3.0 Ei sovitettu}%
-	\@namedef{doclicense@lang@lic@CC@by-sa@3.0}{Nimeä-JaaSamoin 3.0 Ei sovitettu}%
-	\@namedef{doclicense@lang@lic@CC@by-nd@3.0}{Nimeä-EiMuutoksia 3.0 Ei sovitettu}%
-	\@namedef{doclicense@lang@lic@CC@by-nc@3.0}{Nimeä-EiKaupallinen 3.0 Ei sovitettu}%
-	\@namedef{doclicense@lang@lic@CC@by-nc-sa@3.0}{Nimeä-EiKaupallinen-JaaSamoin 3.0 Ei sovitettu}%
-	\@namedef{doclicense@lang@lic@CC@by-nc-nd@3.0}{Nimeä-EiKaupallinen-EiMuutoksia 3.0 Ei sovitettu}%
-%
-	\@namedef{doclicense@lang@lic@CC@by@4.0}{Nimeä 4.0 Kansainvälinen}%
-	\@namedef{doclicense@lang@lic@CC@by-sa@4.0}{Nimeä-JaaSamoin 4.0 Kansainvälinen}%
-	\@namedef{doclicense@lang@lic@CC@by-nd@4.0}{Nimeä-EiMuutoksia 4.0 Kansainvälinen}%
-	\@namedef{doclicense@lang@lic@CC@by-nc@4.0}{Nimeä-EiKaupallinen 4.0 Kansainvälinen}%
-	\@namedef{doclicense@lang@lic@CC@by-nc-sa@4.0}{Nimeä-EiKaupallinen-JaaSamoin 4.0 Kansainvälinen}%
-	\@namedef{doclicense@lang@lic@CC@by-nc-nd@4.0}{Nimeä-EiKaupallinen-EiMuutoksia 4.0 Kansainvälinen}%
-  }{}
-  }
-  }
-   
-\makeatother
+
