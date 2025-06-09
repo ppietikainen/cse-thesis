@@ -9,33 +9,64 @@
 % 2023-06-15: Example of a CC-BY figure added with reference in the footnotes (TTo)
 
 
-\documentclass[a4paper, 12pt, titlepage]{dithesis}
+\documentclass[a4paper, 12pt, titlepage]{report}
+\usepackage[finnish]{di}
 
-\usepackage[english,finnish]{babel}
+\usepackage[type={CC}, modifier={by}, version={4.0}]{doclicense-csetemplate}
 
-\usepackage{di}
+\copyrighttext
+  {Copyright \textcopyright\ \number\year\ \getauthorslist. Except otherwise noted, the reuse of this document is authorized under a Creative Commons 4.0 International (CC-BY-4.0) license.}
+  {%
+    \textcopyright{}
+    \number\year\ \getauthorslist.\par
+    \doclicenseThis % CC logo, needs transparency removed
+    Exception: The figures  are not included in the license.
+  }
+  
+% Abstracts are placed in the metadata of the PDF file, 
+% so they cannot contain empty lines or special characters.
+% Mathematic symbols should be fine (mathxmp option for pdfx package),
+\abstract{This document provides general guidance for a degree student
+  of Computer Science and Engineering in preparing his/her master's
+  thesis. This guide defines the role of a thesis in the
+  M.Sc. Degree, presents the actions to be taken in different phases
+  of the thesis procedure and introduces the way that master’s thesis
+  is written. The document has been formatted based on these
+  guidelines to serve as an example how the thesis should look like.}
+
+\tiivistelma{Näissä ohjeissa opastetaan valmistumisvaiheessa olevaa
+  opiskelijaa diplomityön tekemisessä. Ohjeissa selvitetään työn asema
+  diplomi-insinööritutkinnossa, kerrotaan toimenpiteet, joihin työn
+  tekijän on ryhdyttävä työn eri vaiheissa, sekä määritellään
+  yksityiskohtaisesti diplomityön kirjallinen rakenne. Ohje on
+  muotoiltu noudattaen näitä kirjoitusohjeita ja toimii siten
+  esimerkkinä, miltä diplomityön tulisi näyttää.}
+
+% Keywords are also included in the PDF metadata, and cannot contain any
+% special characters. Separate them with \spc
+
+\keywords{M.Sc. degree\spc master’s thesis instructions\spc structure of a master’s thesis}
+\avainsanat{diplomi-insinöörin tutkinto\spc diplomityön ohjeet\spc diplomityön rakenne}
 
 %%%%%%%%%%%%%%%%%%%%% SET YOUR INFORMATION HERE %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{TODO: Bachelor's and Diploma Thesis Guide}
 \otsikko{TODO: Kandidaatintyön ja diplomityön teko-ohjeet}
 
-\firstname{TODO: Programme}
-\lastname{TODO: Committee}
+\firstname{Author}
+\lastname{One}
 
 % Please choose the correct type of thesis and the language used
 \thesis{Master} % {Bachelor | Master}
-% Uncomment for Finnish thesis
-% \renewcommand{\thesislanguage}{finnish}
 
 %Names of other authors can be added here
-\firstnametwo{}
-\lastnametwo{}
-\firstnamethree{}
-\lastnamethree{}
-
-
+\firstnametwo{Author}
+\lastnametwo{Two}
+\firstnamethree{Author}
+\lastnamethree{Three}
 %Do not remove or comment the extra names if you do not need them, leave them empty instead
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\headertitlecap automatically creates headers with TitleCaps (Capitalizes the First Letter in Each Word) for H0, H2, and H3. Words not to be capitalized can be changed in di.sty
@@ -45,18 +76,22 @@
 \addbibresource{citations.bib}
 
 \begin{document}
-    \maketitlepage
 
-    \ifthenelse{\equal{\thesislanguage}{finnish}}{
-        \input{Chapters/tiivistelma}
-        \selectlanguage{english}
-        \input{Chapters/abstract}
-        \selectlanguage{finnish}
+\hypersetup{pageanchor=false}
+\maketitlepage
+    \pagenumbering{arabic}
+    \setcounter{page}{1}
+    \hypersetup{pageanchor=true}
+    \makecopyrightpage{}
+  
+    \IfLang{\MainLang}{finnish}{
+      \input{Chapters/tiivistelma}
+      \input{Chapters/abstract}
+      \selectlanguage{finnish}
     } {
-        \input{Chapters/abstract}
-        \selectlanguage{finnish}
-        \input{Chapters/tiivistelma}
-        \selectlanguage{english}
+      \input{Chapters/abstract}
+      \input{Chapters/tiivistelma}
+      \selectlanguage{english}
     }
     \contents %Insert table of contents
     \input{Chapters/foreword}
@@ -85,9 +120,10 @@
     \chapter{Summary}
         \label{summary}
         \input{Chapters/summary}
-
+    
     \printbibliography[heading=bibnumbered, title=\mybibname]
 
+    \startappendix
     \chapter{Appendices}
         \input{Chapters/appendices}
 

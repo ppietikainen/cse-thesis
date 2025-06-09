@@ -1,82 +1,167 @@
-% $Id: di.sty,v 1.3 2019/05/29 15:27:37 exec Exp $
 %
-% Template for Department of Electrical and Information Engineering Diploma Thesis v1.1.2013
-% Authors: Mika Korhonen (original author), Pekka Pietikäinen, Christian Wieser, Teemu Tokola, Juha Kylmänen, Tuomas Holmberg and Tuomas Varanka.
-% If you make any improvements to this template, please contact teemu.tokola@oulu.fi
+% Template for Degree Programme of Computer Science and Engineering
+% Diploma Thesis at University of Oulu
 %
+% Authors: Mika Korhonen (original author), Pekka Pietikäinen,
+% Christian Wieser, Teemu Tokola, Juha Kylmänen, Tuomas Holmberg and
+% Tuomas Varanka
+% If you make any improvements to this template, please use
+% https://github.com/ouspg/cse-thesis
 %
-% CHANGELOG
-% 2023-01-31: Thnks to Miika Sikala
-%   row 133: \dichapter{\texorpdfstring{\MakeUppercase{#1}}{}} --> \dichapter{\texorpdfstring{\MakeUppercase{#1}}{#1}}
-%   row 136: \dichapter*{\texorpdfstring{\MakeUppercase{#1}}{}} --> \dichapter*{\texorpdfstring{\MakeUppercase{#1}}{#1}}
-%   row 217: \renewcommand{\section}[1]{\oldsection{\texorpdfstring{\titlecap{##1}}{}}{}} --> \renewcommand{\section}[1]{\oldsection{\texorpdfstring{\titlecap{##1}}{##1}}{}}
-%   row 218: \renewcommand{\subsection}[1]{\oldsubsection{\texorpdfstring{\titlecap{##1}}{}}{}} --> \renewcommand{\subsection}[1]{\oldsubsection{\texorpdfstring{\titlecap{##1}}{##1}}{}}
-% 2023-01-31: Track changes has been turned on -TTo
-% 
+% Several inspirations come from from Aalto University
+% aaltothesis.cls by Luis R.J. Costa
+
 \ProvidesPackage{di}
 
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}  
-\usepackage{newtxtext, newtxmath}
-\usepackage{tabularx}
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage{enumerate}
-\usepackage{placeins}
-\usepackage{fancybox}
-\usepackage{verbatim}
-\usepackage{longtable}
-\usepackage[hyphens]{url}
-\usepackage{boxedminipage}
-\usepackage{subcaption}
-\usepackage{multirow}
-\usepackage{amsfonts}
-\usepackage{xcolor}
+% --- Encoding and fonts: Required for correct character rendering and thesis typography ---
+\usepackage[utf8]{inputenc}      % UTF-8 encoding for international characters
+\usepackage[T1]{fontenc}         % Output font encoding for accented characters
+\usepackage{lmodern}             % Latin Modern font as required by thesis typography
+\usepackage{newtxtext, newtxmath} % Improved text and math font for readability
 
-\usepackage[english=nohyphenation,finnish=nohyphenation]{hyphsubst}
-\usepackage[labelsep=period]{caption}
-\usepackage{enumitem}
-\usepackage[useregional=text, british]{datetime2}
-\usepackage{nth}
-\usepackage{titlecaps}
-\usepackage{titletoc}
-\usepackage[linesnumbered, ruled]{algorithm2e}
-\usepackage{chngcntr}
-\usepackage[pdfa]{hyperref}
-\hypersetup{breaklinks=true}
-\tolerance=500
+% --- Page layout and margins ---
+\usepackage[
+  left=4.5cm,           % left margin
+  right=2.0cm,          % right margin  
+  top=2.5cm,            % top margin
+  bottom=3.0cm,         % bottom margin
+]{geometry}
 
-\usepackage{import}
-\usepackage[a-1b,mathxmp]{pdfx}
+% --- Language and hyphenation ---
+\usepackage[english,finnish]{babel} % Support for English and Finnish thesis (main.tex)
+\usepackage[english=nohyphenation,finnish=nohyphenation]{hyphsubst} % No hyphenation per instructions
 
-\providecommand{\thesislanguage}{english} 
+% --- Typography, layout, and sectioning ---
+\usepackage[noindentafter]{titlesec}            % Custom section/chapter formatting (font size, bold, spacing)
+\usepackage{titletoc}            % Custom table of contents formatting
+\usepackage{titlecaps}           % Title capitalization for headings as per instructions
+\usepackage{etoolbox}            % Utility for macro programming (used in title formatting)
+\usepackage{enumitem}            % Customization of itemize/enumerate (bullet style per instructions)
+\usepackage{chngcntr}            % For resetting counters (figures/tables per chapter)
+\usepackage{tocloft}             % Customization of TOC/LOF/LOT appearance
 
+% --- Figures, tables, and floats ---
+\usepackage{graphicx}            % Required for including figures
+\usepackage{float}               % Improved float placement (figures/tables as per instructions)
+\usepackage{placeins}            % Ensures floats stay within chapters/sections
+\usepackage{tabularx}            % Flexible tables (table layout as per instructions)
+\usepackage{longtable}           % Tables spanning multiple pages
+\usepackage{subcaption}          % Subfigures/subtables
+\usepackage{multirow}            % Multirow cells in tables
+\usepackage{fancybox}            % For boxed content (used in some thesis layouts)
+\usepackage{verbatim}            % For including verbatim text/code
+
+% --- Math and symbols ---
+\usepackage{amsfonts}            % Additional math fonts (for equations, as per instructions)
+
+% --- Algorithms ---
+\usepackage[linesnumbered, ruled]{algorithm2e} % For writing algorithms (see writing instructions)
+
+% --- Bibliography ---
 \usepackage[backend=biber,
-  refsection=section,
   style=ieee,
   doi=true,
   urldate=long,
-  url=true]{biblatex}
+  url=true]{biblatex}            % IEEE bibliography style, running numbering, BibLaTeX as required
 
-\DefineBibliographyStrings{finnish}{
-  %artno       = Art\adddot\addspace no\adddot      ,
-  %chapter     = ch\adddot                          ,
-  %editor      = Ed\adddot                          ,
-  %editors     = Eds\adddot                         ,
-  %mathesis    = M\adddot S\adddot\addspace thesis  ,
-  %patentjp    = Japanese Patent                    ,
-  %patentus    = U\adddot S\adddot\addspace Patent  ,
-  %phdthesis   = Ph\adddot D\adddot\addspace dissertation,
-  %presentedat = presented at the\addspace          ,
-  %techreport  = Tech\adddot\addspace Rep\adddot    ,
-  url         = [Online]\adddot\addspace Saatavilla ,
-  urlseen     = Viitattu\addcolon
+% --- Date and time ---
+\usepackage[useregional=text, british]{datetime2} % Date formatting for title page and signature
+
+% --- Quoting and citations ---
+\usepackage{csquotes}            % Recommended for correct quotation marks in citations
+
+% --- Utility and color profiles ---
+\usepackage{import}              % For importing files (used in some thesis structures)
+\usepackage{colorprofiles}       % For PDF/A compliance (required for electronic thesis submission)
+
+\newcommand*{\MainLang}{}
+\newcommand*{\OtherLangs}{}
+
+\DeclareOption{english}{%
+  \PassOptionsToPackage{main=english, finnish}{babel}%
+  \renewcommand*{\MainLang}{english}%
+  \renewcommand*{\OtherLangs}{finnish}%
+}
+\DeclareOption{finnish}{%
+  \PassOptionsToPackage{main=finnish, english}{babel}%
+  \renewcommand*{\MainLang}{finnish}%
+  \renewcommand*{\OtherLangs}{english}%
 }
 
+\ProcessOptions\relax
+
+\RequirePackage{ifthen, xstring}
+
+\newcommand*{\IfEng}[3]{\ifdefstring{#1}{english}{#2}{#3}}%
+\newcommand*{\IfFin}[3]{\ifdefstring{#1}{finnish}{#2}{#3}}%
+\newcommand{\IfLang}[4]{%
+  \ifdefstring{#1}{#2}{#3}{#4}%
+}
+
+\newcounter{NAllPages}
+\newcounter{NMainTxtPages}
+\newcounter{NAppdxPages}
+\newcommand*{\stor@maintxtpag@number}{%
+  \immediate\write\@auxout{\string\setcounter{NMainTxtPages}{\thepage-1}}%
+}
+
+\newcommand{\startappendix}{%
+\stor@maintxtpag@number%
+}
+
+\AtEndDocument{%
+  \immediate\write\@auxout{\string\setcounter{NAllPages}{\thepage}}%
+}
+
+\newcommand*{\shownumberofpages}{%
+  \arabic{NAllPages}
+%  \ifthenelse{\value{NMainTxtPages}=0}{\arabic{NAllPages}}%
+%  \ifnumequal{\value{NMainTxtPages}}{0}{\arabic{NAllPages}}%
+% 	{\arabic{NMainTxtPages}+\arabic{NAppdxPages}}%
+}%
+
+
+% --- Miscellaneous ---
+\tolerance=500                   % Typographic tolerance (for line breaking)
+\setlength{\parindent}{0.5cm}
+
+
+\setlist[itemize,1]{label=\raisebox{0.2ex}{\tiny$\bullet$}}
+\setlist[itemize,2]{label=\raisebox{0.2ex}{\tiny$\bullet$}}
+
+\DefineBibliographyStrings{finnish}{
+  chapter      = luku,
+  editor       = toim\adddot,
+  editors      = toim\adddot,
+  mathesis     = Pro gradu -tutkielma,
+  patentjp     = Japanin patentti,
+  patentus     = Yhdysvaltain patentti,
+  phdthesis    = Väitöskirja,
+  presentedat  = esitetty,
+  techreport   = Tekninen raportti,
+  url          = [Online]\adddot\addspace Saatavilla,
+  urlseen      = Viitattu\addcolon
+}
 
 \NeedsTeXFormat{LaTeX2e}
-\RequirePackage{lastpage,ifthen, xstring}
+\RequirePackage{appendix}
+\renewcommand{\thechapter}{Appendix \arabic{chapter}}  % Custom numbering
+\renewcommand{\appendixname}{Appendix}
+
+\RequirePackage{chngcntr}
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
+\counterwithout{equation}{chapter}
+
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+\renewcommand{\theequation}{\arabic{equation}}
+
+\RequirePackage{ifthen, xstring}
+
 \RequirePackage{tocloft}
+\setlength{\cftchapnumwidth}{3em}
+\setlength{\cftbeforechapskip}{1em}
 
 \widowpenalty10000
 \clubpenalty10000
@@ -84,6 +169,64 @@
 \hbadness=99999
 \graphicspath{{Figures/}{../Figures/}}
 \counterwithout{footnote}{chapter}
+
+\newtoggle{writexmpdatafile}
+
+\toggletrue{writexmpdatafile}
+
+\newcommand{\CopyrightText}{}% variable; used for printing on page
+\newcommand{\MetaCopyrightText}{}%
+\newcommand{\pdfCopyrightURL}{}%
+\newcommand{\copyrighttext}[2]{%
+  \renewcommand{\MetaCopyrightText}{#1}%
+  \renewcommand{\CopyrightText}{#2}%
+  \ifdef{\doclicenseURL}{\renewcommand{\pdfCopyrightURL}{\doclicenseURL}}{}%
+}%
+
+\RequirePackage[a-1b,latxmp, mathxmp]{pdfx}[2017/05/18]% Produces PDF/A 1b, 2b and 3b
+                                           % compliant pdf
+\RequirePackage{newfile}% Provides an easy interface for writing data into new
+% file (used to write metadata into file .xmpdata)
+
+\newcommand*{\spc}{\noexpand\sep}%
+
+\newcommand{\makemetadata}{%
+  \iftoggle{writexmpdatafile}{%
+    % Write the metadata into file .xmpdata, which is included in the PDF/A file
+	\newoutputstream{xmpdata}%
+	\openoutputfile{\jobname.xmpdata}{xmpdata}%
+	\addtostream{xmpdata}{\noexpand\Title {\maintitle}}%
+	\addtostream{xmpdata}{\noexpand\Author {\getauthorsmetadata}}%
+  \addtostream{xmpdata}{\noexpand\Copyright {\MetaCopyrightText}}%%
+ 	\addtostream{xmpdata}{\noexpand\CopyrightURL {\pdfCopyrightURL}}
+		\IfFin{\MainLang}{%
+          \addtostream{xmpdata}{\noexpand\Subject {\tiivistelmametadata}}%
+          \addtostream{xmpdata}{\noexpand\Keywords[fi] {\avainsanatmetadata%
+              \noexpand\sep[en] \keywordsmetadata}}%
+        }{%
+          \addtostream{xmpdata}{\noexpand\Subject {\abstractmetadata}}%
+          \addtostream{xmpdata}{\noexpand\Keywords[en] {\keywordsmetadata%
+              \noexpand\sep[fi] \avainsanatmetadata}}%
+        }%
+  \closeoutputstream{xmpdata}%
+  }{%
+    % Write the metadata directly into the pdf file via hyperref keywords
+	%\renewcommand*{\spc}{; }%
+	%\hypersetup{%
+	%  pdftitle={\maintitle},%
+	%  pdfauthor={\ThesisAuthor},%
+	%  pdfsubject={\abstracttext},%
+	%  pdfcopyright={\MetaCopyrightText},%
+	%  pdfkeywords={\keywords}%
+	%}%
+  }%
+}%
+%
+\AtBeginDocument{%
+  \makemetadata%
+}%
+%
+
 
 % Change these "excluded words" if you are not satisfied with titlecaps
 %http://perspectivesandprotips.blogspot.com/2014/11/using-macros-with-titlecaps-in-latex.html
@@ -102,119 +245,70 @@
   per plus regarding round since % save
   than through to toward towards under %
   underneath unlike until up upon %
-  versus via with within without}
+versus via with within without}
 
-\newcommand{\ie}{\textit{i.e.}}
-\newcommand{\eg}{\textit{e.g.}}
-\newcommand{\etc}{\textit{etc.}}
+\setcounter{secnumdepth}{2} % numbers up to \subsection by default
 
-\renewcommand{\@cite}[2]{%
-	[{#1}\ifthenelse{\boolean{@tempswa}}{ #2}{}]}
-\newcommand{\pcite}[1]{\cite[.]{#1}}
+% Chapter
+% Chapters are set in 14pt bold (bfseries), centered, uppercase.
+% No space before, one baseline skip after.
+\titleformat{\chapter}
+  [hang]
+  {\normalfont\bfseries\fontsize{14}{17}\selectfont\centering}
+  {\thechapter.}
+  {1em}
+  {\MakeUppercase}
 
-\def\@sect#1#2#3#4#5#6[#7]#8{%
-  \ifnum #2>\c@secnumdepth
-    \let\@svsec\@empty
-  \else
-    \refstepcounter{#1}%
-    \protected@edef\@svsec{\@seccntformat{#1}\relax}%
-  \fi
-  \@tempskipa #5\relax
-  \ifdim \@tempskipa>\z@
-    \begingroup
-      #6{%
-        \@hangfrom{\hskip #3\relax\@svsec}%
-          \interlinepenalty \@M #8\@@par}%
-    \endgroup
-    \csname #1mark\endcsname{#7}%
-    \addcontentsline{toc}{#1}{%
-      \ifnum #2>\c@secnumdepth \else
-        \protect\numberline{\csname the#1\endcsname.}%
-      \fi
-      #7}%
-  \else
-    \def\@svsechd{%
-      #6{\hskip #3\relax
-      \@svsec #8}%
-      \csname #1mark\endcsname{#7}%
-      \addcontentsline{toc}{#1}{%
-        \ifnum #2>\c@secnumdepth \else
-          \protect\numberline{\csname the#1\endcsname.}%
-        \fi
-        #7}}%
-  \fi
-  \@xsect{#5}}
+\renewcommand{\thechapter}{\arabic{chapter}}
 
-\def\@seccntformat#1{\csname the#1\endcsname.\ \ }
+% Section
+% Sections are 12pt bold (bfseries), left-aligned, normal font.
+% 2 baseline skips before and 1 after.
+\titleformat{\section}
+  [hang]
+  {\normalfont\bfseries\fontsize{12}{15}\selectfont\centering}
+  {\thesection.}
+  {1em}
+  {}
+
+% Subsection
+% Subsections are bold italic (bfseries, itshape), normal font size,
+% with 2 baseline skips before and 1 after.
+\titleformat{\subsection}
+  [hang]
+  {\normalfont\bfseries\itshape\centering}
+  {\thesubsection.}
+  {1em}
+  {}
+
+% Subsubsection
+% Subsubsections are italic (itshape), normal font size,
+% with 2 baseline skips before and 1 after.
+\titleformat{\subsubsection}
+  [hang]
+  {\normalfont\itshape\centering}
+  {\thesubsubsection.}
+  {1em}
+  {}
+
+\titlespacing*{\chapter}{0pt}{0pt}{\baselineskip}
+\titlespacing*{\section}{0pt}{2\baselineskip}{\baselineskip}
+\titlespacing*{\subsection}{0pt}{2\baselineskip}{\baselineskip}
+\titlespacing*{\subsubsection}{0pt}{2\baselineskip}{\baselineskip}
+
+% --------------------
+% Add period after number in TOC entries
+% --------------------
+
+\renewcommand{\cftchapaftersnum}{.}
+\renewcommand{\cftsecaftersnum}{.}
+\renewcommand{\cftsubsecaftersnum}{.}
+\renewcommand{\cftsubsubsecaftersnum}{.}
 
 %decimal comma
 \DeclareMathSymbol{,}{\mathpunct}{letters}{"3B}
 \DeclareMathSymbol{.}{\mathord}{letters}{"3B}
 %\DeclareMathSymbol{\decimal}{\mathord}{letters}{"3A}
-\newcommand{\piste}{\text{.}}
-
-%chapter styles
-%
-% Inspired from here:
-% http://tex.stackexchange.com/questions/73242/problem-with-redefining-chapter-command
-\renewcommand*{\chapter}{%
-  \@ifstar{%
-    %\toks@\expandafter{\the\toks@*}%
-    \finalstar@chapter
-  }{
-    \final@chapter
-  }%
-}
-
-\newcommand*{\final@chapter}[1]{%
-  \dichapter{\texorpdfstring{\MakeUppercase{#1}}{#1}}
-}
-\newcommand*{\finalstar@chapter}[1]{%
-  \dichapter*{\texorpdfstring{\MakeUppercase{#1}}{#1}}
-}
-
-\newcommand{\dichapter}{
-	\clearpage
-	\@startsection
-		{chapter}%
-		{0}%
-		{0mm}%
-		{0mm}%
-		{\baselineskip}%
-		{\normalfont\large\bfseries\centering\MakeUppercase}}%
-
-\newcommand{\abschapter}{
-	\@startsection
-		{chapter}%
-		{0}%
-		{0mm}%
-		{2\baselineskip}%
-		{\baselineskip}%
-		{\normalfont\large\bfseries\centering}}%
-
-\renewcommand{\thechapter}{\arabic{chapter}}
-
-\renewcommand{\section}{
-	\@startsection
-		{section}%
-		{1}%
-		{0mm}%
-		{2\baselineskip}%
-		{\baselineskip}%
-		{\normalfont\normalsize\bfseries\centering}}%
-
-\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}%
-
-\renewcommand{\subsection}{
-	\@startsection
-		{subsection}%
-		{2}%
-		{0mm}%
-		{2\baselineskip}%
-		{\baselineskip}%
-		{\normalfont\normalsize\bfseries\itshape\centering}}%
-
-\renewcommand{\thesubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}}%
 
 \newcommand{\firstname}[1]{\gdef\@firstname{#1}}
 \newcommand{\lastname}[1]{\gdef\@lastname{#1}}
@@ -223,7 +317,7 @@
 \newcommand{\firstnamethree}[1]{\gdef\@firstnamethree{#1}}
 \newcommand{\lastnamethree}[1]{\gdef\@lastnamethree{#1}}
 \newcommand{\otsikko}[1]{\gdef\@otsikko{#1}
-	\gdef\@isotsikko{\MakeUppercase{#1}}}
+\gdef\@isotsikko{\MakeUppercase{#1}}}
 
 \newcommand{\getfirstname}{\@firstname}
 \newcommand{\getlastname}{\@lastname}
@@ -234,23 +328,17 @@
 \newcommand{\getotsikko}{\@otsikko}
 \newcommand{\gettitle}{\@title}
 
-\newcommand{\lskip}[1][]{\vspace{#1\baselineskip}\noindent}
-
-\newcommand{\avainsanat}{\lskip Avainsanat: }
-\newcommand{\keywords}{\lskip Keywords: }
-
 \newcommand{\thesis}[1]{\gdef\@thesis{#1}}
 \newcommand{\getthesis}{\@thesis}
 
 \newcommand{\headertitlecap}{
-    \ifthenelse{\equal{\thesislanguage}{english}}{
-        \let\oldsection\section
-        \let\oldsubsection\subsection
-        \renewcommand{\section}[1]{\oldsection{\texorpdfstring{\titlecap{##1}}{##1}}}
-        \renewcommand{\subsection}[1]{\oldsubsection{\texorpdfstring{\titlecap{##1}}{##1}}}
-    }{}
+  \IfLang{\MainLang}{english}{
+    \let\oldsection\section
+    \let\oldsubsection\subsection
+    \renewcommand{\section}[1]{\oldsection{\texorpdfstring{\titlecap{##1}}{##1}}}
+    \renewcommand{\subsection}[1]{\oldsubsection{\texorpdfstring{\titlecap{##1}}{##1}}}
+  }{}
 }
-
 
 \newcommand{\facultyname}{}
 \newcommand{\degreeprogramme}{}
@@ -265,68 +353,105 @@
 \newcommand{\cityname}{}
 \newcommand{\universitylogo}{Figures/logo-en.png}
 
-\ifthenelse{\equal{\thesislanguage}{finnish}}{%
+\newcommand{\keywordsmetadata}{}%
+\newcommand{\keywords}[1]{\renewcommand*{\keywordsmetadata}{#1}}
+
+\newcommand{\avainsanatmetadata}{}%
+\newcommand{\avainsanat}[1]{\renewcommand*{\avainsanatmetadata}{#1}}
+
+% Define abstract content storage
+\long\def\abstractmetadata{}
+\long\def\tiivistelmametadata{}
+% User-facing macros for defining abstract text
+\long\def\abstract#1{\long\def\abstractmetadata{#1}}
+\long\def\tiivistelma#1{\long\def\tiivistelmametadata{#1}}
+
+% Add macros for thesis type in English and Finnish
+\newcommand{\thesistypeenglish}{%
+  \ifthenelse{\equal{\@thesis}{Master}}{Master's thesis}{Bachelor's thesis}%
+}
+\newcommand{\thesistypefinnish}{%
+  \ifthenelse{\equal{\@thesis}{Master}}{Diplomityö}{Kandidaatintyö}%
+}
+
+\IfLang{\MainLang}{finnish}{%
   \renewcommand{\facultyname}{TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA}
   \renewcommand{\degreeprogramme}{Tietotekniikan tutkinto-ohjelma}
-  \renewcommand{\thesistypetitle}{\ifthenelse{\equal{\@thesis}{Master}}{Diplomityö}{Kandidaatintyö}}
-  \renewcommand{\maintitle}{\MakeUppercase{\@otsikko}}
+  \renewcommand{\thesistypetitle}{\thesistypefinnish}
+  \renewcommand{\maintitle}{\getotsikko}
   \renewcommand{\universityname}{Oulun yli\-opis\-to}
   \renewcommand{\pagelabel}{s.}
   \renewcommand{\headerforeword}{ALKULAUSE}
   \renewcommand{\headerabbreviations}{LYHENTEIDEN JA MERKKIEN SELITYKSET}
   \renewcommand{\tocname}{SISÄLLYSLUETTELO}
-  \renewcommand{\mybibname}{VIITTEET}
+  \renewcommand{\mybibname}{Viitteet}
   \renewcommand{\cityname}{Oulussa }
   \renewcommand{\universitylogo}{Figures/logo-fi.png}
 }{
-  \renewcommand{\facultyname}{FACULTY OF INFORMATION TECHNOLOGY AND ELECTRICAL ENGINEERING}
-  \renewcommand{\degreeprogramme}{Degree Programme in Computer Science and Engineering}
-  \renewcommand{\thesistypetitle}{\getthesis's Thesis}
-  \renewcommand{\maintitle}{\MakeUppercase{\@title}}
+  \renewcommand{\facultyname}{FACULTY OF INFORMATION TECHNOLOGY AND
+  ELECTRICAL ENGINEERING}
+  \renewcommand{\degreeprogramme}{Degree Programme in Computer
+  Science and Engineering}
+  \renewcommand{\thesistypetitle}{\thesistypeenglish}
+  \renewcommand{\maintitle}{\gettitle}
   \renewcommand{\universityname}{University of Oulu}
   \renewcommand{\pagelabel}{p.}
   \renewcommand{\headerforeword}{FOREWORD}
   \renewcommand{\headerabbreviations}{LIST OF ABBREVIATIONS AND SYMBOLS}
   \renewcommand{\tocname}{TABLE OF CONTENTS}
-  \renewcommand{\mybibname}{REFERENCES}
+  \renewcommand{\mybibname}{References}
   \renewcommand{\cityname}{Oulu, }
 }
 
 % --- End centralized definitions ---
 
 %Title page
+% Commentary: The title page is generated by \maketitlepage. Ensure correct faculty, degree, and title.
 \newcommand{\maketitlepage}{
   \sloppy
-  \ifthenelse{\equal{\thesislanguage}{finnish}}{
-    \selectlanguage{english}
-  } {
-    \selectlanguage{english}
-    }
-    \begin{titlepage}
-        \centering
-        \includegraphics*[width=0.22\textwidth]{\universitylogo}\\
-        {\sffamily\fontsize{8}{10pt}\selectfont \facultyname\\}
-        \vspace{70 mm}
-        {\textbf{\fontsize{16}{19pt}\selectfont \getauthorstitle}\\}
-        \vspace{12 mm}
-        {\textbf{\fontsize{18}{22pt}\selectfont \maintitle \\}}
-        \vfill
-        {\fontsize{14}{17}\selectfont \thesistypetitle \\ \degreeprogramme \\ \DTMToday \\}
-        \vspace{1cm}
-    \end{titlepage}
+ 
+  \selectlanguage{\MainLang}
+  
+  \begin{titlepage}
+    \centering
+    \includegraphics*[width=0.22\textwidth]{\universitylogo}\\
+    {\sffamily\fontsize{8}{10pt}\selectfont \facultyname\\}
+    \vspace{70 mm}
+    {\textbf{\fontsize{16}{19pt}\selectfont \getauthorstitle}\\}
+    \vspace{12 mm}
+    {\textbf{\fontsize{18}{22pt}\selectfont \MakeUppercase{\maintitle} \\}}
+    \vfill
+    {\fontsize{14}{17}\selectfont \thesistypetitle
+    \\ \degreeprogramme \\ \DTMToday \\}
+    \vspace{1cm}
+  \end{titlepage}
+  \cleardoublepage
+  \pagenumbering{gobble}
 }
+
+\newcommand{\makecopyrightpage}{%
+  \newpage
+  \thispagestyle{empty}%
+    \makeatletter\input{doclicense-\MainLang.ldf}
+    \makeatother
+  \noindent
+  \CopyrightText\par%
+  \cleardoublepage
+}%
 
 \addtocontents{toc}{\protect\thispagestyle{empty}}
 %Table of contents
+% Commentary: Use \contents to generate the table of contents. Only chapters from Introduction onwards are numbered.
 \newcommand{\contents}{
-    \newpage
-    \renewcommand{\contentsname}{\tocname}%
-    \addtocontents{toc}{\protect\contentsline{chapter}{\tocname}{}{page.\thepage} }
-    \newlength{\temp}
-    \setlength{\temp}{\parskip}
-    \setlength{\parskip}{0mm} 
-    \tableofcontents
-    \setlength{\parskip}{\temp}
+  \newpage
+  \renewcommand{\contentsname}{\tocname}%
+  \addtocontents{toc}{\protect\contentsline{chapter}{\tocname}{}{page.\thepage}
+  }
+  \newlength{\temp}
+  \setlength{\temp}{\parskip}
+  \setlength{\parskip}{0mm}
+  \tableofcontents
+  \setlength{\parskip}{\temp}
 }
 
 \setcounter{tocdepth}{2}
@@ -339,155 +464,85 @@
 \setlength{\cftaftertoctitleskip}{8mm}
 \renewcommand{\cftdotsep}{0.2}
 
-% abstract / tiivistelmä
-\renewenvironment{abstract}{
-	\newpage
-	\addtocontents{toc}{\protect\contentsline{chapter}{ABSTRACT}{}{page.\thepage}}
-	{{\getauthorsabstract (\the\year) \titlecap{\@title}.} University of Oulu, Degree Programme in Computer Science and Engineering, \pageref{LastPage}~p.}
-	\abschapter*{ABSTRACT} \bf}
+\newcommand{\englishabstracttitle}{%
+  {\textbf{\getauthorsabstractacta\ (\the\year) \titlecap{\@title}}. University of Oulu, Degree Programme in Computer Science and Engineering, \shownumberofpages~p.}
+}
 
-\newenvironment{tiivistelma}{
-	\newpage 
-	\addtocontents{toc}{\protect\contentsline{chapter}{TIIVISTELM\"A}{}{page.\thepage}}
-	{{\getauthorsabstract (\the\year) \@otsikko .} Oulun yli\-opis\-to, Tietotekniikan tutkinto-ohjelma, \pageref{LastPage}~s.}
-	\abschapter*{TIIVISTELM\"A} \bf}
+\newcommand{\finnishabstracttitle}{%
+  {\textbf{\getauthorsabstractacta\ (\the\year) \getotsikko}. Oulun yli\-opis\-to, Tietotekniikan tutkinto-ohjelma, \shownumberofpages~s.}
+}
+
+\newcommand{\englishabstracttitleieee}{%
+  {\getauthorsabstractieee, ``\titlecap{\@title},'' \thesistypeenglish, Dept. of Computer Science, Univ. of Oulu, Oulu, Finland, \the\year.}
+}
+
+\newcommand{\finnishabstracttitleieee}{%
+  {\getauthorsabstractieee, ``\getotsikko,'' \thesistypefinnish, Tietotekniikan koulutusohjelma, Oulun yliopisto, Oulu, Suomi, \the\year.}
+}
+
+
+\newenvironment{thesisabstract}[1]{%
+  \selectlanguage{#1}%
+  \setcounter{NAppdxPages}{\value{NAllPages}-\value{NMainTxtPages}}%
+  \renewcommand*{\spc}{, }
+  \ifstrequal{#1}{finnish}{%
+    \def\thesisabstract@heading{TIIVISTELMÄ}%
+    \def\thesisabstract@keywords{Avainsanat: \avainsanatmetadata}
+    \def\thesisabstract@authorline{\finnishabstracttitle}
+  }{%
+    \def\thesisabstract@heading{ABSTRACT}%
+    \def\thesisabstract@keywords{Keywords: \keywordsmetadata}%
+    \def\thesisabstract@authorline{\englishabstracttitle}
+  }%
+  \cleardoublepage
+  \noindent\thesisabstract@authorline
+  \par\vspace{2\baselineskip}%
+
+  {\centering\bfseries\fontsize{14}{17}\selectfont\MakeUppercase{\thesisabstract@heading}\par}%
+  \addtocontents{toc}{\protect\contentsline{chapter}{\thesisabstract@heading}{}{page.\thepage}}
+  \vspace{1\baselineskip}
+  \@afterindentfalse\@afterheading
+  \begingroup
+  \bfseries
+  }{%
+  \endgroup
+  \par
+  \vspace{1\baselineskip}\noindent
+  \textbf{\thesisabstract@keywords}
+}
 
 %chapters without page numbering
 \newcommand{\header}[1]{
-	\dichapter*{#1}
-	\addtocontents{toc}{\protect\contentsline{chapter}{#1}{}{page.\thepage} }}
+  \chapter*{#1}
+\addtocontents{toc}{\protect\contentsline{chapter}{#1}{}{page.\thepage} }}
 
-
-\newcommand{\bits}[2]{\multicolumn{#1}{c|}{{#2}} }
-\newcommand{\qw}[1] {\bits{32}{#1}}
-\newcommand{\word}[1] {\bits{16}{#1}}
-\newcommand{\byte}[1] {\bits{8}{#1}}
-\newcommand{\bit}[1] {\bits{1}{#1}}
-
-\newenvironment{protocolheader}[2]
-{
-\setlength{\tabcolsep}{2 pt}%
-\setlength{\doublerulesep}{0 pt}%
-\par
-\sbox{\TmpCaption}{#1}
-	\renewcommand{\TmpLabel}{\label{#2}}
-\begin{table}[ht]
-\begin{center}
-\begin{tabular}{|c|cccccccccccccccccccccccccccccccc|}
-\hline
-Byte& \byte{0}&\byte{1} &\byte{2} & \byte{3} \\
-    & 7 &6&5&4&3&2&1&\multicolumn{1}{c|}{0}&7& 6 & 5 & 4 & 3 & 2 & 1 & \multicolumn{1}{c|}{0} & 7 & 6 & 5 & 4 & 3 & 2 & 1 & \multicolumn{1}{c|}{0} &7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
-\hline 
-}
-{
-\end{tabular}
-\end{center}
-\vspace{-1cm}
-\begin{figure}[H]
-	\caption{\usebox{\TmpCaption}} \TmpLabel
-\end{figure}
-
-\end{table}
-
-
-
-}
-
-
-%page margins, and spacing
-\oddsidemargin2cm  % 1 in + 2 cm = 4.5 cm
-\textwidth14.5cm
-\topmargin-1.5cm
-\marginparwidth0cm
-\marginparsep0cm
-\textheight24cm
 
 
 %page numbering
 \pagestyle{empty}
 
 \newcommand{\pagenumbers}{
-	\pagestyle{myheadings}
-	\markright{} }
+  \pagestyle{myheadings}
+  \makeatletter
+  \def\ps@plain{\ps@myheadings} % plain pages like chapters also top right
+  \makeatother
+} 
 
-%indentation and spacing between chapters
+\captionsetup[table]{
+  position=above,
+  justification=raggedright,
+  singlelinecheck=true,
+}
 
-%\parskip\baselineskip
-\parindent0.4cm
+% Figures
+\captionsetup[figure]{
+  justification=justified,  % full justification for long captions
+  singlelinecheck=true,     % short captions centered
+  % skip=\baselineskip
+}
 
-%dont indent the first row
-\let\@afterindenttrue\@afterindentfalse
-\@afterindentfalse
 
-%figures and tables
-\renewcommand{\thefigure}%numerilization
-     {\arabic{figure}}
-
-\renewcommand{\thetable}
-     {\arabic{table}}
-
-\renewcommand{\@makecaption}[2]{%
-  \vskip\abovecaptionskip
-  \sbox\@tempboxa{#1. #2}%
-  \ifdim \wd\@tempboxa >\hsize
-    #1. #2\par
-  \else
-    \global \@minipagefalse
-    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}
-  \fi
-  \vskip\belowcaptionskip}
-
-\newsavebox{\TmpCaption}
-\newcommand{\TmpLabel}{}
-
-\newenvironment{kuva}[2]
-  {\begin{figure}[ht] \begin{center} \sbox{\TmpCaption}{#1}
-	\renewcommand{\TmpLabel}{\label{#2}}}
-  {\caption{\usebox{\TmpCaption}} \TmpLabel \end{center}
-	\vspace{-\baselineskip} \end{figure}}
-
-\newenvironment{taulukko}[2]
-  {\begin{table}[ht] \begin{center} \caption{#1} \label{#2} }
-  {\end{center} \vspace{-\baselineskip} \end{table}}
-
-%equations
-\renewcommand{\theequation}{\arabic{equation}}
-
-%bibliography
-\renewenvironment{thebibliography}[1]
-     {\dichapter{\mybibname}
-      \list{\@biblabel{\@arabic\c@enumiv}}%
-           {\settowidth\labelwidth{\@biblabel{#1}}%
-            \leftmargin\labelwidth
-            \advance\leftmargin\labelsep
-            \@openbib@code
-            \usecounter{enumiv}%
-            \let\p@enumiv\@empty
-            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
-      \sloppy
-      \clubpenalty4000
-      \@clubpenalty \clubpenalty
-      \widowpenalty4000%
-      \sfcode`\.\@m}
-     {\def\@noitemerr
-       {\@latex@warning{Empty `thebibliography' environment}}%
-      \endlist}
-
-% caption
-\setlength\abovecaptionskip{0\p@} %\setlength\abovecaptionskip{\f@size\p@}
-\setlength\belowcaptionskip{0\p@}
-\long\def\@makecaption#1#2{%
-  \vskip\abovecaptionskip
-  \sbox\@tempboxa{#1. #2}%
-  \ifdim \wd\@tempboxa >\hsize
-    #1. #2\par
-  \else
-    \global \@minipagefalse
-    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
-  \fi
-  \vskip\belowcaptionskip}
-
-% algorithm  
+% algorithm
 %\renewcommand{\@algocf@capt@plain}{above}
 %\renewcommand{\algocf@caption@plain}{\box\algocf@capbox\vskip\AlCapSkip}
 \SetAlCapSty{}
@@ -496,72 +551,85 @@ Byte& \byte{0}&\byte{1} &\byte{2} & \byte{3} \\
 
 %get authors for the title page
 \newcommand{\getauthorstitle}{
-    \ifthenelse{\equal{\@firstnametwo}{}}
-    {\getfirstname\ \getlastname}
-    {\ifthenelse{\equal{\@firstnamethree}{}}
-        {
-        \begin{tabular}[t]{c}
-        \getfirstname\ \getlastname\\
-        \getfirstnametwo\ \getlastnametwo\par
-        \end{tabular}
-        }
-        {
-        \begin{tabular}[t]{c}
-        \getfirstname\ \getlastname\\
-        \getfirstnametwo\ \getlastnametwo\\
-        \getfirstnamethree\ \getlastnamethree
-        \end{tabular}
-        }
-    }     
+  \begin{tabular}[t]{c}
+  \getauthors{\\}%   
+  \end{tabular}
 }
-%get authors for the abstract
-\newcommand{\getauthorsabstract}{
-    \ifthenelse{\equal{\@firstnametwo}{}}
-    {\noindent \bf \@lastname\ \StrChar{\@firstname}{1}.}
-    {\ifthenelse{\equal{\@firstnamethree}{}}
-        {
-        \noindent \bf \@lastname\ \StrChar{\@firstname}{1}., \@lastnametwo\ \StrChar{\@firstnametwo}{1}. \ignorespaces
-        }
-        {
-        \noindent \bf \@lastname\ \StrChar{\@firstname}{1}., \@lastnametwo\ \StrChar{\@firstnametwo}{1}., \@lastnamethree\ \StrChar{\@firstnamethree}{1}. \ignorespaces
-        }
-    }
+
+
+\newcommand{\getauthorsmetadata}{
+  \getauthors{\spc }%
 }
+
+\newcommand{\getauthorslist}{
+  \getauthors{, }%
+}
+
+% Helper macro to get first initial from a name
+\newcommand{\getfirstinitial}[1]{\StrChar{#1}{1}.}
+
+% Returns the list of authors, separated by \sep
+\newcommand{\getauthors}[1]{%
+  \@ifempty{\@firstnametwo}{%
+    \getfirstname\ \getlastname%
+  }{%
+    \@ifempty{\@firstnamethree}{%
+      \getfirstname\ \getlastname#1\getfirstnametwo\ \getlastnametwo%
+    }{%
+      \getfirstname\ \getlastname#1\getfirstnametwo\ \getlastnametwo#1\getfirstnamethree\ \getlastnamethree%
+    }%
+  }%
+}
+
+%get authors for the abstract (Acta style: Surname F.)
+\newcommand{\getauthorsabstractacta}{%
+  \ifthenelse{\equal{\@firstnametwo}{}}%
+    {\@lastname\ \getfirstinitial{\@firstname}}%
+    {\ifthenelse{\equal{\@firstnamethree}{}}%
+      {\@lastname\ \getfirstinitial{\@firstname},\ %
+        \@lastnametwo\ \getfirstinitial{\@firstnametwo}}%
+      {\@lastname\ \getfirstinitial{\@firstname},\ %
+        \@lastnametwo\ \getfirstinitial{\@firstnametwo},\ %
+        \@lastnamethree\ \getfirstinitial{\@firstnamethree}}%
+    }%
+}
+
+%get authors for the abstract (IEEE style: F. Lastname)
+\newcommand{\getauthorsabstractieee}{%
+  \ifthenelse{\equal{\@firstnametwo}{}}%
+    {\getfirstinitial{\@firstname}\ \@lastname}%
+    {\ifthenelse{\equal{\@firstnamethree}{}}%
+      {\getfirstinitial{\@firstname}\ \@lastname,\ %
+        \getfirstinitial{\@firstnametwo}\ \@lastnametwo}%
+      {\getfirstinitial{\@firstname}\ \@lastname,\ %
+        \getfirstinitial{\@firstnametwo}\ \@lastnametwo,\ %
+        \getfirstinitial{\@firstnamethree}\ \@lastnamethree}%
+    }%
+}
+
 %signature at the bottom of foreword
 \newcommand{\signature}{
-    \DTMlangsetup[en-GB]{monthyearsep={,\space}}
-    \par\lskip[1]\hspace{0.0cm}
-    \begin{flushleft} \cityname \DTMToday \end{flushleft}
-    \par \lskip[0]\hspace{0.0cm}
-    \ifthenelse{\equal{\@firstnametwo}{}}
-    {\begin{flushleft} \@firstname\ \@lastname \end{flushleft}}
-    {\ifthenelse{\equal{\@firstnamethree}{}}
-        {
-        \begin{flushleft}
-        \@firstname\ \@lastname\\
-        \@firstnametwo\ \@lastnametwo
-        \end{flushleft}
-        }
-        {
-        \begin{flushleft}
-        \@firstname\ \@lastname\\
-        \@firstnametwo\ \@lastnametwo\\
-        \@firstnamethree\ \@lastnamethree
-        \end{flushleft}
-        }
-    }
+  \DTMlangsetup[en-GB]{monthyearsep={,\space}}
+  \par \vspace{1\baselineskip} \noindent
+  \begin{flushleft} \cityname \DTMToday
+  \end{flushleft}
+  \par \noindent
+  \begin{flushleft}
+    \getauthors{\\}
+  \end{flushleft}
 }
 
+\makeatletter
 \g@addto@macro{\normalsize}{%
-    \setlength{\abovedisplayskip}{0pt}
-    \setlength{\abovedisplayshortskip}{0pt}
-    \setlength{\belowdisplayskip}{12pt}
-    \setlength{\belowdisplayshortskip}{12pt}}
+  \setlength{\abovedisplayskip}{0pt}
+  \setlength{\abovedisplayshortskip}{0pt}
+  \setlength{\belowdisplayskip}{12pt}
+\setlength{\belowdisplayshortskip}{12pt}}
 \makeatother
 
-% Moved from dithesis.cls, eqref is from amsmath so renew 
-\newcommand{\figref}[1]{Figure \ref{#1}}
-\renewcommand{\eqref}[1]{Equation (\ref{#1})}
-\newcommand{\tabref}[1]{Table \ref{#1}}
-\newcommand{\charef}[1]{Chapter \ref{#1}}
-\newcommand{\secref}[1]{Section \ref{#1}}
+% Moved from dithesis.cls, eqref is from amsmath so renew
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+\renewcommand{\eqref}[1]{Equation~(\ref{#1})}
+\newcommand{\tabref}[1]{Table~\ref{#1}}
+\newcommand{\charef}[1]{Chapter~\ref{#1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}

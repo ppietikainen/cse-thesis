@@ -18,11 +18,6 @@ The aim is a clear and well-structured thesis, \textbf{without unnecessary exces
 \section{Typography}
 
 In the text typography, you need to use the following guidelines and rules:
-\newlength{\mylen}
-\setbox1=\hbox{$\bullet$}\setbox2=\hbox{\tiny$\bullet$}
-\setlength{\mylen}{\dimexpr0.7\ht1-0.5\ht2}
-\renewcommand\labelitemi{\raisebox{\mylen}{\tiny$\bullet$}}
-\renewcommand\labelitemii{\raisebox{\mylen}{\tiny$\bullet$}}
 
 \begin{itemize}
     \setlength\itemsep{0pt}
@@ -80,7 +75,6 @@ The thesis should include figures and tables to support the text. They should be
     tables).
 \end{itemize}
 
-\captionsetup[table]{justification=raggedright,singlelinecheck=off}
 \begin{table}[!ht]
 % Add some padding to the table cells:
 \def\arraystretch{1.1}%
