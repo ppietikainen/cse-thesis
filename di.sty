@@ -1,28 +1,16 @@
 %
-% Template for Department of Electrical and Information Engineering
-% Diploma Thesis v1.1.2013
+% Template for Degree Programme of Computer Science and Engineering
+% Diploma Thesis at University of Oulu
+%
 % Authors: Mika Korhonen (original author), Pekka Pietikäinen,
 % Christian Wieser, Teemu Tokola, Juha Kylmänen, Tuomas Holmberg and
-% Tuomas Varanka.
-% If you make any improvements to this template, please contact
-% teemu.tokola@oulu.fi
+% Tuomas Varanka
+% If you make any improvements to this template, please use
+% https://github.com/ouspg/cse-thesis
 %
-% CHANGELOG
-% 2023-01-31: Thnks to Miika Sikala
-%   row 133: \dichapter{\texorpdfstring{\MakeUppercase{#1}}{}} -->
-% \dichapter{\texorpdfstring{\MakeUppercase{#1}}{#1}}
-%   row 136: \dichapter*{\texorpdfstring{\MakeUppercase{#1}}{}} -->
-% \dichapter*{\texorpdfstring{\MakeUppercase{#1}}{#1}}
-%   row 217:
-% \renewcommand{\section}[1]{\oldsection{\texorpdfstring{\titlecap{##1}}{}}{}}
-% -->
-% \renewcommand{\section}[1]{\oldsection{\texorpdfstring{\titlecap{##1}}{##1}}{}}
-%   row 218:
-% \renewcommand{\subsection}[1]{\oldsubsection{\texorpdfstring{\titlecap{##1}}{}}{}}
-% -->
-% \renewcommand{\subsection}[1]{\oldsubsection{\texorpdfstring{\titlecap{##1}}{##1}}{}}
-% 2023-01-31: Track changes has been turned on -TTo
-%
+% Several inspirations come from from Aalto University
+% aaltothesis.cls by Luis R.J. Costa
+
 \ProvidesPackage{di}
 
 % --- Encoding and fonts: Required for correct character rendering and thesis typography ---
@@ -31,12 +19,20 @@
 \usepackage{lmodern}             % Latin Modern font as required by thesis typography
 \usepackage{newtxtext, newtxmath} % Improved text and math font for readability
 
+% --- Page layout and margins ---
+\usepackage[
+  left=4.5cm,           % left margin
+  right=2.0cm,          % right margin  
+  top=2.5cm,            % top margin
+  bottom=3.0cm,         % bottom margin
+]{geometry}
+
 % --- Language and hyphenation ---
 \usepackage[english,finnish]{babel} % Support for English and Finnish thesis (main.tex)
 \usepackage[english=nohyphenation,finnish=nohyphenation]{hyphsubst} % No hyphenation per instructions
 
 % --- Typography, layout, and sectioning ---
-\usepackage{titlesec}            % Custom section/chapter formatting (font size, bold, spacing)
+\usepackage[noindentafter]{titlesec}            % Custom section/chapter formatting (font size, bold, spacing)
 \usepackage{titletoc}            % Custom table of contents formatting
 \usepackage{titlecaps}           % Title capitalization for headings as per instructions
 \usepackage{etoolbox}            % Utility for macro programming (used in title formatting)
@@ -127,6 +123,8 @@
 
 % --- Miscellaneous ---
 \tolerance=500                   % Typographic tolerance (for line breaking)
+\setlength{\parindent}{0.5cm}
+
 
 \setlist[itemize,1]{label=\raisebox{0.2ex}{\tiny$\bullet$}}
 \setlist[itemize,2]{label=\raisebox{0.2ex}{\tiny$\bullet$}}
@@ -201,9 +199,16 @@
 	\addtostream{xmpdata}{\noexpand\Author {\getauthorsmetadata}}%
   \addtostream{xmpdata}{\noexpand\Copyright {\MetaCopyrightText}}%%
  	\addtostream{xmpdata}{\noexpand\CopyrightURL {\pdfCopyrightURL}}
-	\addtostream{xmpdata}{\noexpand\Subject {\englishabstract}}%
-	%\addtostream{xmpdata}{\noexpand\Keywords {\keywords}}%
-	\closeoutputstream{xmpdata}%
+		\IfFin{\MainLang}{%
+          \addtostream{xmpdata}{\noexpand\Subject {\tiivistelmametadata}}%
+          \addtostream{xmpdata}{\noexpand\Keywords[fi] {\avainsanatmetadata%
+              \noexpand\sep[en] \keywordsmetadata}}%
+        }{%
+          \addtostream{xmpdata}{\noexpand\Subject {\abstractmetadata}}%
+          \addtostream{xmpdata}{\noexpand\Keywords[en] {\keywordsmetadata%
+              \noexpand\sep[fi] \avainsanatmetadata}}%
+        }%
+  \closeoutputstream{xmpdata}%
   }{%
     % Write the metadata directly into the pdf file via hyperref keywords
 	%\renewcommand*{\spc}{; }%
@@ -245,45 +250,51 @@ versus via with within without}
 \setcounter{secnumdepth}{2} % numbers up to \subsection by default
 
 % Chapter
-% Commentary: Chapters are set in 14pt bold (bfseries), centered, uppercase. No space before, one baseline skip after.
+% Chapters are set in 14pt bold (bfseries), centered, uppercase.
+% No space before, one baseline skip after.
 \titleformat{\chapter}
   [hang]
   {\normalfont\bfseries\fontsize{14}{17}\selectfont\centering}
   {\thechapter.}
   {1em}
   {\MakeUppercase}
-\titlespacing*{\chapter}{0pt}{0pt}{\baselineskip}
-% Remove indentation for the first paragraph after headings
-\patchcmd{\chapter}{\@afterindenttrue}{\@afterindentfalse}{}{}
+
+\renewcommand{\thechapter}{\arabic{chapter}}
 
 % Section
-% Commentary: Sections are 12pt bold (bfseries), left-aligned, normal font, with 2 baseline skips before and 1 after.
+% Sections are 12pt bold (bfseries), left-aligned, normal font.
+% 2 baseline skips before and 1 after.
 \titleformat{\section}
   [hang]
-  {\normalfont\bfseries\fontsize{12}{15}\selectfont}
+  {\normalfont\bfseries\fontsize{12}{15}\selectfont\centering}
   {\thesection.}
   {1em}
   {}
-% (Spacing is set in \@startsection: 2\baselineskip before, \baselineskip after.)
 
 % Subsection
-% Commentary: Subsections are bold italic (bfseries, itshape), normal font size, with 2 baseline skips before and 1 after.
+% Subsections are bold italic (bfseries, itshape), normal font size,
+% with 2 baseline skips before and 1 after.
 \titleformat{\subsection}
   [hang]
-  {\normalfont\bfseries\itshape}
+  {\normalfont\bfseries\itshape\centering}
   {\thesubsection.}
   {1em}
   {}
-% (Spacing is set in \@startsection: 2\baselineskip before, \baselineskip after.)
 
 % Subsubsection
-% Commentary: Subsubsections are italic (itshape), normal font size, with 2 baseline skips before and 1 after.
+% Subsubsections are italic (itshape), normal font size,
+% with 2 baseline skips before and 1 after.
 \titleformat{\subsubsection}
   [hang]
-  {\normalfont\itshape}
+  {\normalfont\itshape\centering}
   {\thesubsubsection.}
   {1em}
   {}
+
+\titlespacing*{\chapter}{0pt}{0pt}{\baselineskip}
+\titlespacing*{\section}{0pt}{2\baselineskip}{\baselineskip}
+\titlespacing*{\subsection}{0pt}{2\baselineskip}{\baselineskip}
+\titlespacing*{\subsubsection}{0pt}{2\baselineskip}{\baselineskip}
 
 % --------------------
 % Add period after number in TOC entries
@@ -298,35 +309,6 @@ versus via with within without}
 \DeclareMathSymbol{,}{\mathpunct}{letters}{"3B}
 \DeclareMathSymbol{.}{\mathord}{letters}{"3B}
 %\DeclareMathSymbol{\decimal}{\mathord}{letters}{"3A}
-
-%chapter styles
-%
-% Inspired from here:
-% http://tex.stackexchange.com/questions/73242/problem-with-redefining-chapter-command
-
-\renewcommand{\thechapter}{\arabic{chapter}}
-
-\renewcommand{\section}{
-  \@startsection
-  {section}%
-  {1}%
-  {0mm}%
-  {2\baselineskip}%
-  {\baselineskip}%
-{\normalfont\normalsize\bfseries\centering}}%
-
-\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}%
-
-\renewcommand{\subsection}{
-  \@startsection
-  {subsection}%
-  {2}%
-  {0mm}%
-  {2\baselineskip}%
-  {\baselineskip}%
-{\normalfont\normalsize\bfseries\itshape\centering}}%
-
-\renewcommand{\thesubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}}%
 
 \newcommand{\firstname}[1]{\gdef\@firstname{#1}}
 \newcommand{\lastname}[1]{\gdef\@lastname{#1}}
@@ -345,9 +327,6 @@ versus via with within without}
 \newcommand{\getlastnamethree}{\@lastnamethree}
 \newcommand{\getotsikko}{\@otsikko}
 \newcommand{\gettitle}{\@title}
-
-\newcommand{\printavainsanat}{\par\noindent Avainsanat: \avainsanat}
-\newcommand{\printkeywords}{\par\noindent Keywords: \keywords}
 
 \newcommand{\thesis}[1]{\gdef\@thesis{#1}}
 \newcommand{\getthesis}{\@thesis}
@@ -374,9 +353,18 @@ versus via with within without}
 \newcommand{\cityname}{}
 \newcommand{\universitylogo}{Figures/logo-en.png}
 
-\newcommand{\keywords}{}
-\newcommand{\avainsanat}{}
-\newcommand{\allkeywords}{\keywords, \avainsanat}
+\newcommand{\keywordsmetadata}{}%
+\newcommand{\keywords}[1]{\renewcommand*{\keywordsmetadata}{#1}}
+
+\newcommand{\avainsanatmetadata}{}%
+\newcommand{\avainsanat}[1]{\renewcommand*{\avainsanatmetadata}{#1}}
+
+% Define abstract content storage
+\long\def\abstractmetadata{}
+\long\def\tiivistelmametadata{}
+% User-facing macros for defining abstract text
+\long\def\abstract#1{\long\def\abstractmetadata{#1}}
+\long\def\tiivistelma#1{\long\def\tiivistelmametadata{#1}}
 
 % Add macros for thesis type in English and Finnish
 \newcommand{\thesistypeenglish}{%
@@ -390,7 +378,7 @@ versus via with within without}
   \renewcommand{\facultyname}{TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA}
   \renewcommand{\degreeprogramme}{Tietotekniikan tutkinto-ohjelma}
   \renewcommand{\thesistypetitle}{\thesistypefinnish}
-  \renewcommand{\maintitle}{\@otsikko}
+  \renewcommand{\maintitle}{\getotsikko}
   \renewcommand{\universityname}{Oulun yli\-opis\-to}
   \renewcommand{\pagelabel}{s.}
   \renewcommand{\headerforeword}{ALKULAUSE}
@@ -405,7 +393,7 @@ versus via with within without}
   \renewcommand{\degreeprogramme}{Degree Programme in Computer
   Science and Engineering}
   \renewcommand{\thesistypetitle}{\thesistypeenglish}
-  \renewcommand{\maintitle}{\@title}
+  \renewcommand{\maintitle}{\gettitle}
   \renewcommand{\universityname}{University of Oulu}
   \renewcommand{\pagelabel}{p.}
   \renewcommand{\headerforeword}{FOREWORD}
@@ -476,63 +464,51 @@ versus via with within without}
 \setlength{\cftaftertoctitleskip}{8mm}
 \renewcommand{\cftdotsep}{0.2}
 
-\newenvironment{abstractpage}[2]{%
-  \newpage
-  \addtocontents{toc}{\protect\contentsline{chapter}{#1}{}{page.\thepage}}
-  % Metadata first (not bold)
-  {\noindent#2\par\vspace{2em}}
-  % Heading, carefully scoped to avoid leaking bold style
-  {\begingroup
-    \centering
-    \normalfont\bfseries\fontsize{14}{17}\selectfont
-    \MakeUppercase{#1}\par
-    \endgroup
-    \vspace{1em}
-    \noindent
-  }
-}{}
-
-\newcommand{\englishabstractmetadata}{%
+\newcommand{\englishabstracttitle}{%
   {\textbf{\getauthorsabstractacta\ (\the\year) \titlecap{\@title}}. University of Oulu, Degree Programme in Computer Science and Engineering, \shownumberofpages~p.}
 }
 
-% Finnish metadata
-\newcommand{\finnishabstractmetadata}{%
-  {\textbf{\getauthorsabstractacta\ (\the\year) \@otsikko}. Oulun yli\-opis\-to, Tietotekniikan tutkinto-ohjelma, \shownumberofpages~s.}
+\newcommand{\finnishabstracttitle}{%
+  {\textbf{\getauthorsabstractacta\ (\the\year) \getotsikko}. Oulun yli\-opis\-to, Tietotekniikan tutkinto-ohjelma, \shownumberofpages~s.}
 }
 
-% Shortcut commands
-\newcommand{\abstractenglish}{}
-\newcommand{\abstractfinnish}{\begin{abstractpage}{TIIVISTELMÄ}{\finnishabstractmetadata}}
-
-\newcommand{\englishabstractmetadataieee}{%
+\newcommand{\englishabstracttitleieee}{%
   {\getauthorsabstractieee, ``\titlecap{\@title},'' \thesistypeenglish, Dept. of Computer Science, Univ. of Oulu, Oulu, Finland, \the\year.}
 }
 
-\newcommand{\finnishabstractmetadataieee}{%
-  {\getauthorsabstractieee, ``\@otsikko,'' \thesistypefinnish, Tietotekniikan koulutusohjelma, Oulun yliopisto, Oulu, Suomi, \the\year.}
+\newcommand{\finnishabstracttitleieee}{%
+  {\getauthorsabstractieee, ``\getotsikko,'' \thesistypefinnish, Tietotekniikan koulutusohjelma, Oulun yliopisto, Oulu, Suomi, \the\year.}
 }
 
 
-% Commands to print abstracts
-\newcommand{\printabstract}{%
-  \selectlanguage{english}
-  \setcounter{NAppdxPages}{\value{NAllPages}-\value{NMainTxtPages}}
-  \begin{abstractpage}{ABSTRACT}{\englishabstractmetadata}
-    {\bfseries \englishabstract
+\newenvironment{thesisabstract}[1]{%
+  \selectlanguage{#1}%
+  \setcounter{NAppdxPages}{\value{NAllPages}-\value{NMainTxtPages}}%
+  \renewcommand*{\spc}{, }
+  \ifstrequal{#1}{finnish}{%
+    \def\thesisabstract@heading{TIIVISTELMÄ}%
+    \def\thesisabstract@keywords{Avainsanat: \avainsanatmetadata}
+    \def\thesisabstract@authorline{\finnishabstracttitle}
+  }{%
+    \def\thesisabstract@heading{ABSTRACT}%
+    \def\thesisabstract@keywords{Keywords: \keywordsmetadata}%
+    \def\thesisabstract@authorline{\englishabstracttitle}
+  }%
+  \cleardoublepage
+  \noindent\thesisabstract@authorline
+  \par\vspace{2\baselineskip}%
 
-    \printkeywords}
-  \end{abstractpage}
-}
-
-\newcommand{\printtiivistelma}{%
-\selectlanguage{finnish}  
-\setcounter{NAppdxPages}{\value{NAllPages}-\value{NMainTxtPages}}
-\begin{abstractpage}{TIIVISTELMÄ}{\finnishabstractmetadata}
-    {\bfseries \finnishabstract
-
-    \printavainsanat}
-\end{abstractpage}
+  {\centering\bfseries\fontsize{14}{17}\selectfont\MakeUppercase{\thesisabstract@heading}\par}%
+  \addtocontents{toc}{\protect\contentsline{chapter}{\thesisabstract@heading}{}{page.\thepage}}
+  \vspace{1\baselineskip}
+  \@afterindentfalse\@afterheading
+  \begingroup
+  \bfseries
+  }{%
+  \endgroup
+  \par
+  \vspace{1\baselineskip}\noindent
+  \textbf{\thesisabstract@keywords}
 }
 
 %chapters without page numbering
@@ -541,12 +517,6 @@ versus via with within without}
 \addtocontents{toc}{\protect\contentsline{chapter}{#1}{}{page.\thepage} }}
 
 
-
-%page margins, and spacing
-\oddsidemargin 1.96cm      % left margin = 4.5 cm
-\evensidemargin 1.96cm
-\topmargin -0.71cm      % top margin = 2.5 cm
-\textheight 24.2cm   
 
 %page numbering
 \pagestyle{empty}
@@ -595,6 +565,9 @@ versus via with within without}
   \getauthors{, }%
 }
 
+% Helper macro to get first initial from a name
+\newcommand{\getfirstinitial}[1]{\StrChar{#1}{1}.}
+
 % Returns the list of authors, separated by \sep
 \newcommand{\getauthors}[1]{%
   \@ifempty{\@firstnametwo}{%
@@ -611,31 +584,28 @@ versus via with within without}
 %get authors for the abstract (Acta style: Surname F.)
 \newcommand{\getauthorsabstractacta}{%
   \ifthenelse{\equal{\@firstnametwo}{}}%
-    {\noindent \bf \@lastname\ \StrChar{\@firstname}{1}.}%
+    {\@lastname\ \getfirstinitial{\@firstname}}%
     {\ifthenelse{\equal{\@firstnamethree}{}}%
-      {\noindent \bf \@lastname\ \StrChar{\@firstname}{1}.,\ %
-        \@lastnametwo\ \StrChar{\@firstnametwo}{1}. \ignorespaces}%
-      {\noindent \bf \@lastname\ \StrChar{\@firstname}{1}.,\ %
-        \@lastnametwo\ \StrChar{\@firstnametwo}{1}.,\ %
-        \@lastnamethree\ \StrChar{\@firstnamethree}{1}. \ignorespaces}%
+      {\@lastname\ \getfirstinitial{\@firstname},\ %
+        \@lastnametwo\ \getfirstinitial{\@firstnametwo}}%
+      {\@lastname\ \getfirstinitial{\@firstname},\ %
+        \@lastnametwo\ \getfirstinitial{\@firstnametwo},\ %
+        \@lastnamethree\ \getfirstinitial{\@firstnamethree}}%
     }%
 }
 
 %get authors for the abstract (IEEE style: F. Lastname)
 \newcommand{\getauthorsabstractieee}{%
   \ifthenelse{\equal{\@firstnametwo}{}}%
-    {\noindent \StrChar{\@firstname}{1}.\ \@lastname}%
+    {\getfirstinitial{\@firstname}\ \@lastname}%
     {\ifthenelse{\equal{\@firstnamethree}{}}%
-      {\noindent \StrChar{\@firstname}{1}.\ \@lastname,\ %
-        \StrChar{\@firstnametwo}{1}.\ \@lastnametwo \ignorespaces}%
-      {\noindent \StrChar{\@firstname}{1}.\ \@lastname,\ %
-        \StrChar{\@firstnametwo}{1}.\ \@lastnametwo,\ %
-        \StrChar{\@firstnamethree}{1}.\ \@lastnamethree \ignorespaces}%
+      {\getfirstinitial{\@firstname}\ \@lastname,\ %
+        \getfirstinitial{\@firstnametwo}\ \@lastnametwo}%
+      {\getfirstinitial{\@firstname}\ \@lastname,\ %
+        \getfirstinitial{\@firstnametwo}\ \@lastnametwo,\ %
+        \getfirstinitial{\@firstnamethree}\ \@lastnamethree}%
     }%
 }
-
-% For backward compatibility, keep the original macro name as Acta style
-\let\getauthorsabstract\getauthorsabstractacta
 
 %signature at the bottom of foreword
 \newcommand{\signature}{
@@ -649,6 +619,7 @@ versus via with within without}
   \end{flushleft}
 }
 
+\makeatletter
 \g@addto@macro{\normalsize}{%
   \setlength{\abovedisplayskip}{0pt}
   \setlength{\abovedisplayshortskip}{0pt}
