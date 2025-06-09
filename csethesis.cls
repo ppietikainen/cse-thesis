@@ -35,6 +35,8 @@
 \usepackage{chngcntr}
 \usepackage{tocloft}
 
+\usepackage[useregional=text, british]{datetime2}
+
 \usepackage{appendix}
 \usepackage{newfile}
 
@@ -151,8 +153,7 @@
 \newcommand{\lastnametwo}[1]{\gdef\@lastnametwo{#1}}
 \newcommand{\firstnamethree}[1]{\gdef\@firstnamethree{#1}}
 \newcommand{\lastnamethree}[1]{\gdef\@lastnamethree{#1}}
-\newcommand{\otsikko}[1]{\gdef\@otsikko{#1}
-\gdef\@isotsikko{\MakeUppercase{#1}}}
+\newcommand{\otsikko}[1]{\gdef\@otsikko{#1}}
 
 \newcommand{\getfirstname}{\@firstname}
 \newcommand{\getlastname}{\@lastname}
@@ -339,8 +340,8 @@
 
 %chapters without page numbering
 \newcommand{\header}[1]{
-  \chapter{#1}}
-%\addtocontents{toc}{\protect\contentsline{chapter}{#1}{}{page.\thepage} }}
+  \chapter{#1}
+  \addtocontents{toc}{\protect\contentsline{chapter}{#1}{}{page.\thepage} }}
 
 
 
@@ -426,6 +427,11 @@
 
 \AtEndOfClass{%
   \RequirePackage{csethesis}%
+  % Location of pdfx import matters a lot
+  % It loads hyperref, which does internal links
+  % It seems to be the only working way to get PDF/A-1b
+  % compliance with all the metadata fields included
+
   \usepackage[a-1b,latxmp, mathxmp]{pdfx}[2017/05/18]
   \hypersetup{
     unicode=true,
