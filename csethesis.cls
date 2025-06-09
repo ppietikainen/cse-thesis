@@ -17,52 +17,34 @@
 % Load report class as the base
 \LoadClass[12pt,a4paper,titlepage]{report}
 
-% --- Language and hyphenation ---
-\usepackage[english,finnish]{babel} % Support for English and Finnish thesis (main.tex)
-\usepackage[english=nohyphenation,finnish=nohyphenation]{hyphsubst} % No hyphenation per instructions
+% --- Core packages only (minimal set) ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{etoolbox}
+\usepackage{ifthen}
+\usepackage{xstring}
 
-\RequirePackage{csethesis}
-
-% --- Page layout and margins ---
+% --- Essential formatting packages needed for document structure ---
 \usepackage[
-  left=4.5cm,           % left margin
-  right=2.0cm,          % right margin  
-  top=2.5cm,            % top margin
-  bottom=3.0cm,         % bottom margin
+  left=4.5cm, right=2.0cm, top=2.5cm, bottom=3.0cm
 ]{geometry}
 
-% --- Typography, layout, and sectioning ---
-\usepackage[noindentafter]{titlesec}            
-\usepackage{titletoc}            
-\usepackage{titlecaps}           
-\usepackage{etoolbox}            
-\usepackage{enumitem}            
-\usepackage{chngcntr}            
-\usepackage{tocloft}             
+\usepackage[noindentafter]{titlesec}
+\usepackage{titletoc}
+\usepackage{titlecaps}
+\usepackage{chngcntr}
+\usepackage{tocloft}
 
-% --- Figures, tables, and floats ---
-\usepackage{graphicx}            
-\usepackage{float}               
-\usepackage{placeins}            
-\usepackage{tabularx}            
-\usepackage{longtable}           
-\usepackage{subcaption}          
-\usepackage{multirow}            
-\usepackage{fancybox}            
-\usepackage{verbatim}            
+\usepackage[a-1b,latxmp, mathxmp]{pdfx}[2017/05/18]
+\hypersetup{
+unicode=true,
+pdfencoding=auto,
+hidelinks
+}
+\usepackage{appendix}
+\usepackage{newfile}
 
-% --- Math and symbols ---
-\usepackage{amsfonts}            
-
-% --- Date and time ---
-\usepackage[useregional=text, british]{datetime2} 
-
-% --- Quoting and citations ---
-\usepackage{csquotes}            
-
-% --- Utility and color profiles ---
-\usepackage{colorprofiles}       
-
+% --- Language option processing ---
 \newcommand*{\MainLang}{}
 \newcommand*{\OtherLangs}{}
 
@@ -105,47 +87,16 @@
 }
 
 \newcommand*{\shownumberofpageswithappendix}{%
-  \ifthenelse{\value{NMainTxtPages}=0}{\arabic{NAllPages}}%
   \ifnumequal{\value{NMainTxtPages}}{0}{\arabic{NAllPages}}%
   {\arabic{NMainTxtPages}+\arabic{NAppdxPages}}%
 }%
 
-
 % --- Miscellaneous ---
-\tolerance=500                   % Typographic tolerance (for line breaking)
-\setlength{\parindent}{0.5cm}
-
-
-\setlist[itemize,1]{label=\raisebox{0.2ex}{\tiny$\bullet$}}
-\setlist[itemize,2]{label=\raisebox{0.2ex}{\tiny$\bullet$}}
-
-\NeedsTeXFormat{LaTeX2e}
-\RequirePackage{appendix}
 \renewcommand{\thechapter}{Appendix \arabic{chapter}}  % Custom numbering
 \renewcommand{\appendixname}{Appendix}
 
-\RequirePackage{chngcntr}
-\counterwithout{figure}{chapter}
-\counterwithout{table}{chapter}
-\counterwithout{equation}{chapter}
 
-\renewcommand{\thefigure}{\arabic{figure}}
-\renewcommand{\thetable}{\arabic{table}}
-\renewcommand{\theequation}{\arabic{equation}}
-
-\RequirePackage{ifthen, xstring}
-
-\RequirePackage{tocloft}
-\setlength{\cftchapnumwidth}{3em}
-\setlength{\cftbeforechapskip}{1em}
-
-\widowpenalty10000
-\clubpenalty10000
-\displaywidowpenalty10000
-\hbadness=99999
-\graphicspath{{Figures/}{../Figures/}}
-\counterwithout{footnote}{chapter}
-
+%decimal comma
 \newtoggle{writexmpdatafile}
 
 \toggletrue{writexmpdatafile}
@@ -158,11 +109,6 @@
   \renewcommand{\CopyrightText}{#2}%
   \ifdef{\doclicenseURL}{\renewcommand{\pdfCopyrightURL}{\doclicenseURL}}{}%
 }%
-
-\RequirePackage[a-1b,latxmp, mathxmp]{pdfx}[2017/05/18]% Produces PDF/A 1b, 2b and 3b
-                                           % compliant pdf
-\RequirePackage{newfile}% Provides an easy interface for writing data into new
-% file (used to write metadata into file .xmpdata)
 
 \newcommand*{\spc}{\noexpand\sep}%
 
@@ -203,25 +149,6 @@
 }%
 %
 
-
-% Change these "excluded words" if you are not satisfied with titlecaps
-%http://perspectivesandprotips.blogspot.com/2014/11/using-macros-with-titlecaps-in-latex.html
-\Resetlcwords
-\Addlcwords{a an the}
-\Addlcwords{and but for or nor}
-\Addlcwords{aboard about above across %
-  after against along amid among anti %
-  around as at behind below % before
-  beneath beside besides between %
-  beyond but by concerning considering %
-  despite down during except excepting %
-  excluding following for from in %
-  inside into like minus near of off %
-  on onto opposite outside over past %
-  per plus regarding round since % save
-  than through to toward towards under %
-  underneath unlike until up upon %
-versus via with within without}
 
 \setcounter{secnumdepth}{2} % numbers up to \subsection by default
 
@@ -272,18 +199,6 @@ versus via with within without}
 \titlespacing*{\subsection}{0pt}{2\baselineskip}{\baselineskip}
 \titlespacing*{\subsubsection}{0pt}{2\baselineskip}{\baselineskip}
 
-% --------------------
-% Add period after number in TOC entries
-% --------------------
-
-\renewcommand{\cftchapaftersnum}{.}
-\renewcommand{\cftsecaftersnum}{.}
-\renewcommand{\cftsubsecaftersnum}{.}
-\renewcommand{\cftsubsubsecaftersnum}{.}
-
-%decimal comma
-\DeclareMathSymbol{,}{\mathpunct}{letters}{"3B}
-\DeclareMathSymbol{.}{\mathord}{letters}{"3B}
 %\DeclareMathSymbol{\decimal}{\mathord}{letters}{"3A}
 
 \newcommand{\firstname}[1]{\gdef\@firstname{#1}}
@@ -489,8 +404,8 @@ versus via with within without}
 
 %chapters without page numbering
 \newcommand{\header}[1]{
-  \chapter*{#1}
-\addtocontents{toc}{\protect\contentsline{chapter}{#1}{}{page.\thepage} }}
+  \chapter{#1}}
+%\addtocontents{toc}{\protect\contentsline{chapter}{#1}{}{page.\thepage} }}
 
 
 
@@ -503,20 +418,6 @@ versus via with within without}
   \def\ps@plain{\ps@myheadings} % plain pages like chapters also top right
   \makeatother
 } 
-
-\captionsetup[table]{
-  position=above,
-  justification=raggedright,
-  singlelinecheck=true,
-}
-
-% Figures
-\captionsetup[figure]{
-  justification=justified,  % full justification for long captions
-  singlelinecheck=true,     % short captions centered
-  % skip=\baselineskip
-}
-
 
 %get authors for the title page
 \newcommand{\getauthorstitle}{
@@ -588,11 +489,6 @@ versus via with within without}
   \end{flushleft}
 }
 
-\makeatletter
-\g@addto@macro{\normalsize}{%
-  \setlength{\abovedisplayskip}{0pt}
-  \setlength{\abovedisplayshortskip}{0pt}
-  \setlength{\belowdisplayskip}{12pt}
-\setlength{\belowdisplayshortskip}{12pt}}
-\makeatother
-
+\AtEndOfClass{%
+  \RequirePackage{csethesis}%
+}
