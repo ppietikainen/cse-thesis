@@ -35,12 +35,6 @@
 \usepackage{chngcntr}
 \usepackage{tocloft}
 
-\usepackage[a-1b,latxmp, mathxmp]{pdfx}[2017/05/18]
-\hypersetup{
-unicode=true,
-pdfencoding=auto,
-hidelinks
-}
 \usepackage{appendix}
 \usepackage{newfile}
 
@@ -150,56 +144,6 @@ hidelinks
 %
 
 
-\setcounter{secnumdepth}{2} % numbers up to \subsection by default
-
-% Chapter
-% Chapters are set in 14pt bold (bfseries), centered, uppercase.
-% No space before, one baseline skip after.
-\titleformat{\chapter}
-  [hang]
-  {\normalfont\bfseries\fontsize{14}{17}\selectfont\centering}
-  {\thechapter.}
-  {1em}
-  {\MakeUppercase}
-
-\renewcommand{\thechapter}{\arabic{chapter}}
-
-% Section
-% Sections are 12pt bold (bfseries), left-aligned, normal font.
-% 2 baseline skips before and 1 after.
-\titleformat{\section}
-  [hang]
-  {\normalfont\bfseries\fontsize{12}{15}\selectfont\centering}
-  {\thesection.}
-  {1em}
-  {}
-
-% Subsection
-% Subsections are bold italic (bfseries, itshape), normal font size,
-% with 2 baseline skips before and 1 after.
-\titleformat{\subsection}
-  [hang]
-  {\normalfont\bfseries\itshape\centering}
-  {\thesubsection.}
-  {1em}
-  {}
-
-% Subsubsection
-% Subsubsections are italic (itshape), normal font size,
-% with 2 baseline skips before and 1 after.
-\titleformat{\subsubsection}
-  [hang]
-  {\normalfont\itshape\centering}
-  {\thesubsubsection.}
-  {1em}
-  {}
-
-\titlespacing*{\chapter}{0pt}{0pt}{\baselineskip}
-\titlespacing*{\section}{0pt}{2\baselineskip}{\baselineskip}
-\titlespacing*{\subsection}{0pt}{2\baselineskip}{\baselineskip}
-\titlespacing*{\subsubsection}{0pt}{2\baselineskip}{\baselineskip}
-
-%\DeclareMathSymbol{\decimal}{\mathord}{letters}{"3A}
 
 \newcommand{\firstname}[1]{\gdef\@firstname{#1}}
 \newcommand{\lastname}[1]{\gdef\@lastname{#1}}
@@ -345,15 +289,6 @@ hidelinks
   \setlength{\parskip}{\temp}
 }
 
-\setcounter{tocdepth}{2}
-\renewcommand{\cfttoctitlefont}{\hfill\normalfont\large\bfseries}
-\renewcommand{\cftaftertoctitle}{\hfill\hfill}
-\renewcommand{\cftchapfont}{}
-\renewcommand{\cftchappagefont}{}
-\setlength{\cftbeforechapskip}{0mm}
-\setlength{\cftbeforetoctitleskip}{0mm}
-\setlength{\cftaftertoctitleskip}{8mm}
-\renewcommand{\cftdotsep}{0.2}
 
 \newcommand{\englishabstracttitle}{%
   {\textbf{\getauthorsabstractacta\ (\the\year) \titlecap{\@title}}. University of Oulu, Degree Programme in Computer Science and Engineering, \shownumberofpages~p.}
@@ -491,4 +426,10 @@ hidelinks
 
 \AtEndOfClass{%
   \RequirePackage{csethesis}%
+  \usepackage[a-1b,latxmp, mathxmp]{pdfx}[2017/05/18]
+  \hypersetup{
+    unicode=true,
+    pdfencoding=auto,
+    hidelinks
+  }
 }

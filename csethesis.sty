@@ -91,10 +91,69 @@
 }
 
 % TOC configuration
+\setcounter{tocdepth}{2}
 \renewcommand{\cftchapaftersnum}{.}
 \renewcommand{\cftsecaftersnum}{.}
 \renewcommand{\cftsubsecaftersnum}{.}
 \renewcommand{\cftsubsubsecaftersnum}{.}
+\renewcommand{\cfttoctitlefont}{\hfill\normalfont\large\bfseries}
+\renewcommand{\cftaftertoctitle}{\hfill\hfill}
+\renewcommand{\cftchapfont}{}
+\renewcommand{\cftchappagefont}{}
+\setlength{\cftbeforechapskip}{0mm}
+\setlength{\cftbeforetoctitleskip}{0mm}
+\setlength{\cftaftertoctitleskip}{8mm}
+\renewcommand{\cftdotsep}{0.2}
+
+% Chapter
+% Chapters are set in 14pt bold (bfseries), centered, uppercase.
+% No space before, one baseline skip after.
+\titleformat{\chapter}
+  [hang]
+  {\normalfont\bfseries\fontsize{14}{17}\selectfont\centering}
+  {\thechapter.}
+  {1em}
+  {\MakeUppercase}
+
+\renewcommand{\thechapter}{\arabic{chapter}}
+
+% Section
+% Sections are 12pt bold (bfseries), left-aligned, normal font.
+% 2 baseline skips before and 1 after.
+\titleformat{\section}
+  [hang]
+  {\normalfont\bfseries\fontsize{12}{15}\selectfont\centering}
+  {\thesection.}
+  {1em}
+  {}
+
+% Subsection
+% Subsections are bold italic (bfseries, itshape), normal font size,
+% with 2 baseline skips before and 1 after.
+\titleformat{\subsection}
+  [hang]
+  {\normalfont\bfseries\itshape\centering}
+  {\thesubsection.}
+  {1em}
+  {}
+\setcounter{secnumdepth}{2} % numbers up to \subsection by default
+
+% Subsubsection
+% Subsubsections are italic (itshape), normal font size,
+% with 2 baseline skips before and 1 after.
+\titleformat{\subsubsection}
+  [hang]
+  {\normalfont\itshape\centering}
+  {\thesubsubsection.}
+  {1em}
+  {}
+
+\titlespacing*{\chapter}{0pt}{0pt}{\baselineskip}
+\titlespacing*{\section}{0pt}{2\baselineskip}{\baselineskip}
+\titlespacing*{\subsection}{0pt}{2\baselineskip}{\baselineskip}
+\titlespacing*{\subsubsection}{0pt}{2\baselineskip}{\baselineskip}
+
+%\DeclareMathSymbol{\decimal}{\mathord}{letters}{"3A}
 
 % Bullet configuration
 \setlist[itemize,1]{label=\raisebox{0.2ex}{\tiny$\bullet$}}
