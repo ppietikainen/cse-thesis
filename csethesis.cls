@@ -11,13 +11,17 @@
 % Several inspirations come from from Aalto University
 % aaltothesis.cls by Luis R.J. Costa
 
-\ProvidesPackage{di}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{csethesis}[2025/06/09 Diploma Thesis Class]
 
-% --- Encoding and fonts: Required for correct character rendering and thesis typography ---
-\usepackage[utf8]{inputenc}      % UTF-8 encoding for international characters
-\usepackage[T1]{fontenc}         % Output font encoding for accented characters
-\usepackage{lmodern}             % Latin Modern font as required by thesis typography
-\usepackage{newtxtext, newtxmath} % Improved text and math font for readability
+% Load report class as the base
+\LoadClass[12pt,a4paper,titlepage]{report}
+
+% --- Language and hyphenation ---
+\usepackage[english,finnish]{babel} % Support for English and Finnish thesis (main.tex)
+\usepackage[english=nohyphenation,finnish=nohyphenation]{hyphsubst} % No hyphenation per instructions
+
+\RequirePackage{csethesis}
 
 % --- Page layout and margins ---
 \usepackage[
@@ -27,52 +31,37 @@
   bottom=3.0cm,         % bottom margin
 ]{geometry}
 
-% --- Language and hyphenation ---
-\usepackage[english,finnish]{babel} % Support for English and Finnish thesis (main.tex)
-\usepackage[english=nohyphenation,finnish=nohyphenation]{hyphsubst} % No hyphenation per instructions
-
 % --- Typography, layout, and sectioning ---
-\usepackage[noindentafter]{titlesec}            % Custom section/chapter formatting (font size, bold, spacing)
-\usepackage{titletoc}            % Custom table of contents formatting
-\usepackage{titlecaps}           % Title capitalization for headings as per instructions
-\usepackage{etoolbox}            % Utility for macro programming (used in title formatting)
-\usepackage{enumitem}            % Customization of itemize/enumerate (bullet style per instructions)
-\usepackage{chngcntr}            % For resetting counters (figures/tables per chapter)
-\usepackage{tocloft}             % Customization of TOC/LOF/LOT appearance
+\usepackage[noindentafter]{titlesec}            
+\usepackage{titletoc}            
+\usepackage{titlecaps}           
+\usepackage{etoolbox}            
+\usepackage{enumitem}            
+\usepackage{chngcntr}            
+\usepackage{tocloft}             
 
 % --- Figures, tables, and floats ---
-\usepackage{graphicx}            % Required for including figures
-\usepackage{float}               % Improved float placement (figures/tables as per instructions)
-\usepackage{placeins}            % Ensures floats stay within chapters/sections
-\usepackage{tabularx}            % Flexible tables (table layout as per instructions)
-\usepackage{longtable}           % Tables spanning multiple pages
-\usepackage{subcaption}          % Subfigures/subtables
-\usepackage{multirow}            % Multirow cells in tables
-\usepackage{fancybox}            % For boxed content (used in some thesis layouts)
-\usepackage{verbatim}            % For including verbatim text/code
+\usepackage{graphicx}            
+\usepackage{float}               
+\usepackage{placeins}            
+\usepackage{tabularx}            
+\usepackage{longtable}           
+\usepackage{subcaption}          
+\usepackage{multirow}            
+\usepackage{fancybox}            
+\usepackage{verbatim}            
 
 % --- Math and symbols ---
-\usepackage{amsfonts}            % Additional math fonts (for equations, as per instructions)
-
-% --- Algorithms ---
-\usepackage[linesnumbered, ruled]{algorithm2e} % For writing algorithms (see writing instructions)
-
-% --- Bibliography ---
-\usepackage[backend=biber,
-  style=ieee,
-  doi=true,
-  urldate=long,
-  url=true]{biblatex}            % IEEE bibliography style, running numbering, BibLaTeX as required
+\usepackage{amsfonts}            
 
 % --- Date and time ---
-\usepackage[useregional=text, british]{datetime2} % Date formatting for title page and signature
+\usepackage[useregional=text, british]{datetime2} 
 
 % --- Quoting and citations ---
-\usepackage{csquotes}            % Recommended for correct quotation marks in citations
+\usepackage{csquotes}            
 
 % --- Utility and color profiles ---
-\usepackage{import}              % For importing files (used in some thesis structures)
-\usepackage{colorprofiles}       % For PDF/A compliance (required for electronic thesis submission)
+\usepackage{colorprofiles}       
 
 \newcommand*{\MainLang}{}
 \newcommand*{\OtherLangs}{}
@@ -89,8 +78,6 @@
 }
 
 \ProcessOptions\relax
-
-\RequirePackage{ifthen, xstring}
 
 \newcommand*{\IfEng}[3]{\ifdefstring{#1}{english}{#2}{#3}}%
 \newcommand*{\IfFin}[3]{\ifdefstring{#1}{finnish}{#2}{#3}}%
@@ -115,9 +102,12 @@
 
 \newcommand*{\shownumberofpages}{%
   \arabic{NAllPages}
-%  \ifthenelse{\value{NMainTxtPages}=0}{\arabic{NAllPages}}%
-%  \ifnumequal{\value{NMainTxtPages}}{0}{\arabic{NAllPages}}%
-% 	{\arabic{NMainTxtPages}+\arabic{NAppdxPages}}%
+}
+
+\newcommand*{\shownumberofpageswithappendix}{%
+  \ifthenelse{\value{NMainTxtPages}=0}{\arabic{NAllPages}}%
+  \ifnumequal{\value{NMainTxtPages}}{0}{\arabic{NAllPages}}%
+  {\arabic{NMainTxtPages}+\arabic{NAppdxPages}}%
 }%
 
 
@@ -128,20 +118,6 @@
 
 \setlist[itemize,1]{label=\raisebox{0.2ex}{\tiny$\bullet$}}
 \setlist[itemize,2]{label=\raisebox{0.2ex}{\tiny$\bullet$}}
-
-\DefineBibliographyStrings{finnish}{
-  chapter      = luku,
-  editor       = toim\adddot,
-  editors      = toim\adddot,
-  mathesis     = Pro gradu -tutkielma,
-  patentjp     = Japanin patentti,
-  patentus     = Yhdysvaltain patentti,
-  phdthesis    = Väitöskirja,
-  presentedat  = esitetty,
-  techreport   = Tekninen raportti,
-  url          = [Online]\adddot\addspace Saatavilla,
-  urlseen      = Viitattu\addcolon
-}
 
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{appendix}
@@ -387,7 +363,6 @@ versus via with within without}
   \renewcommand{\mybibname}{Viitteet}
   \renewcommand{\cityname}{Oulussa }
   \renewcommand{\universitylogo}{Figures/logo-fi.png}
-  \renewcommand{\algorithmcfname}{Algoritmi}
 }{
   \renewcommand{\facultyname}{FACULTY OF INFORMATION TECHNOLOGY AND
   ELECTRICAL ENGINEERING}
@@ -543,13 +518,6 @@ versus via with within without}
 }
 
 
-% algorithm
-%\renewcommand{\@algocf@capt@plain}{above}
-%\renewcommand{\algocf@caption@plain}{\box\algocf@capbox\vskip\AlCapSkip}
-\SetAlCapSty{}
-\SetAlgoCaptionSeparator{.}
-%\SetAlCapSkip{2mm}
-
 %get authors for the title page
 \newcommand{\getauthorstitle}{
   \begin{tabular}[t]{c}
@@ -628,9 +596,3 @@ versus via with within without}
 \setlength{\belowdisplayshortskip}{12pt}}
 \makeatother
 
-% Moved from dithesis.cls, eqref is from amsmath so renew
-\newcommand{\figref}[1]{Figure~\ref{#1}}
-\renewcommand{\eqref}[1]{Equation~(\ref{#1})}
-\newcommand{\tabref}[1]{Table~\ref{#1}}
-\newcommand{\charef}[1]{Chapter~\ref{#1}}
-\newcommand{\secref}[1]{Section~\ref{#1}}

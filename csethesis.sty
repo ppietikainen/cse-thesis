@@ -1,0 +1,50 @@
+\ProvidesPackage{csethesis}
+
+% --- Encoding and fonts: Required for correct character rendering and thesis typography ---
+\usepackage[utf8]{inputenc}      % UTF-8 encoding for international characters
+\usepackage[T1]{fontenc}         % Output font encoding for accented characters
+\usepackage{lmodern}             % Latin Modern font as required by thesis typography
+\usepackage{newtxtext, newtxmath} % Improved text and math font for readability
+
+% --- Bibliography ---
+\usepackage[backend=biber,
+  style=ieee,
+  doi=true,
+  urldate=long,
+  url=true]{biblatex}            
+
+\usepackage{import}              
+
+\DefineBibliographyStrings{finnish}{
+  chapter      = luku,
+  editor       = toim\adddot,
+  editors      = toim\adddot,
+  mathesis     = Pro gradu -tutkielma,
+  patentjp     = Japanin patentti,
+  patentus     = Yhdysvaltain patentti,
+  phdthesis    = Väitöskirja,
+  presentedat  = esitetty,
+  techreport   = Tekninen raportti,
+  url          = [Online]\adddot\addspace Saatavilla,
+  urlseen      = Viitattu\addcolon
+}
+
+% --- Algorithms ---
+\usepackage[linesnumbered, ruled]{algorithm2e}
+
+% algorithm
+%\renewcommand{\@algocf@capt@plain}{above}
+%\renewcommand{\algocf@caption@plain}{\box\algocf@capbox\vskip\AlCapSkip}
+\SetAlCapSty{}
+\SetAlgoCaptionSeparator{.}
+%\SetAlCapSkip{2mm}
+\addto\captionsfinnish{%
+  \renewcommand{\algorithmcfname}{Algoritmi}%
+}
+
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+\renewcommand{\eqref}[1]{Equation~(\ref{#1})}
+\newcommand{\tabref}[1]{Table~\ref{#1}}
+\newcommand{\charef}[1]{Chapter~\ref{#1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}
+
