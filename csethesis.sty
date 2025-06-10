@@ -9,10 +9,10 @@
 \usepackage{float}
 \usepackage{placeins}
 \usepackage{tabularx}
-\usepackage{longtable}
 \usepackage{subcaption}
 \usepackage{multirow}
 \usepackage{caption}
+\usepackage{tocloft}
 
 \usepackage{amsfonts}
 \usepackage{amsmath}
@@ -89,10 +89,6 @@
 
 % TOC configuration
 \setcounter{tocdepth}{2}
-\renewcommand{\cftchapaftersnum}{.}
-\renewcommand{\cftsecaftersnum}{.}
-\renewcommand{\cftsubsecaftersnum}{.}
-\renewcommand{\cftsubsubsecaftersnum}{.}
 \renewcommand{\cfttoctitlefont}{\hfill\normalfont\large\bfseries}
 \renewcommand{\cftaftertoctitle}{\hfill\hfill}
 \renewcommand{\cftchapfont}{}
@@ -102,17 +98,31 @@
 \setlength{\cftaftertoctitleskip}{8mm}
 \renewcommand{\cftdotsep}{0.2}
 
+\makeatletter
+\let\oldl@chapter\l@chapter
+\renewcommand*\l@chapter[2]{\oldl@chapter{\MakeUppercase{#1}}{#2}}
+\makeatother
+
+\newcommand{\enabletocdots}{
+  \addtocontents{toc}{\protect\renewcommand{\protect\cftchapleader}{\protect\cftdotfill{\cftdotsep}}}
+}
+% Instead of \cftchapaftersnum{.}, directly control the numbering style:
+
+\renewcommand{\thechapter}{\arabic{chapter}.}
+\renewcommand{\thesection}{\thechapter\arabic{section}.}
+\renewcommand{\thesubsection}{\thesection\arabic{subsection}.}
+\renewcommand{\thesubsubsection}{\thesubsection\arabic{subsubsection}.}
+
+
 % Chapter
 % Chapters are set in 14pt bold (bfseries), centered, uppercase.
 % No space before, one baseline skip after.
 \titleformat{\chapter}
   [hang]
   {\normalfont\bfseries\fontsize{14}{17}\selectfont\centering}
-  {\thechapter.}
+  {\thechapter}
   {1em}
   {\MakeUppercase}
-
-\renewcommand{\thechapter}{\arabic{chapter}}
 
 % Section
 % Sections are 12pt bold (bfseries), left-aligned, normal font.
@@ -120,7 +130,7 @@
 \titleformat{\section}
   [hang]
   {\normalfont\bfseries\fontsize{12}{15}\selectfont\centering}
-  {\thesection.}
+  {\thesection}
   {1em}
   {}
 
@@ -130,7 +140,7 @@
 \titleformat{\subsection}
   [hang]
   {\normalfont\bfseries\itshape\centering}
-  {\thesubsection.}
+  {\thesubsection}
   {1em}
   {}
 \setcounter{secnumdepth}{2} % numbers up to \subsection by default
@@ -141,7 +151,7 @@
 \titleformat{\subsubsection}
   [hang]
   {\normalfont\itshape\centering}
-  {\thesubsubsection.}
+  {\thesubsubsection}
   {1em}
   {}
 

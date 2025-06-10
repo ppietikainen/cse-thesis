@@ -30,15 +30,21 @@
 ]{geometry}
 
 \usepackage[noindentafter]{titlesec}
-\usepackage{titletoc}
 \usepackage{titlecaps}
 \usepackage{chngcntr}
-\usepackage{tocloft}
-
 \usepackage[useregional=text, british]{datetime2}
-
 \usepackage{appendix}
 \usepackage{newfile}
+
+% Footnotes in longtable require it to be loaded before pdfx, otherwise
+% should be in .sty
+\usepackage{longtable}
+\usepackage[a-1b,latxmp, mathxmp]{pdfx}[2017/05/18]
+\hypersetup{
+  unicode=true,
+  pdfencoding=auto,
+  hidelinks
+}
 
 % --- Language option processing ---
 \newcommand*{\MainLang}{}
@@ -71,7 +77,9 @@
 }
 
 \newcommand{\startappendix}{%
-\stor@maintxtpag@number%
+  \stor@maintxtpag@number%
+%  \renewcommand{\thechapter}{Appendix \arabic{chapter}}  % Custom numbering
+  \renewcommand{\appendixname}{Appendix}
 }
 
 \AtEndDocument{%
@@ -88,8 +96,6 @@
 }%
 
 % --- Miscellaneous ---
-\renewcommand{\thechapter}{Appendix \arabic{chapter}}  % Custom numbering
-\renewcommand{\appendixname}{Appendix}
 
 \newtoggle{writexmpdatafile}
 
@@ -338,7 +344,7 @@
 
 %chapters without page numbering
 \newcommand{\header}[1]{
-  \chapter{#1}
+  \chapter*{#1}
   \addtocontents{toc}{\protect\contentsline{chapter}{#1}{}{page.\thepage} }}
 
 
@@ -425,14 +431,4 @@
 
 \AtEndOfClass{%
   \RequirePackage{csethesis}%
-  % Location of pdfx import matters a lot
-  % It loads hyperref, which does internal links
-  % It seems to be the only working way to get PDF/A-1b
-  % compliance with all the metadata fields included
-  \usepackage[a-1b,latxmp, mathxmp]{pdfx}[2017/05/18]
-  \hypersetup{
-    unicode=true,
-    pdfencoding=auto,
-    hidelinks
-  }
 }
