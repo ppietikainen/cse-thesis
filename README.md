@@ -16,7 +16,7 @@ Contributors to the template include:
 We kindly ask for students using this template to improve this template,
 and share the improvements, so that others may benefit.
 
-This template is distributed to students via Overleaf and https://github.com/ouspg/cse-thesis is synchronized with it. Issues and pull requests can be made to GitHub
+This template is distributed to students via Overleaf and https://github.com/ouspg/cse-thesis is synchronized with it. Issues and pull requests can be made to GitHub.
 
 ### FILES AND FOLDERS
  * Figures
@@ -24,21 +24,30 @@ This template is distributed to students via Overleaf and https://github.com/ous
  * Chapters
    * This folder holds all the chapters that are added to the main file. To create more chapters simply create a .tex file in the chapters folder and input it in the main.tex file.
  * citations.bib
-   * This holds all the bibtex citations. When searching for references online, use the "bibtex" form of citation.
- * di.bst
-   * This holds the style for the bibliography. No need to go here.
- * di.sty
+   * This holds all the bibtex citations. Use a reference manager like Zotero and use the "bibtex" form of citation when exporting from it. 
+ * csethesis.sty
    * This is a package holds most of the scripts and style.
- * dithesis.cls
+ * csethesis.cls
    * Similar to di.sty, holds scripts and style.
  * LICENSE
    * The license.
  * main.tex
    * The main file. Input your information and files here.
+ * ieee.bbx v1.4e 2025-03-14
+   * This is needed to make @online citations comply with the IEEE style. TexLive 2025 should ship this, so can be removed once Overleaf has it
+ * doclicense-csetemplate.sty, doclicense-images, doclicense-finnish.ldf
+   * PDF/A-compatible CC license logos and .sty-file that looks for them in separate directory
+     * Generated with gs -dPDFA -dBATCH -dNOPAUSE -sColorConversionStrategy=UseDeviceIndependentColor -sDEVICE=pdfwrite -dPDFACompatibilityPolicy=2 -sOutputFile="$@" "$@.in.pdf"
+   * Finnish translations to doclicense
  * README.md
    * This file!
 
 ### LoC
+ * 2025-06-09 Pekka Pietikäinen
+   * Big refactoring
+   * IEEE citation style using biblatex & biber
+     * Citations exported from Zotero should have doi, accessed etc. correctly!
+   * PDF/A support with metadata
  * 2019-06-06 Tuomas Holmberg and Tuomas Varanka
    * Cleanups 
    * Moved github version to Overleaf
@@ -61,7 +70,6 @@ This template is distributed to students via Overleaf and https://github.com/ous
 
 ### TODO   
  * See Issues (are the ones below relevant anymore?)
- * Accessed time in url in citations automatically. (author=..., accessed=...)
  * Automatic sorting in list of abbreviations and symbols
  * Improve TitleCaps
  * Clean up algorithm environment (ifelse finnish)

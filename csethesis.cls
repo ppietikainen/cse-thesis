@@ -91,8 +91,6 @@
 \renewcommand{\thechapter}{Appendix \arabic{chapter}}  % Custom numbering
 \renewcommand{\appendixname}{Appendix}
 
-
-%decimal comma
 \newtoggle{writexmpdatafile}
 
 \toggletrue{writexmpdatafile}
@@ -431,7 +429,6 @@
   % It loads hyperref, which does internal links
   % It seems to be the only working way to get PDF/A-1b
   % compliance with all the metadata fields included
-
   \usepackage[a-1b,latxmp, mathxmp]{pdfx}[2017/05/18]
   \hypersetup{
     unicode=true,
