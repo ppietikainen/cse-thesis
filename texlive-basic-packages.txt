@@ -34,8 +34,9 @@ xcolor		      # Color support
 # collection-latex-extra
 fmtcount
 enumitem
-
 ccicons
 doclicense
 newfile
 xifthen
+# This gets pulled by hyperref randomly depending on environment
+puenc-greek
