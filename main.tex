@@ -9,8 +9,7 @@
 % 2023-06-15: Example of a CC-BY figure added with reference in the footnotes (TTo)
 
 
-\documentclass[a4paper, 12pt, titlepage]{report}
-\usepackage[finnish]{di}
+\documentclass[finnish]{csethesis}
 
 \usepackage[type={CC}, modifier={by}, version={4.0}]{doclicense-csetemplate}
 
@@ -98,7 +97,7 @@
     \input{Chapters/abbreviations}
     
     %sets the dots for numbered chapters in table of contents
-    \addtocontents{toc}{\protect\renewcommand{\protect\cftchapleader}{\protect\cftdotfill{\cftdotsep}}}
+    \enabletocdots
 
     \chapter{Introduction} %Set the name of a new chapter
         \label{introduction} %Create a label for referencing purposes (\charef{.})

@@ -11,69 +11,42 @@
 % Several inspirations come from from Aalto University
 % aaltothesis.cls by Luis R.J. Costa
 
-\ProvidesPackage{di}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{csethesis}[2025/06/09 Diploma Thesis Class]
 
-% --- Encoding and fonts: Required for correct character rendering and thesis typography ---
-\usepackage[utf8]{inputenc}      % UTF-8 encoding for international characters
-\usepackage[T1]{fontenc}         % Output font encoding for accented characters
-\usepackage{lmodern}             % Latin Modern font as required by thesis typography
-\usepackage{newtxtext, newtxmath} % Improved text and math font for readability
+% Load report class as the base
+\LoadClass[12pt,a4paper,titlepage]{report}
 
-% --- Page layout and margins ---
+% --- Core packages only (minimal set) ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{etoolbox}
+\usepackage{ifthen}
+\usepackage{xstring}
+
+% --- Essential formatting packages needed for document structure ---
 \usepackage[
-  left=4.5cm,           % left margin
-  right=2.0cm,          % right margin  
-  top=2.5cm,            % top margin
-  bottom=3.0cm,         % bottom margin
+  left=4.5cm, right=2.0cm, top=2.5cm, bottom=3.0cm
 ]{geometry}
 
-% --- Language and hyphenation ---
-\usepackage[english,finnish]{babel} % Support for English and Finnish thesis (main.tex)
-\usepackage[english=nohyphenation,finnish=nohyphenation]{hyphsubst} % No hyphenation per instructions
+\usepackage[noindentafter]{titlesec}
+\usepackage{titlecaps}
+\usepackage{chngcntr}
+\usepackage[useregional=text, british]{datetime2}
+\usepackage{appendix}
+\usepackage{newfile}
 
-% --- Typography, layout, and sectioning ---
-\usepackage[noindentafter]{titlesec}            % Custom section/chapter formatting (font size, bold, spacing)
-\usepackage{titletoc}            % Custom table of contents formatting
-\usepackage{titlecaps}           % Title capitalization for headings as per instructions
-\usepackage{etoolbox}            % Utility for macro programming (used in title formatting)
-\usepackage{enumitem}            % Customization of itemize/enumerate (bullet style per instructions)
-\usepackage{chngcntr}            % For resetting counters (figures/tables per chapter)
-\usepackage{tocloft}             % Customization of TOC/LOF/LOT appearance
+% Footnotes in longtable require it to be loaded before pdfx, otherwise
+% should be in .sty
+\usepackage{longtable}
+\usepackage[a-1b,latxmp, mathxmp]{pdfx}[2017/05/18]
+\hypersetup{
+  unicode=true,
+  pdfencoding=auto,
+  hidelinks
+}
 
-% --- Figures, tables, and floats ---
-\usepackage{graphicx}            % Required for including figures
-\usepackage{float}               % Improved float placement (figures/tables as per instructions)
-\usepackage{placeins}            % Ensures floats stay within chapters/sections
-\usepackage{tabularx}            % Flexible tables (table layout as per instructions)
-\usepackage{longtable}           % Tables spanning multiple pages
-\usepackage{subcaption}          % Subfigures/subtables
-\usepackage{multirow}            % Multirow cells in tables
-\usepackage{fancybox}            % For boxed content (used in some thesis layouts)
-\usepackage{verbatim}            % For including verbatim text/code
-
-% --- Math and symbols ---
-\usepackage{amsfonts}            % Additional math fonts (for equations, as per instructions)
-
-% --- Algorithms ---
-\usepackage[linesnumbered, ruled]{algorithm2e} % For writing algorithms (see writing instructions)
-
-% --- Bibliography ---
-\usepackage[backend=biber,
-  style=ieee,
-  doi=true,
-  urldate=long,
-  url=true]{biblatex}            % IEEE bibliography style, running numbering, BibLaTeX as required
-
-% --- Date and time ---
-\usepackage[useregional=text, british]{datetime2} % Date formatting for title page and signature
-
-% --- Quoting and citations ---
-\usepackage{csquotes}            % Recommended for correct quotation marks in citations
-
-% --- Utility and color profiles ---
-\usepackage{import}              % For importing files (used in some thesis structures)
-\usepackage{colorprofiles}       % For PDF/A compliance (required for electronic thesis submission)
-
+% --- Language option processing ---
 \newcommand*{\MainLang}{}
 \newcommand*{\OtherLangs}{}
 
@@ -90,8 +63,6 @@
 
 \ProcessOptions\relax
 
-\RequirePackage{ifthen, xstring}
-
 \newcommand*{\IfEng}[3]{\ifdefstring{#1}{english}{#2}{#3}}%
 \newcommand*{\IfFin}[3]{\ifdefstring{#1}{finnish}{#2}{#3}}%
 \newcommand{\IfLang}[4]{%
@@ -106,7 +77,9 @@
 }
 
 \newcommand{\startappendix}{%
-\stor@maintxtpag@number%
+  \stor@maintxtpag@number%
+%  \renewcommand{\thechapter}{Appendix \arabic{chapter}}  % Custom numbering
+  \renewcommand{\appendixname}{Appendix}
 }
 
 \AtEndDocument{%
@@ -115,60 +88,14 @@
 
 \newcommand*{\shownumberofpages}{%
   \arabic{NAllPages}
-%  \ifthenelse{\value{NMainTxtPages}=0}{\arabic{NAllPages}}%
-%  \ifnumequal{\value{NMainTxtPages}}{0}{\arabic{NAllPages}}%
-% 	{\arabic{NMainTxtPages}+\arabic{NAppdxPages}}%
-}%
-
-
-% --- Miscellaneous ---
-\tolerance=500                   % Typographic tolerance (for line breaking)
-\setlength{\parindent}{0.5cm}
-
-
-\setlist[itemize,1]{label=\raisebox{0.2ex}{\tiny$\bullet$}}
-\setlist[itemize,2]{label=\raisebox{0.2ex}{\tiny$\bullet$}}
-
-\DefineBibliographyStrings{finnish}{
-  chapter      = luku,
-  editor       = toim\adddot,
-  editors      = toim\adddot,
-  mathesis     = Pro gradu -tutkielma,
-  patentjp     = Japanin patentti,
-  patentus     = Yhdysvaltain patentti,
-  phdthesis    = Väitöskirja,
-  presentedat  = esitetty,
-  techreport   = Tekninen raportti,
-  url          = [Online]\adddot\addspace Saatavilla,
-  urlseen      = Viitattu\addcolon
 }
 
-\NeedsTeXFormat{LaTeX2e}
-\RequirePackage{appendix}
-\renewcommand{\thechapter}{Appendix \arabic{chapter}}  % Custom numbering
-\renewcommand{\appendixname}{Appendix}
+\newcommand*{\shownumberofpageswithappendix}{%
+  \ifnumequal{\value{NMainTxtPages}}{0}{\arabic{NAllPages}}%
+  {\arabic{NMainTxtPages}+\arabic{NAppdxPages}}%
+}%
 
-\RequirePackage{chngcntr}
-\counterwithout{figure}{chapter}
-\counterwithout{table}{chapter}
-\counterwithout{equation}{chapter}
-
-\renewcommand{\thefigure}{\arabic{figure}}
-\renewcommand{\thetable}{\arabic{table}}
-\renewcommand{\theequation}{\arabic{equation}}
-
-\RequirePackage{ifthen, xstring}
-
-\RequirePackage{tocloft}
-\setlength{\cftchapnumwidth}{3em}
-\setlength{\cftbeforechapskip}{1em}
-
-\widowpenalty10000
-\clubpenalty10000
-\displaywidowpenalty10000
-\hbadness=99999
-\graphicspath{{Figures/}{../Figures/}}
-\counterwithout{footnote}{chapter}
+% --- Miscellaneous ---
 
 \newtoggle{writexmpdatafile}
 
@@ -182,11 +109,6 @@
   \renewcommand{\CopyrightText}{#2}%
   \ifdef{\doclicenseURL}{\renewcommand{\pdfCopyrightURL}{\doclicenseURL}}{}%
 }%
-
-\RequirePackage[a-1b,latxmp, mathxmp]{pdfx}[2017/05/18]% Produces PDF/A 1b, 2b and 3b
-                                           % compliant pdf
-\RequirePackage{newfile}% Provides an easy interface for writing data into new
-% file (used to write metadata into file .xmpdata)
 
 \newcommand*{\spc}{\noexpand\sep}%
 
@@ -228,87 +150,6 @@
 %
 
 
-% Change these "excluded words" if you are not satisfied with titlecaps
-%http://perspectivesandprotips.blogspot.com/2014/11/using-macros-with-titlecaps-in-latex.html
-\Resetlcwords
-\Addlcwords{a an the}
-\Addlcwords{and but for or nor}
-\Addlcwords{aboard about above across %
-  after against along amid among anti %
-  around as at behind below % before
-  beneath beside besides between %
-  beyond but by concerning considering %
-  despite down during except excepting %
-  excluding following for from in %
-  inside into like minus near of off %
-  on onto opposite outside over past %
-  per plus regarding round since % save
-  than through to toward towards under %
-  underneath unlike until up upon %
-versus via with within without}
-
-\setcounter{secnumdepth}{2} % numbers up to \subsection by default
-
-% Chapter
-% Chapters are set in 14pt bold (bfseries), centered, uppercase.
-% No space before, one baseline skip after.
-\titleformat{\chapter}
-  [hang]
-  {\normalfont\bfseries\fontsize{14}{17}\selectfont\centering}
-  {\thechapter.}
-  {1em}
-  {\MakeUppercase}
-
-\renewcommand{\thechapter}{\arabic{chapter}}
-
-% Section
-% Sections are 12pt bold (bfseries), left-aligned, normal font.
-% 2 baseline skips before and 1 after.
-\titleformat{\section}
-  [hang]
-  {\normalfont\bfseries\fontsize{12}{15}\selectfont\centering}
-  {\thesection.}
-  {1em}
-  {}
-
-% Subsection
-% Subsections are bold italic (bfseries, itshape), normal font size,
-% with 2 baseline skips before and 1 after.
-\titleformat{\subsection}
-  [hang]
-  {\normalfont\bfseries\itshape\centering}
-  {\thesubsection.}
-  {1em}
-  {}
-
-% Subsubsection
-% Subsubsections are italic (itshape), normal font size,
-% with 2 baseline skips before and 1 after.
-\titleformat{\subsubsection}
-  [hang]
-  {\normalfont\itshape\centering}
-  {\thesubsubsection.}
-  {1em}
-  {}
-
-\titlespacing*{\chapter}{0pt}{0pt}{\baselineskip}
-\titlespacing*{\section}{0pt}{2\baselineskip}{\baselineskip}
-\titlespacing*{\subsection}{0pt}{2\baselineskip}{\baselineskip}
-\titlespacing*{\subsubsection}{0pt}{2\baselineskip}{\baselineskip}
-
-% --------------------
-% Add period after number in TOC entries
-% --------------------
-
-\renewcommand{\cftchapaftersnum}{.}
-\renewcommand{\cftsecaftersnum}{.}
-\renewcommand{\cftsubsecaftersnum}{.}
-\renewcommand{\cftsubsubsecaftersnum}{.}
-
-%decimal comma
-\DeclareMathSymbol{,}{\mathpunct}{letters}{"3B}
-\DeclareMathSymbol{.}{\mathord}{letters}{"3B}
-%\DeclareMathSymbol{\decimal}{\mathord}{letters}{"3A}
 
 \newcommand{\firstname}[1]{\gdef\@firstname{#1}}
 \newcommand{\lastname}[1]{\gdef\@lastname{#1}}
@@ -316,8 +157,7 @@ versus via with within without}
 \newcommand{\lastnametwo}[1]{\gdef\@lastnametwo{#1}}
 \newcommand{\firstnamethree}[1]{\gdef\@firstnamethree{#1}}
 \newcommand{\lastnamethree}[1]{\gdef\@lastnamethree{#1}}
-\newcommand{\otsikko}[1]{\gdef\@otsikko{#1}
-\gdef\@isotsikko{\MakeUppercase{#1}}}
+\newcommand{\otsikko}[1]{\gdef\@otsikko{#1}}
 
 \newcommand{\getfirstname}{\@firstname}
 \newcommand{\getlastname}{\@lastname}
@@ -454,15 +294,6 @@ versus via with within without}
   \setlength{\parskip}{\temp}
 }
 
-\setcounter{tocdepth}{2}
-\renewcommand{\cfttoctitlefont}{\hfill\normalfont\large\bfseries}
-\renewcommand{\cftaftertoctitle}{\hfill\hfill}
-\renewcommand{\cftchapfont}{}
-\renewcommand{\cftchappagefont}{}
-\setlength{\cftbeforechapskip}{0mm}
-\setlength{\cftbeforetoctitleskip}{0mm}
-\setlength{\cftaftertoctitleskip}{8mm}
-\renewcommand{\cftdotsep}{0.2}
 
 \newcommand{\englishabstracttitle}{%
   {\textbf{\getauthorsabstractacta\ (\the\year) \titlecap{\@title}}. University of Oulu, Degree Programme in Computer Science and Engineering, \shownumberofpages~p.}
@@ -514,7 +345,7 @@ versus via with within without}
 %chapters without page numbering
 \newcommand{\header}[1]{
   \chapter*{#1}
-\addtocontents{toc}{\protect\contentsline{chapter}{#1}{}{page.\thepage} }}
+  \addtocontents{toc}{\protect\contentsline{chapter}{#1}{}{page.\thepage} }}
 
 
 
@@ -527,27 +358,6 @@ versus via with within without}
   \def\ps@plain{\ps@myheadings} % plain pages like chapters also top right
   \makeatother
 } 
-
-\captionsetup[table]{
-  position=above,
-  justification=raggedright,
-  singlelinecheck=true,
-}
-
-% Figures
-\captionsetup[figure]{
-  justification=justified,  % full justification for long captions
-  singlelinecheck=true,     % short captions centered
-  % skip=\baselineskip
-}
-
-
-% algorithm
-%\renewcommand{\@algocf@capt@plain}{above}
-%\renewcommand{\algocf@caption@plain}{\box\algocf@capbox\vskip\AlCapSkip}
-\SetAlCapSty{}
-\SetAlgoCaptionSeparator{.}
-%\SetAlCapSkip{2mm}
 
 %get authors for the title page
 \newcommand{\getauthorstitle}{
@@ -619,17 +429,6 @@ versus via with within without}
   \end{flushleft}
 }
 
-\makeatletter
-\g@addto@macro{\normalsize}{%
-  \setlength{\abovedisplayskip}{0pt}
-  \setlength{\abovedisplayshortskip}{0pt}
-  \setlength{\belowdisplayskip}{12pt}
-\setlength{\belowdisplayshortskip}{12pt}}
-\makeatother
-
-% Moved from dithesis.cls, eqref is from amsmath so renew
-\newcommand{\figref}[1]{Figure~\ref{#1}}
-\renewcommand{\eqref}[1]{Equation~(\ref{#1})}
-\newcommand{\tabref}[1]{Table~\ref{#1}}
-\newcommand{\charef}[1]{Chapter~\ref{#1}}
-\newcommand{\secref}[1]{Section~\ref{#1}}
+\AtEndOfClass{%
+  \RequirePackage{csethesis}%
+}
