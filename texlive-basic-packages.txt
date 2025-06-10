@@ -39,4 +39,4 @@ doclicense
 newfile
 xifthen
 # This gets pulled by hyperref randomly depending on environment
-puenc-greek
+greek-fontenc
