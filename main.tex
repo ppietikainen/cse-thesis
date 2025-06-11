@@ -8,11 +8,10 @@
 % 2023-06-15: Changes to foreword, clarifications to indicate template is also for Bachelor thesis  (TTo)
 % 2023-06-15: Example of a CC-BY figure added with reference in the footnotes (TTo)
 
-
-\documentclass[finnish]{csethesis}
+% Valid options english/finnish, cse/bme, master/bachelor
+\documentclass[english,cse]{csethesis}
 
 \usepackage[type={CC}, modifier={by}, version={4.0}]{doclicense-csetemplate}
-
 \copyrighttext
   {Copyright \textcopyright\ \number\year\ \getauthorslist. Except otherwise noted, the reuse of this document is authorized under a Creative Commons 4.0 International (CC-BY-4.0) license.}
   {%
@@ -21,7 +20,7 @@
     \doclicenseThis % CC logo, needs transparency removed
     Exception: The figures  are not included in the license.
   }
-  
+
 % Abstracts are placed in the metadata of the PDF file, 
 % so they cannot contain empty lines or special characters.
 % Mathematic symbols should be fine (mathxmp option for pdfx package),
@@ -54,9 +53,6 @@
 
 \firstname{Author}
 \lastname{One}
-
-% Please choose the correct type of thesis and the language used
-\thesis{Master} % {Bachelor | Master}
 
 %Names of other authors can be added here
 \firstnametwo{Author}

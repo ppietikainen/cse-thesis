@@ -43,6 +43,59 @@
   urlseen      = Viitattu\addcolon
 }
 
+% Set language-dependent strings using babel's \addto\captions<lang>
+\addto\captionsfinnish{%
+  \renewcommand{\facultyname}{TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA}
+  \renewcommand{\degreeprogramme}{%
+  \ifthenelse{\equal{\degreeprogrammeselection}{bme}}%
+      {Lääketieteen tekniikan tutkinto-ohjelma}%
+      {Tietotekniikan tutkinto-ohjelma}%
+  }
+  \renewcommand{\thesistypetitle}{%
+    \ifthenelse{\equal{\thesistype}{master}}%
+    {Diplomityö}%
+    {Kandidaatintyö}%
+  }
+  \renewcommand{\maintitle}{\getotsikko}
+  \renewcommand{\universityname}{Oulun yli\-opis\-to}
+  \renewcommand{\universitynameieee}{\universityname}
+  \renewcommand{\pagelabel}{s.}
+  \renewcommand{\abstracttitle}{TIIVISTELMÄ}
+  \renewcommand{\headerforeword}{ALKULAUSE}
+  \renewcommand{\headerabbreviations}{LYHENTEIDEN JA MERKKIEN SELITYKSET}
+  \renewcommand{\tocname}{SISÄLLYSLUETTELO}
+  \renewcommand{\mybibname}{Viitteet}
+  \renewcommand{\cityname}{Oulussa }
+  \renewcommand{\countryname}{Suomi}
+  \renewcommand{\keywordsline}{Avainsanat: \keywordsmetadata}
+  \renewcommand{\universitylogo}{Figures/logo-fi.png}
+}
+\addto\captionsenglish{%
+  \renewcommand{\facultyname}{FACULTY OF INFORMATION TECHNOLOGY AND ELECTRICAL ENGINEERING}
+  \renewcommand{\degreeprogramme}{%
+    \ifthenelse{\equal{\degreeprogrammeselection}{bme}}%
+      {Degree Programme in Biomedical Engineering}%
+      {Degree Programme in Computer Science and Engineering}%
+  }
+  \renewcommand{\thesistypetitle}{%
+    \ifthenelse{\equal{\thesistype}{master}}%
+    {Master's thesis}%
+    {Bachelor's thesis}%
+  }
+  \renewcommand{\maintitle}{\gettitle}
+  \renewcommand{\universityname}{University of Oulu}
+  \renewcommand{\universitynameieee}{Univ. of Oulu}
+  \renewcommand{\pagelabel}{p.}
+  \renewcommand{\keywordsline}{Keywords: \avainsanatmetadata}
+  \renewcommand{\abstracttitle}{ABSTRACT}
+  \renewcommand{\headerforeword}{FOREWORD}
+  \renewcommand{\headerabbreviations}{LIST OF ABBREVIATIONS AND SYMBOLS}
+  \renewcommand{\tocname}{TABLE OF CONTENTS}
+  \renewcommand{\mybibname}{References}
+  \renewcommand{\cityname}{Oulu, }
+  \renewcommand{\countryname}{Finland}
+}
+
 % Algorithms
 \usepackage[linesnumbered, ruled]{algorithm2e}
 
