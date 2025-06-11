@@ -61,6 +61,20 @@
   \renewcommand*{\OtherLangs}{english}%
 }
 
+\newcommand{\degreeprogrammeselection}{cse} % default to 'cse' (Tietotekniikka)
+\newcommand{\thesistype}{Master} % default to 'Master' (Diplomityö)
+
+\DeclareOption{cse}{\renewcommand{\degreeprogrammeselection}{cse}}
+\DeclareOption{bme}{\renewcommand{\degreeprogrammeselection}{bme}}
+\ExecuteOptions{cse} % default
+
+\DeclareOption{bachelor}{%
+  \renewcommand{\thesistype}{Bachelor}%
+}
+\DeclareOption{master}{%
+  \renewcommand{\thesistype}{Master}
+}
+\ExecuteOptions{master} % default to 'master' (Diplomi-insinööri)
 \ProcessOptions\relax
 
 \newcommand*{\IfEng}[3]{\ifdefstring{#1}{english}{#2}{#3}}%
@@ -168,9 +182,6 @@
 \newcommand{\getotsikko}{\@otsikko}
 \newcommand{\gettitle}{\@title}
 
-\newcommand{\thesis}[1]{\gdef\@thesis{#1}}
-\newcommand{\getthesis}{\@thesis}
-
 \newcommand{\headertitlecap}{
   \IfLang{\MainLang}{english}{
     \let\oldsection\section
@@ -179,19 +190,6 @@
     \renewcommand{\subsection}[1]{\oldsubsection{\texorpdfstring{\titlecap{##1}}{##1}}}
   }{}
 }
-
-\newcommand{\facultyname}{}
-\newcommand{\degreeprogramme}{}
-\newcommand{\thesistypetitle}{}
-\newcommand{\maintitle}{}
-\newcommand{\universityname}{}
-\newcommand{\pagelabel}{}
-\newcommand{\headerforeword}{}
-\newcommand{\headerabbreviations}{}
-\newcommand{\tocname}{}
-\newcommand{\mybibname}{}
-\newcommand{\cityname}{}
-\newcommand{\universitylogo}{Figures/logo-en.png}
 
 \newcommand{\keywordsmetadata}{}%
 \newcommand{\keywords}[1]{\renewcommand*{\keywordsmetadata}{#1}}
@@ -207,41 +205,21 @@
 \long\def\tiivistelma#1{\long\def\tiivistelmametadata{#1}}
 
 % Add macros for thesis type in English and Finnish
-\newcommand{\thesistypeenglish}{%
-  \ifthenelse{\equal{\@thesis}{Master}}{Master's thesis}{Bachelor's thesis}%
-}
-\newcommand{\thesistypefinnish}{%
-  \ifthenelse{\equal{\@thesis}{Master}}{Diplomityö}{Kandidaatintyö}%
-}
-
-\IfLang{\MainLang}{finnish}{%
-  \renewcommand{\facultyname}{TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA}
-  \renewcommand{\degreeprogramme}{Tietotekniikan tutkinto-ohjelma}
-  \renewcommand{\thesistypetitle}{\thesistypefinnish}
-  \renewcommand{\maintitle}{\getotsikko}
-  \renewcommand{\universityname}{Oulun yli\-opis\-to}
-  \renewcommand{\pagelabel}{s.}
-  \renewcommand{\headerforeword}{ALKULAUSE}
-  \renewcommand{\headerabbreviations}{LYHENTEIDEN JA MERKKIEN SELITYKSET}
-  \renewcommand{\tocname}{SISÄLLYSLUETTELO}
-  \renewcommand{\mybibname}{Viitteet}
-  \renewcommand{\cityname}{Oulussa }
-  \renewcommand{\universitylogo}{Figures/logo-fi.png}
-}{
-  \renewcommand{\facultyname}{FACULTY OF INFORMATION TECHNOLOGY AND
-  ELECTRICAL ENGINEERING}
-  \renewcommand{\degreeprogramme}{Degree Programme in Computer
-  Science and Engineering}
-  \renewcommand{\thesistypetitle}{\thesistypeenglish}
-  \renewcommand{\maintitle}{\gettitle}
-  \renewcommand{\universityname}{University of Oulu}
-  \renewcommand{\pagelabel}{p.}
-  \renewcommand{\headerforeword}{FOREWORD}
-  \renewcommand{\headerabbreviations}{LIST OF ABBREVIATIONS AND SYMBOLS}
-  \renewcommand{\tocname}{TABLE OF CONTENTS}
-  \renewcommand{\mybibname}{References}
-  \renewcommand{\cityname}{Oulu, }
-}
+\newcommand{\facultyname}{}
+\newcommand{\degreeprogramme}{}
+\newcommand{\thesistypetitle}{}
+\newcommand{\maintitle}{}
+\newcommand{\universityname}{}
+\newcommand{\universitynameieee}{}
+\newcommand{\pagelabel}{}
+\newcommand{\headerforeword}{}
+\newcommand{\headerabbreviations}{}
+\newcommand{\tocname}{}
+\newcommand{\mybibname}{}
+\newcommand{\cityname}{}
+\newcommand{\countryname}{}
+\newcommand{\keywordsline}{}
+\newcommand{\universitylogo}{Figures/logo-en.png}
 
 % --- End centralized definitions ---
 
@@ -295,42 +273,25 @@
 }
 
 
-\newcommand{\englishabstracttitle}{%
-  {\textbf{\getauthorsabstractacta\ (\the\year) \titlecap{\@title}}. University of Oulu, Degree Programme in Computer Science and Engineering, \shownumberofpages~p.}
+\newcommand{\abstracttitle}{%
+  {\textbf{\getauthorsabstractacta\ (\the\year) \titlecap{\@title}}. \universityname, \degreeprogramme, \shownumberofpages~p.}
 }
 
-\newcommand{\finnishabstracttitle}{%
-  {\textbf{\getauthorsabstractacta\ (\the\year) \getotsikko}. Oulun yli\-opis\-to, Tietotekniikan tutkinto-ohjelma, \shownumberofpages~s.}
+\newcommand{\abstracttitleieee}{%
+  {\getauthorsabstractieee, ``\titlecap{\@title},'' \thesistypetitle, \degreeprogramme, \universitynameieee, Oulu, \countryname, \the\year.}
 }
-
-\newcommand{\englishabstracttitleieee}{%
-  {\getauthorsabstractieee, ``\titlecap{\@title},'' \thesistypeenglish, Dept. of Computer Science, Univ. of Oulu, Oulu, Finland, \the\year.}
-}
-
-\newcommand{\finnishabstracttitleieee}{%
-  {\getauthorsabstractieee, ``\getotsikko,'' \thesistypefinnish, Tietotekniikan koulutusohjelma, Oulun yliopisto, Oulu, Suomi, \the\year.}
-}
-
 
 \newenvironment{thesisabstract}[1]{%
   \selectlanguage{#1}%
   \setcounter{NAppdxPages}{\value{NAllPages}-\value{NMainTxtPages}}%
   \renewcommand*{\spc}{, }
-  \ifstrequal{#1}{finnish}{%
-    \def\thesisabstract@heading{TIIVISTELMÄ}%
-    \def\thesisabstract@keywords{Avainsanat: \avainsanatmetadata}
-    \def\thesisabstract@authorline{\finnishabstracttitle}
-  }{%
-    \def\thesisabstract@heading{ABSTRACT}%
-    \def\thesisabstract@keywords{Keywords: \keywordsmetadata}%
-    \def\thesisabstract@authorline{\englishabstracttitle}
-  }%
+
   \cleardoublepage
-  \noindent\thesisabstract@authorline
+  \noindent\abstracttitle
   \par\vspace{2\baselineskip}%
 
-  {\centering\bfseries\fontsize{14}{17}\selectfont\MakeUppercase{\thesisabstract@heading}\par}%
-  \addtocontents{toc}{\protect\contentsline{chapter}{\thesisabstract@heading}{}{page.\thepage}}
+  {\centering\bfseries\fontsize{14}{17}\selectfont\MakeUppercase{\abstracttitle}\par}%
+  \addtocontents{toc}{\protect\contentsline{chapter}{\abstracttitle}{}{page.\thepage}}
   \vspace{1\baselineskip}
   \@afterindentfalse\@afterheading
   \begingroup
@@ -339,7 +300,7 @@
   \endgroup
   \par
   \vspace{1\baselineskip}\noindent
-  \textbf{\thesisabstract@keywords}
+  \textbf{\keywordsline}
 }
 
 %chapters without page numbering
