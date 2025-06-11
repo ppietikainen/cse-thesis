@@ -61,6 +61,20 @@
   \renewcommand*{\OtherLangs}{english}%
 }
 
+\newcommand{\degreeprogrammeselection}{cse} % default to 'cs' (Tietotekniikka)
+\newcommand{\thesistype}{Master} % default to 'Master' (Dipl
+
+\DeclareOption{cse}{\renewcommand{\degreeprogrammeselection}{cse}}
+\DeclareOption{bme}{\renewcommand{\degreeprogrammeselection}{bme}}
+\ExecuteOptions{cse} % default
+
+\DeclareOption{bachelor}{%
+  \renewcommand{\thesistype}{Bachelor}%
+}
+\DeclareOption{master}{%
+  \renewcommand{\thesistype}{Master}
+}
+\ExecuteOptions{master} % default to 'master' (Diplomi-insinööri)
 \ProcessOptions\relax
 
 \newcommand*{\IfEng}[3]{\ifdefstring{#1}{english}{#2}{#3}}%
@@ -168,9 +182,6 @@
 \newcommand{\getotsikko}{\@otsikko}
 \newcommand{\gettitle}{\@title}
 
-\newcommand{\thesis}[1]{\gdef\@thesis{#1}}
-\newcommand{\getthesis}{\@thesis}
-
 \newcommand{\headertitlecap}{
   \IfLang{\MainLang}{english}{
     \let\oldsection\section
@@ -194,13 +205,6 @@
 \long\def\tiivistelma#1{\long\def\tiivistelmametadata{#1}}
 
 % Add macros for thesis type in English and Finnish
-\newcommand{\thesistypeenglish}{%
-  \ifthenelse{\equal{\@thesis}{Master}}{Master's thesis}{Bachelor's thesis}%
-}
-\newcommand{\thesistypefinnish}{%
-  \ifthenelse{\equal{\@thesis}{Master}}{Diplomityö}{Kandidaatintyö}%
-}
-
 \newcommand{\facultyname}{}
 \newcommand{\degreeprogramme}{}
 \newcommand{\thesistypetitle}{}
@@ -274,7 +278,7 @@
 }
 
 \newcommand{\abstracttitleieee}{%
-  {\getauthorsabstractieee, ``\titlecap{\@title},'' \thesistype, \degreeprogramme, \universitynameieee, Oulu, \countryname, \the\year.}
+  {\getauthorsabstractieee, ``\titlecap{\@title},'' \thesistypetitle, \degreeprogramme, \universitynameieee, Oulu, \countryname, \the\year.}
 }
 
 \newenvironment{thesisabstract}[1]{%

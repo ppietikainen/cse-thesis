@@ -46,8 +46,16 @@
 % Set language-dependent strings using babel's \addto\captions<lang>
 \addto\captionsfinnish{%
   \renewcommand{\facultyname}{TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA}
-  \renewcommand{\degreeprogramme}{Tietotekniikan tutkinto-ohjelma}
-  \renewcommand{\thesistypetitle}{\thesistypefinnish}
+  \renewcommand{\degreeprogramme}{%
+  \ifthenelse{\equal{\degreeprogrammeselection}{bme}}%
+      {Lääketieteen tekniikan tutkinto-ohjelma}%
+      {Tietotekniikan tutkinto-ohjelma}%
+  }
+  \renewcommand{\thesistypetitle}{%
+    \ifthenelse{\equal{\thesistype}{master}}%
+    {Diplomityö}%
+    {Kandidaatintyö}%
+  }
   \renewcommand{\maintitle}{\getotsikko}
   \renewcommand{\universityname}{Oulun yli\-opis\-to}
   \renewcommand{\universitynameieee}{\universityname}
@@ -64,8 +72,16 @@
 }
 \addto\captionsenglish{%
   \renewcommand{\facultyname}{FACULTY OF INFORMATION TECHNOLOGY AND ELECTRICAL ENGINEERING}
-  \renewcommand{\degreeprogramme}{Degree Programme in Computer Science and Engineering}
-  \renewcommand{\thesistypetitle}{\thesistypeenglish}
+  \renewcommand{\degreeprogramme}{%
+    \ifthenelse{\equal{\degreeprogrammeselection}{bme}}%
+      {Degree Programme in Biomedical Engineering}%
+      {Degree Programme in Computer Science and Engineering}%
+  }
+  \renewcommand{\thesistypetitle}{%
+    \ifthenelse{\equal{\thesistype}{master}}%
+    {Master's thesis}%
+    {Bachelor's thesis}%
+  }
   \renewcommand{\maintitle}{\gettitle}
   \renewcommand{\universityname}{University of Oulu}
   \renewcommand{\universitynameieee}{Univ. of Oulu}
