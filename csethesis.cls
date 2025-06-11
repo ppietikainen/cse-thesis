@@ -212,6 +212,7 @@
 \newcommand{\universityname}{}
 \newcommand{\universitynameieee}{}
 \newcommand{\pagelabel}{}
+\newcommand{\abstracttitle}{}
 \newcommand{\headerforeword}{}
 \newcommand{\headerabbreviations}{}
 \newcommand{\tocname}{}
@@ -273,11 +274,11 @@
 }
 
 
-\newcommand{\abstracttitle}{%
+\newcommand{\abstractauthors}{%
   {\textbf{\getauthorsabstractacta\ (\the\year) \titlecap{\@title}}. \universityname, \degreeprogramme, \shownumberofpages~p.}
 }
 
-\newcommand{\abstracttitleieee}{%
+\newcommand{\abstractauthorsieee}{%
   {\getauthorsabstractieee, ``\titlecap{\@title},'' \thesistypetitle, \degreeprogramme, \universitynameieee, Oulu, \countryname, \the\year.}
 }
 
@@ -287,7 +288,7 @@
   \renewcommand*{\spc}{, }
 
   \cleardoublepage
-  \noindent\abstracttitle
+  \noindent\abstractauthors
   \par\vspace{2\baselineskip}%
 
   {\centering\bfseries\fontsize{14}{17}\selectfont\MakeUppercase{\abstracttitle}\par}%
