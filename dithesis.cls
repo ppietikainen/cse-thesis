@@ -136,7 +136,7 @@
     % Write the metadata into file .xmpdata, which is included in the PDF/A file
 	\newoutputstream{xmpdata}%
 	\openoutputfile{\jobname.xmpdata}{xmpdata}%
-	\addtostream{xmpdata}{\noexpand\Title {\maintitle}}%
+	\addtostream{xmpdata}{\noexpand\Title {\metadatatitle}}%
 	\addtostream{xmpdata}{\noexpand\Author {\getauthorsmetadata}}%
   \addtostream{xmpdata}{\noexpand\Copyright {\MetaCopyrightText}}%%
  	\addtostream{xmpdata}{\noexpand\CopyrightURL {\pdfCopyrightURL}}
@@ -164,6 +164,11 @@
 }%
 %
 \AtBeginDocument{%
+  \IfLang{\MainLang}{finnish}{%
+    \renewcommand{\metadatatitle}{\getotsikko}
+  }{%
+    \renewcommand{\metadatatitle}{\gettitle}
+  }
   \makemetadata%
 }%
 %
@@ -215,7 +220,8 @@
 \newcommand{\degreeprogrammetitle}{}
 \newcommand{\getauthorsabstract}{}
 \newcommand{\thesistypetitle}{}
-\newcommand{\maintitle}{}
+\newcommand{\thesistitle}{}
+\newcommand{\metadatatitle}{}
 \newcommand{\universityname}{}
 \newcommand{\universitynameieee}{}
 \newcommand{\pagelabel}{}
@@ -241,11 +247,11 @@
   \begin{titlepage}
     \centering
     \includegraphics*[width=0.22\textwidth]{\universitylogo}\\
-    {\sffamily\fontsize{8}{10pt}\selectfont \facultyname\\}
+    {\sffamily\fontsize{8}{10pt}\selectfont \MakeUppercase{\facultyname} \\}
     \vspace{70 mm}
     {\textbf{\fontsize{16}{19pt}\selectfont \getauthorstitle}\\}
     \vspace{12 mm}
-    {\textbf{\fontsize{18}{22pt}\selectfont \MakeUppercase{\maintitle} \\}}
+    {\textbf{\fontsize{18}{22pt}\selectfont \MakeUppercase{\thesistitle} \\}}
     \vfill
     {\fontsize{14}{17}\selectfont \thesistypetitle
     \\ \degreeprogrammetitle \\ \DTMToday \\}
@@ -284,11 +290,11 @@
 
 
 \newcommand{\abstractauthors}{%
-  {\textbf{\getauthorsabstractacta\ (\the\year) \titlecap{\@title}}. \universityname, \degreeprogramme, \shownumberofpages~p.}
+  {\textbf{\getauthorsabstractacta\ (\the\year) \thesistitle.} \universityname, \facultyname, \degreeprogramme, \thesistypetitle, \shownumberofpages~p.}
 }
 
 \newcommand{\abstractauthorsieee}{%
-  {\getauthorsabstractieee, ``\titlecap{\@title},'' \thesistypetitle, \degreeprogramme, \universitynameieee, Oulu, \countryname, \the\year.}
+  {\getauthorsabstractieee, ``\thesistitle,'' \thesistypetitle, \degreeprogramme, \universitynameieee, Oulu, \countryname, \the\year.}
 }
 
 \newenvironment{thesisabstract}[1]{%

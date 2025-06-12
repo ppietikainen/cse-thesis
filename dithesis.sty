@@ -49,7 +49,7 @@
 
 % Set language-dependent strings using babel's \addto\captions<lang>
 \addto\captionsfinnish{%
-  \renewcommand{\facultyname}{TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA}
+  \renewcommand{\facultyname}{Tieto- ja sähkötekniikan tiedekunta}
   \renewcommand{\degreeprogramme}{%
     \ifthenelse{\equal{\degreeprogrammeselection}{bme}}%
       {Lääketieteen tekniikan tutkinto-ohjelma}%
@@ -69,7 +69,7 @@
     {Diplomityö}%
     {Kandidaatintyö}%
   }
-  \renewcommand{\maintitle}{\getotsikko}
+  \renewcommand{\thesistitle}{\getotsikko}
   \renewcommand{\universityname}{Oulun yli\-opis\-to}
   \renewcommand{\universitynameieee}{\universityname}
   \renewcommand{\pagelabel}{s.}
@@ -84,7 +84,7 @@
   \renewcommand{\universitylogo}{Figures/logo-fi.png}
 }
 \addto\captionsenglish{%
-  \renewcommand{\facultyname}{FACULTY OF INFORMATION TECHNOLOGY AND ELECTRICAL ENGINEERING}
+  \renewcommand{\facultyname}{Faculty of Information Technology and Electical Engineering}
   \renewcommand{\degreeprogramme}{%
     \ifthenelse{\equal{\degreeprogrammeselection}{bme}}%
       {Degree Programme in Biomedical Engineering}%
@@ -104,7 +104,7 @@
     {Master's thesis}%
     {Bachelor's thesis}%
   }
-  \renewcommand{\maintitle}{\gettitle}
+  \renewcommand{\thesistitle}{\titlecap{\gettitle}}
   \renewcommand{\universityname}{University of Oulu}
   \renewcommand{\universitynameieee}{Univ. of Oulu}
   \renewcommand{\pagelabel}{p.}
