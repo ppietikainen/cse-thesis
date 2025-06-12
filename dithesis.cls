@@ -1,7 +1,7 @@
-%
-% Template for Degree Programme of Computer Science and Engineering
-% Diploma Thesis at University of Oulu
-%
+% Template for M. Sc. (Tech.) degree programmes at the
+% Faculity of Information Technology and Electical Engineering
+% at University of Oulu (CSE/BME/BA)
+% 
 % Authors: Mika Korhonen (original author), Pekka Pietikäinen,
 % Christian Wieser, Teemu Tokola, Juha Kylmänen, Tuomas Holmberg and
 % Tuomas Varanka
@@ -12,7 +12,7 @@
 % aaltothesis.cls by Luis R.J. Costa
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{csethesis}[2025/06/09 Diploma Thesis Class]
+\ProvidesClass{dithesis}[2025/06/09 Diploma Thesis Class]
 
 % Load report class as the base
 \LoadClass[12pt,a4paper,titlepage]{report}
@@ -61,18 +61,19 @@
   \renewcommand*{\OtherLangs}{english}%
 }
 
-\newcommand{\degreeprogrammeselection}{cse} % default to 'cs' (Tietotekniikka)
-\newcommand{\thesistype}{Master} % default to 'Master' (Dipl
+\newcommand{\degreeprogrammeselection}{cse} % default to 'cse' (Tietotekniikka)
+\newcommand{\thesistype}{Master} % default to 'Master' (Diplomityö)
 
 \DeclareOption{cse}{\renewcommand{\degreeprogrammeselection}{cse}}
 \DeclareOption{bme}{\renewcommand{\degreeprogrammeselection}{bme}}
+\DeclareOption{ba}{\renewcommand{\degreeprogrammeselection}{ba}}
 \ExecuteOptions{cse} % default
 
 \DeclareOption{bachelor}{%
-  \renewcommand{\thesistype}{Bachelor}%
+  \renewcommand{\thesistype}{bachelor}%
 }
 \DeclareOption{master}{%
-  \renewcommand{\thesistype}{Master}
+  \renewcommand{\thesistype}{master}
 }
 \ExecuteOptions{master} % default to 'master' (Diplomi-insinööri)
 \ProcessOptions\relax
@@ -87,7 +88,9 @@
 \newcounter{NMainTxtPages}
 \newcounter{NAppdxPages}
 \newcommand*{\stor@maintxtpag@number}{%
-  \immediate\write\@auxout{\string\setcounter{NMainTxtPages}{\thepage-1}}%
+  \immediate\write\@auxout{%
+    \string\setcounter{NMainTxtPages}{\number\numexpr\thepage-1\relax}%
+  }%
 }
 
 \newcommand{\startappendix}{%
@@ -121,7 +124,9 @@
 \newcommand{\copyrighttext}[2]{%
   \renewcommand{\MetaCopyrightText}{#1}%
   \renewcommand{\CopyrightText}{#2}%
-  \ifdef{\doclicenseURL}{\renewcommand{\pdfCopyrightURL}{\doclicenseURL}}{}%
+  \makeatletter
+  \@ifundefined{doclicenseURL}{}{\renewcommand{\pdfCopyrightURL}{\doclicenseURL}}%
+  \makeatother
 }%
 
 \newcommand*{\spc}{\noexpand\sep}%
@@ -131,7 +136,7 @@
     % Write the metadata into file .xmpdata, which is included in the PDF/A file
 	\newoutputstream{xmpdata}%
 	\openoutputfile{\jobname.xmpdata}{xmpdata}%
-	\addtostream{xmpdata}{\noexpand\Title {\maintitle}}%
+	\addtostream{xmpdata}{\noexpand\Title {\metadatatitle}}%
 	\addtostream{xmpdata}{\noexpand\Author {\getauthorsmetadata}}%
   \addtostream{xmpdata}{\noexpand\Copyright {\MetaCopyrightText}}%%
  	\addtostream{xmpdata}{\noexpand\CopyrightURL {\pdfCopyrightURL}}
@@ -159,6 +164,11 @@
 }%
 %
 \AtBeginDocument{%
+  \IfLang{\MainLang}{finnish}{%
+    \renewcommand{\metadatatitle}{\getotsikko}
+  }{%
+    \renewcommand{\metadatatitle}{\gettitle}
+  }
   \makemetadata%
 }%
 %
@@ -207,11 +217,15 @@
 % Add macros for thesis type in English and Finnish
 \newcommand{\facultyname}{}
 \newcommand{\degreeprogramme}{}
+\newcommand{\degreeprogrammetitle}{}
+\newcommand{\getauthorsabstract}{}
 \newcommand{\thesistypetitle}{}
-\newcommand{\maintitle}{}
+\newcommand{\thesistitle}{}
+\newcommand{\metadatatitle}{}
 \newcommand{\universityname}{}
 \newcommand{\universitynameieee}{}
 \newcommand{\pagelabel}{}
+\newcommand{\abstracttitle}{}
 \newcommand{\headerforeword}{}
 \newcommand{\headerabbreviations}{}
 \newcommand{\tocname}{}
@@ -233,14 +247,14 @@
   \begin{titlepage}
     \centering
     \includegraphics*[width=0.22\textwidth]{\universitylogo}\\
-    {\sffamily\fontsize{8}{10pt}\selectfont \facultyname\\}
+    {\sffamily\fontsize{8}{10pt}\selectfont \MakeUppercase{\facultyname} \\}
     \vspace{70 mm}
     {\textbf{\fontsize{16}{19pt}\selectfont \getauthorstitle}\\}
     \vspace{12 mm}
-    {\textbf{\fontsize{18}{22pt}\selectfont \MakeUppercase{\maintitle} \\}}
+    {\textbf{\fontsize{18}{22pt}\selectfont \MakeUppercase{\thesistitle} \\}}
     \vfill
     {\fontsize{14}{17}\selectfont \thesistypetitle
-    \\ \degreeprogramme \\ \DTMToday \\}
+    \\ \degreeprogrammetitle \\ \DTMToday \\}
     \vspace{1cm}
   \end{titlepage}
   \cleardoublepage
@@ -248,13 +262,15 @@
 }
 
 \newcommand{\makecopyrightpage}{%
-  \newpage
-  \thispagestyle{empty}%
-    \makeatletter\input{doclicense-\MainLang.ldf}
-    \makeatother
-  \noindent
-  \CopyrightText\par%
-  \cleardoublepage
+  \ifx\CopyrightText\@empty
+    % Do nothing if empty
+  \else
+    \newpage
+    \thispagestyle{empty}%
+    \noindent
+    \CopyrightText\par%
+    \cleardoublepage
+  \fi
 }%
 
 \addtocontents{toc}{\protect\thispagestyle{empty}}
@@ -273,12 +289,12 @@
 }
 
 
-\newcommand{\abstracttitle}{%
-  {\textbf{\getauthorsabstractacta\ (\the\year) \titlecap{\@title}}. \universityname, \degreeprogramme, \shownumberofpages~p.}
+\newcommand{\abstractauthors}{%
+  {\textbf{\getauthorsabstractacta\ (\the\year) \thesistitle.} \universityname, \facultyname, \degreeprogramme, \thesistypetitle, \shownumberofpages~p.}
 }
 
-\newcommand{\abstracttitleieee}{%
-  {\getauthorsabstractieee, ``\titlecap{\@title},'' \thesistypetitle, \degreeprogramme, \universitynameieee, Oulu, \countryname, \the\year.}
+\newcommand{\abstractauthorsieee}{%
+  {\getauthorsabstractieee, ``\thesistitle,'' \thesistypetitle, \degreeprogramme, \universitynameieee, Oulu, \countryname, \the\year.}
 }
 
 \newenvironment{thesisabstract}[1]{%
@@ -287,7 +303,7 @@
   \renewcommand*{\spc}{, }
 
   \cleardoublepage
-  \noindent\abstracttitle
+  \noindent\abstractauthors
   \par\vspace{2\baselineskip}%
 
   {\centering\bfseries\fontsize{14}{17}\selectfont\MakeUppercase{\abstracttitle}\par}%
@@ -391,5 +407,5 @@
 }
 
 \AtEndOfClass{%
-  \RequirePackage{csethesis}%
+  \RequirePackage{dithesis}%
 }

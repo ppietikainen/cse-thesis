@@ -1,4 +1,8 @@
-\ProvidesPackage{csethesis}
+% Template for M. Sc. (Tech.) degree programmes at the
+% Faculity of Information Technology and Electical Engineering
+% at University of Oulu (CSE/BME/BA)
+% 
+\ProvidesPackage{dithesis}
 \usepackage{lmodern}
 \usepackage{newtxtext, newtxmath}
 \usepackage[english,finnish]{babel}
@@ -45,18 +49,27 @@
 
 % Set language-dependent strings using babel's \addto\captions<lang>
 \addto\captionsfinnish{%
-  \renewcommand{\facultyname}{TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA}
+  \renewcommand{\facultyname}{Tieto- ja sähkötekniikan tiedekunta}
   \renewcommand{\degreeprogramme}{%
-  \ifthenelse{\equal{\degreeprogrammeselection}{bme}}%
+    \ifthenelse{\equal{\degreeprogrammeselection}{bme}}%
       {Lääketieteen tekniikan tutkinto-ohjelma}%
+    {\ifthenelse{\equal{\degreeprogrammeselection}{ba}}%
+      {Liiketoiminta-analytiikan tutkinto-ohjelma}%
       {Tietotekniikan tutkinto-ohjelma}%
+    }%
+  }
+  \renewcommand{\degreeprogrammetitle}{%
+    \ifthenelse{\equal{\degreeprogrammeselection}{ba}}%
+      {Liiketoiminta-analytiikka\\Tietotekniikka}%
+    {\degreeprogramme%
+    }%
   }
   \renewcommand{\thesistypetitle}{%
     \ifthenelse{\equal{\thesistype}{master}}%
     {Diplomityö}%
     {Kandidaatintyö}%
   }
-  \renewcommand{\maintitle}{\getotsikko}
+  \renewcommand{\thesistitle}{\getotsikko}
   \renewcommand{\universityname}{Oulun yli\-opis\-to}
   \renewcommand{\universitynameieee}{\universityname}
   \renewcommand{\pagelabel}{s.}
@@ -71,18 +84,27 @@
   \renewcommand{\universitylogo}{Figures/logo-fi.png}
 }
 \addto\captionsenglish{%
-  \renewcommand{\facultyname}{FACULTY OF INFORMATION TECHNOLOGY AND ELECTRICAL ENGINEERING}
+  \renewcommand{\facultyname}{Faculty of Information Technology and Electical Engineering}
   \renewcommand{\degreeprogramme}{%
     \ifthenelse{\equal{\degreeprogrammeselection}{bme}}%
       {Degree Programme in Biomedical Engineering}%
+    {\ifthenelse{\equal{\degreeprogrammeselection}{ba}}%
+      {Degree Programme in Business Analytics}%
       {Degree Programme in Computer Science and Engineering}%
+    }%
+  }
+  \renewcommand{\degreeprogrammetitle}{%
+    \ifthenelse{\equal{\degreeprogrammeselection}{ba}}%
+      {Business Analytics\\Computer Science and Engineering}%
+    {\degreeprogramme%
+    }%
   }
   \renewcommand{\thesistypetitle}{%
     \ifthenelse{\equal{\thesistype}{master}}%
     {Master's thesis}%
     {Bachelor's thesis}%
   }
-  \renewcommand{\maintitle}{\gettitle}
+  \renewcommand{\thesistitle}{\titlecap{\gettitle}}
   \renewcommand{\universityname}{University of Oulu}
   \renewcommand{\universitynameieee}{Univ. of Oulu}
   \renewcommand{\pagelabel}{p.}
@@ -96,6 +118,10 @@
   \renewcommand{\countryname}{Finland}
 }
 
+% Copyright strings
+\newcommand{\copyrightstring}{Copyright \textcopyright\ \number\year\ \getauthorslist.}
+\newcommand{\allrightsreservedeng}{All rights reserved. Private use of this thesis is permitted.}
+\newcommand{\allrightsreservedfin}{Kaikki oikeudet pidätetään. Työn yksityiskäyttö on sallittu.}
 % Algorithms
 \usepackage[linesnumbered, ruled]{algorithm2e}
 
