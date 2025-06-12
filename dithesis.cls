@@ -12,7 +12,7 @@
 % aaltothesis.cls by Luis R.J. Costa
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{csethesis}[2025/06/09 Diploma Thesis Class]
+\ProvidesClass{dithesis}[2025/06/09 Diploma Thesis Class]
 
 % Load report class as the base
 \LoadClass[12pt,a4paper,titlepage]{report}
@@ -88,7 +88,9 @@
 \newcounter{NMainTxtPages}
 \newcounter{NAppdxPages}
 \newcommand*{\stor@maintxtpag@number}{%
-  \immediate\write\@auxout{\string\setcounter{NMainTxtPages}{\thepage-1}}%
+  \immediate\write\@auxout{%
+    \string\setcounter{NMainTxtPages}{\number\numexpr\thepage-1\relax}%
+  }%
 }
 
 \newcommand{\startappendix}{%
@@ -122,7 +124,9 @@
 \newcommand{\copyrighttext}[2]{%
   \renewcommand{\MetaCopyrightText}{#1}%
   \renewcommand{\CopyrightText}{#2}%
-  \ifdef{\doclicenseURL}{\renewcommand{\pdfCopyrightURL}{\doclicenseURL}}{}%
+  \makeatletter
+  \@ifundefined{doclicenseURL}{}{\renewcommand{\pdfCopyrightURL}{\doclicenseURL}}%
+  \makeatother
 }%
 
 \newcommand*{\spc}{\noexpand\sep}%
@@ -252,13 +256,15 @@
 }
 
 \newcommand{\makecopyrightpage}{%
-  \newpage
-  \thispagestyle{empty}%
-    \makeatletter\input{doclicense-\MainLang.ldf}
-    \makeatother
-  \noindent
-  \CopyrightText\par%
-  \cleardoublepage
+  \ifx\CopyrightText\@empty
+    % Do nothing if empty
+  \else
+    \newpage
+    \thispagestyle{empty}%
+    \noindent
+    \CopyrightText\par%
+    \cleardoublepage
+  \fi
 }%
 
 \addtocontents{toc}{\protect\thispagestyle{empty}}
