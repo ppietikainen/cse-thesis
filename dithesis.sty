@@ -1,3 +1,7 @@
+% Template for M. Sc. (Tech.) degree programmes at the
+% Faculity of Information Technology and Electical Engineering
+% at University of Oulu (CSE/BME/BA)
+% 
 \ProvidesPackage{csethesis}
 \usepackage{lmodern}
 \usepackage{newtxtext, newtxmath}
@@ -47,9 +51,18 @@
 \addto\captionsfinnish{%
   \renewcommand{\facultyname}{TIETO- JA SÄHKÖTEKNIIKAN TIEDEKUNTA}
   \renewcommand{\degreeprogramme}{%
-  \ifthenelse{\equal{\degreeprogrammeselection}{bme}}%
+    \ifthenelse{\equal{\degreeprogrammeselection}{bme}}%
       {Lääketieteen tekniikan tutkinto-ohjelma}%
+    {\ifthenelse{\equal{\degreeprogrammeselection}{ba}}%
+      {Liiketoiminta-analytiikan tutkinto-ohjelma}%
       {Tietotekniikan tutkinto-ohjelma}%
+    }%
+  }
+  \renewcommand{\degreeprogrammetitle}{%
+    \ifthenelse{\equal{\degreeprogrammeselection}{ba}}%
+      {Liiketoiminta-analytiikan tutkinto-ohjelma\\Tietotekniikka}%
+    {\degreeprogramme%
+    }%
   }
   \renewcommand{\thesistypetitle}{%
     \ifthenelse{\equal{\thesistype}{master}}%
@@ -75,7 +88,16 @@
   \renewcommand{\degreeprogramme}{%
     \ifthenelse{\equal{\degreeprogrammeselection}{bme}}%
       {Degree Programme in Biomedical Engineering}%
+    {\ifthenelse{\equal{\degreeprogrammeselection}{ba}}%
+      {Business Analytics, Computer Science and Engineering}%
       {Degree Programme in Computer Science and Engineering}%
+    }%
+  }
+  \renewcommand{\degreeprogrammetitle}{%
+    \ifthenelse{\equal{\degreeprogrammeselection}{ba}}%
+      {Business Analytics\\Computer Science and Engineering}%
+    {\degreeprogramme%
+    }%
   }
   \renewcommand{\thesistypetitle}{%
     \ifthenelse{\equal{\thesistype}{master}}%

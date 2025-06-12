@@ -1,7 +1,7 @@
-%
-% Template for Degree Programme of Computer Science and Engineering
-% Diploma Thesis at University of Oulu
-%
+% Template for M. Sc. (Tech.) degree programmes at the
+% Faculity of Information Technology and Electical Engineering
+% at University of Oulu (CSE/BME/BA)
+% 
 % Authors: Mika Korhonen (original author), Pekka Pietikäinen,
 % Christian Wieser, Teemu Tokola, Juha Kylmänen, Tuomas Holmberg and
 % Tuomas Varanka
@@ -66,13 +66,14 @@
 
 \DeclareOption{cse}{\renewcommand{\degreeprogrammeselection}{cse}}
 \DeclareOption{bme}{\renewcommand{\degreeprogrammeselection}{bme}}
+\DeclareOption{ba}{\renewcommand{\degreeprogrammeselection}{ba}}
 \ExecuteOptions{cse} % default
 
 \DeclareOption{bachelor}{%
-  \renewcommand{\thesistype}{Bachelor}%
+  \renewcommand{\thesistype}{bachelor}%
 }
 \DeclareOption{master}{%
-  \renewcommand{\thesistype}{Master}
+  \renewcommand{\thesistype}{master}
 }
 \ExecuteOptions{master} % default to 'master' (Diplomi-insinööri)
 \ProcessOptions\relax
@@ -207,6 +208,8 @@
 % Add macros for thesis type in English and Finnish
 \newcommand{\facultyname}{}
 \newcommand{\degreeprogramme}{}
+\newcommand{\degreeprogrammetitle}{}
+\newcommand{\getauthorsabstract}{}
 \newcommand{\thesistypetitle}{}
 \newcommand{\maintitle}{}
 \newcommand{\universityname}{}
@@ -241,7 +244,7 @@
     {\textbf{\fontsize{18}{22pt}\selectfont \MakeUppercase{\maintitle} \\}}
     \vfill
     {\fontsize{14}{17}\selectfont \thesistypetitle
-    \\ \degreeprogramme \\ \DTMToday \\}
+    \\ \degreeprogrammetitle \\ \DTMToday \\}
     \vspace{1cm}
   \end{titlepage}
   \cleardoublepage
@@ -392,5 +395,5 @@
 }
 
 \AtEndOfClass{%
-  \RequirePackage{csethesis}%
+  \RequirePackage{dithesis}%
 }
