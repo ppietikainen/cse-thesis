@@ -13,7 +13,7 @@ The thesis should have an abstract and a title in both English and Finnish. The 
 
 A Master’s thesis is written for an engineering audience. The author should therefore avoid presenting issues and topics that go beyond this scope. You should apply professional terminology when available. This rule also applies to all figures and tables.
 
-The aim is a clear and well-structured thesis, \textbf{without unnecessary excessive use of words}---a thesis usually has 50-80 pages. The language (English/Finnish/ Swedish) should be fluent and readable, and it should adhere to the conventions and recommendations applied in a particular language. Advice on such issues can be obtained from various language guides (in Finnish, e.g., \cite{maamies}). There are also several excellent sources on the internet, e.g., \cite{korpela, kielitoimisto} in Finnish and \cite{reportwriting, englishlanguage} in English.
+The aim is a clear and well-structured thesis, \textbf{without unnecessary excessive use of words}---a thesis usually has 50-80 pages. The language (English/Finnish/ Swedish) should be fluent and readable, and it should adhere to the conventions and recommendations applied in a particular language. Advice on such issues can be obtained from various language guides (in Finnish, e.g.,~\cite{maamies}). There are also several excellent sources on the internet, e.g.,~\cite{korpela, kielitoimisto} in Finnish and~\cite{reportwriting, englishlanguage} in English.
 
 \section{Typography}
 
@@ -48,7 +48,7 @@ paragraphs are indented by 0.5 cm
 \end{itemize}
 
 \subsection{Figures and tables}
-The thesis should include figures and tables to support the text. They should be placed in the following manner as is automatically done when following the model of this \LaTeX template:
+The thesis should include figures and tables to support the text. They should be placed in the following manner as is automatically done when following the model of this \LaTeX\ template:
 
 \begin{itemize}
     \setlength\itemsep{0pt}
@@ -59,7 +59,7 @@ The thesis should include figures and tables to support the text. They should be
     not end in a full stop. The permission to publish a table copied from another
     source has to be mentioned as part of the table heading. Many publishers inform
     the correct form to write this permission when such a permission has been
-    granted.
+    granted. The table must be in text format – not an image.
     \item If necessary, the caption should be separated from the figure with a single line spacing for reasons of clarity. A figure and a short caption are centred. However, a caption spanning multiple
     lines is justified at both ends. The necessary references are included in the figure captions. Copyright information is
     also added to the end of the caption. The copyright issues and citation practices of images
@@ -121,27 +121,40 @@ You should not use single subsections---for example, Section 2.1 needs to be acc
 
 \subsubsection{Formatting the figure captions} Figures, tables and appendices are a part of the written presentation. All these need to be referenced to in the text body, preferably before the figure is placed in the text---i.e., first the referring text, then the figure or table. Figures and tables have a running number through the document---or chapter wise, if there are plenty of figures.
 
-\figref{fig:work_packages} serves as an example of a figure and a text referring to it. Figure captions are below the figure, and the caption text ends with a full stop. A short caption is centered, while a long caption extending to a several lines is justified on both sides. According to the copyright enactments, you must always have the permission from the copyright holder to use the figure in your work. \textbf{Copyright infringement may lead to legal actions and penalties, and in those cases the author is responsible.} The writer should grow towards to mainly using figures of his own in the thesis. \textbf{ \figref{fig:work_packages} serves as an example of authors' own production, thus requiring no reference or footnotes.} In other words: if no outside source is referred to, it is assumed that the author of the thesis is also the author of the figure.
+\figref{fig:work_packages} serves as an example of a figure and a text referring to it. Figure captions are below the figure, and the caption text ends with a full stop. A short caption is centered, while a long caption extending to a several lines is justified on both sides.
 
-It is also good practice to explicitly state a license for your
-images, such as CC BY. Please refer to the university instructions on
-further instructions on copyright issues.
+Figures and tables should be given an alternative text that summarises
+the information they contain for the reader. This is discussed further
+in~\secref{accessibility}. Unfortunately support for this in \LaTeX\ is still work in progress, and the alternative text will currently not end up in the final PDF. A suitable alt text for~\figref{fig:work_packages} could be:
+\begin{quote}
+  Diagram showing interactions between work packages WP1 to WP5, all inside WP6, which is itself inside WP7. WP3 (left) sends outputs to WP1, WP2, and WP4. WP1 and WP2 are bidirectionally linked. WP1, WP2, and WP4 send outputs to WP5 (right). A curved arrow shows WP3 also directly feeding into WP5''.
+\end{quote} 
+
+According to the copyright enactments, you must always have the permission from the copyright holder to use the figure in your work. This is discussed more in~\secref{copyright}. To summarize: \textbf{Copyright infringement may lead to legal actions and penalties, and in those cases the author is responsible.} The writer should grow towards to mainly using figures of his own in the thesis. \textbf{ \figref{fig:work_packages} serves as an example of authors' own production, thus requiring no reference or footnotes.}  Often it is necessary to redraw the figure and citing the original source. In other words: if no outside source is referred to, it is assumed that the author of the thesis is also the author of the figure.
+
+Still, it is good practice to explicitly state the copyright owners and
+license, such as CC BY 4.0 for your images, in a separate copyright page or with the image captions. See~\secref{copyright} and the university instructions
+on further instructions on copyright issues.
 
 The final thesis will be published as a PDF/A file, and this LaTeX
 template produces files in that format directly (There is no need to
 use Muuntaja). Be sure to remove all transparency in your source
-images to ensure the end result is also compliant.
+images to ensure the end result is also compliant. Instructions on doing this
+are included with the thesis template.
 
 % Pictures in .pdf, .png or .jpg. No need to specify the extension.
 % Transparent images are not allowed with PDF/A.
 % With ImageMagick transparency can be removed with
 % convert image.png -background white -alpha remove -alpha off image_nobg.png
-% This restriction also affects PDF images
+% This restriction also affects PDF images, as a first step try to make the PDF
+% image PDF/A:
+% gs -dPDFA -dBATCH -dNOPAUSE -sColorConversionStrategy=UseDeviceIndependentColor -sDEVICE=pdfwrite -dPDFACompatibilityPolicy=2 -sOutputFile=output.pdf input.pdf 
 \begin{figure}[ht]
   \begin{center}
     \includegraphics*[width=0.7\textwidth]{WP}
   \end{center}
-  \caption{Connections between work packages (WP). \copyright\ Unto Uneksija 2025 CC BY}
+  \caption{Connections between work packages (WP). \copyrightstring\ \href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0}.}
+  \alt{Diagram showing interactions between work packages WP1 to WP5, all inside WP6, which is itself inside WP7. WP3 (left) sends outputs to WP1, WP2, and WP4. WP1 and WP2 are bidirectionally linked. WP1, WP2, and WP4 send outputs to WP5 (right). A curved arrow shows WP3 also directly feeding into WP5.}
   \label{fig:work_packages}
 \end{figure}
 
@@ -276,49 +289,34 @@ It is not mandatory to bind the thesis at a printing house. However, a student i
 
 \section{Use of images: Intellectual Property Rights}
 \label{copyright}
-Intellectual property rights (IPR) protect works, i.e. the authors and rights-holders of literary or
-artistic works that exceed the threshold of originality. These works include for instance texts,
-images, music and computer software codes. For this reason, figures found on the internet, for
-example, may not be freely used in theses. This section explains how they can be used and
-provides examples.
+Intellectual property rights (IPR) protect works, i.e. the authors and rights-holders of literary or artistic works that exceed the threshold of originality. These works include for instance texts, images, music and computer software codes. For this reason, figures found on the internet, for example, may not be freely used in theses. This section explains how they can be used and provides examples.
 
-The starting point is that the figures must be related to the text, i.e. the text must explain why
-the figure has been presented. The text must contain a reference to the figure.
-Use self-made figures (drawings, schematics, simulation or measurement result figures,
-photographs), if possible.
+The starting point is that the figures must be related to the text, i.e. the text must explain why the figure has been presented. The text must contain a reference to the figure. Use self-made figures (drawings, schematics, simulation or measurement result figures, photographs), if possible.
 
-It is a good practice to mark the photographer in the photos (e.g. “Photographer first name
-last name year.”) If you are not the photographer, ask permission and keep the permission (e.g.
-email correspondence) safe. In addition, keep any other licences you have received, including
-those under the CC licence, safe. Often publications under a CC licence mention the CC licence
-on the front page and the figure is on page z. Save at least the page explaining the CC licence
+It is a good practice to mark the photographer in the photos (e.g. “Photographer first name last name year.”) If you are not the photographer, ask permission and keep the permission (e.g., email correspondence) safe. In addition, keep any other licences you have received, including those under the CC licence, safe. Often publications under a CC licence mention the CC licence on the front page and the figure is on page z. Save at least the page explaining the CC licence
 from the publication from which you have taken the photo.
 
-If you use figures made by others, you must have permission from the copyright owner to
-use the figure. For instance, IEEE and many other publishers have an automated system for
-granting permission for theses. Mark the permission in the caption as requested by the right
-holder, e.g. “Reprinted with permission from [x] \textcopyright\ IEEE, 2022.”.
+If you use figures made by others, you must have permission from the copyright owner to use the figure. For instance, IEEE and many other publishers have an automated system for granting permission for theses. Mark the permission in the caption as requested by the right holder, e.g. “Reprinted with permission from [x] \textcopyright\ IEEE, 2022.”.
 
-Not all figures exceed the threshold of originality. These include, for example, scientific
-diagrams and flowcharts. Good research practices require that even in this case, the source is
-cited in the caption ("Figure from source [x]."). However, it would be best to ask for permission.
-Images with a CC licence are free to use, so long as the terms of use are followed [6]. Even
-then, the caption must mention the source (article, website, etc.) and that the image is CC-
-licensed, for example. ”CC BY 4.0 licensed image from source [x].”.
+Not all figures exceed the threshold of originality. These include, for example, scientific diagrams and flowcharts. Good research practices require that even in this case, the source is cited in the caption ("Figure from source [x]."). However, it would be best to ask for permission. Images with a CC licence are free to use, so long as the terms of use are followed [6]. Even then, the caption must mention the source (article, website, etc.) and that the image is CC-licensed, for example. ”CC BY 4.0 licensed image from source [x].”.
 
-Based on the right to quote, it is possible to take a photocopy, screenshot or photograph of a
-work (not the original file) and publish it, citing the original source in the caption. A critical
-aspect of the right to quote is that the use of the image is relevant to the work, i.e. the image
-must be related to the subject, and it must be explained in the text (this applies to all images).
-Similarly, the source must be cited in text citations.
+Based on the right to quote, it is possible to take a photocopy, screenshot or photograph of a work (not the original file) and publish it, citing the original source in the caption. A critical aspect of the right to quote is that the use of the image is relevant to the work, i.e. the image must be related to the subject, and it must be explained in the text (this applies to all images). Similarly, the source must be cited in text citations.
 
-Sometimes you may want to use someone else's original image idea as a basis for your own
-work. Permission is not required provided that your work clearly an amply edited version of
-the original. However, in accordance with good research practices the source must be declared
-in the caption (“Modified/Adapted/Redrawn from/Based on/Created using data from [x].”), depending on
-the extent of modification done to the original image. Should you only make minor edits, the permission is required.
+Sometimes you may want to use someone else's original image idea as a basis for your own work. Permission is not required provided that your work clearly an amply edited version of the original. However, in accordance with good research practices the source must be declared in the caption (“Modified/Adapted/Redrawn from/Based on/Created using data from [x].”), depending on the extent of modification done to the original image. Should you only make minor edits, the permission is required.
 
-When searching for images through an internet image search, it is not always easy to find
-the rights holder from whom to request permission for use. Hunting for a permit can be a
-demanding task. The easiest way is to use images and figures from scientific articles as in these
-the rights holders are clearly declared.
+When searching for images through an internet image search, it is not always easy to find the rights holder from whom to request permission for use. Hunting for a permit can be a demanding task. The easiest way is to use images and figures from scientific articles as in these the rights holders are clearly declared.
+
+\section{Accessibility}
+\label{accessibility}
+Put effort into the accessibility of your Master’s thesis. The
+structure of an accessible document is clear, and the wording is as
+understandable as possible. Figures and tables should be given an
+alternative text that summarises the information they contain for the
+reader. Alternative text is especially important in situations where
+the reader cannot see the figure or table, for example due to vision
+impairment.  More information on accessible Word documents and
+archivable PDF files can be found in the texts of the University of
+Oulu Campus ICT~\cite{ictaccessibleword,ictwordpdfa}. You can also
+read about the accessibility of mathematical equations in the Campus
+ICT text~\cite{ictaccessiblemath}.
+
