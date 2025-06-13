@@ -45,7 +45,10 @@
   pdfencoding=auto,
   hidelinks
 }
-
+% Compatibility with older TeX distributions, make it a 
+% no-op if not already defined. Some day alt-text will
+% end up in the PDF.
+\providecommand{\alt}[1]{}
 % --- Language option processing ---
 \newcommand*{\MainLang}{}
 \newcommand*{\OtherLangs}{}
