@@ -1,6 +1,6 @@
 ## cse-thesis
 
-This LaTeX -template has been used by various people at department  since the late 1990's, and has slowly improved over time.  It is still  somewhat rough at the edges, but hopefully will be helpful in reducing  some of the pain involved in writing a diploma thesis. 
+This LaTeX -template has been used by various people at department since the late 1990's, and has slowly improved over time.  It is still somewhat rough at the edges, but hopefully will be helpful in reducing some of the pain involved in writing a diploma thesis. 
 
 Contributors to the template include:
 
@@ -16,7 +16,7 @@ Contributors to the template include:
 We kindly ask for students using this template to improve this template,
 and share the improvements, so that others may benefit.
 
-This template is distributed to students via Overleaf and https://github.com/ouspg/cse-thesis is synchronized with it. Issues and pull requests can be made to GitHub.
+This template is distributed to students via Overleaf, and https://github.com/ouspg/cse-thesis is synchronized with it. Issues and pull requests can be made to GitHub.
 
 ### FILES AND FOLDERS
  * Figures
