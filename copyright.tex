@@ -1,0 +1,139 @@
+\documentclass[english, cse, master]{dithesis}
+
+%% Copyright of a work is with the creator/author of the work regardless of
+%% whether the copyright mark is explicitly in the work or not. You may, if you
+%% wish---we encourage you to do so---publish your work under a Creative
+%% Commons license (see creativecommons.org), in which case the license text
+%% must be visible in the work. Write here the copyright text you want using
+%% the macro \copyrighttext, which writes the text into the metadata of the
+%% pdf file as well.
+%%
+%% Syntax:
+%% \copyrigthtext{metadata text}{text visible on the page}
+%% \copyrightstring is common for all languages and licenses.
+%% Copyright (C) year Author(s)
+\newcommand{\crpar}{\vspace{1\baselineskip}\par\noindent}
+\copyrighttext%
+{\copyrightstring\ \allrightsreservedeng}%
+{%
+  \copyrightstring\ \allrightsreservedeng
+  \crpar
+  Private use of this thesis is permitted. Reproduction or modification of the figures in this thesis without permission is prohibited.
+  \crpar
+  Some figures in this thesis have a license or permission statuses that differ from this. These figures are clearly attributed and include license information in the corresponding captions and are listed below. Reproduction or modification of such figures is allowed under the terms of their respective licenses.
+  \crpar
+  Figure 5 is reproduced from [x] under the provisions of copyright law allowing use with appropriate citation. \\
+  Figure 6 is just here to show formatting, this will be commented out in the template anyway
+}
+
+% Only include if you want to use a Creative Commons license,
+% since otherwise undesisred information may be included in the PDF metadata.
+\usepackage[type={CC}, modifier={by}, version={4.0}]{doclicense-di}
+
+
+% Abstracts are placed in the metadata of the PDF file, 
+% so they cannot contain empty lines or special characters.
+% Mathematic symbols should be fine (mathxmp option for pdfx package),
+\abstract{This document provides general guidance for a degree student
+  in the technical degree programmes of Computer Science and Engineering, 
+  Biomedical Engineering and Business Analytics (Tech.) at the faculty of 
+  Information Technology and Electrical Engineering at the University of Oulu
+  in preparing his/her Bachelor's or Master's thesis. This guide defines the role of a
+  thesis in the M.Sc. (Tech.) Degree, presents the actions 
+  to be taken in different phases of the thesis procedure and introduces the way
+  that the thesis is written. The document has been formatted based on these
+  guidelines to serve as an example how the thesis should look like.}
+
+\tiivistelma{Näissä ohjeissa opastetaan valmistumisvaiheessa olevaa
+  opiskelijaa kandidaatin- ja diplomityön tekemisessä. Ohjeissa selvitetään työn asema
+  diplomi-insinööritutkinnossa, kerrotaan toimenpiteet, joihin työn
+  tekijän on ryhdyttävä työn eri vaiheissa, sekä määritellään
+  yksityiskohtaisesti kandidaatin- ja diplomitöiden kirjallinen rakenne. Ohje on
+  muotoiltu noudattaen näitä kirjoitusohjeita ja toimii siten
+  esimerkkinä, miltä lopputyön tulisi näyttää.}
+
+% Keywords are also included in the PDF metadata, and cannot contain any
+% special characters. Separate them with \spc
+
+\keywords{M.Sc. degree\spc master’s thesis instructions\spc structure of a master’s thesis}
+\avainsanat{diplomi-insinöörin tutkinto\spc diplomityön ohjeet\spc diplomityön rakenne}
+
+%%%%%%%%%%%%%%%%%%%%% SET YOUR INFORMATION HERE %%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{TODO: Bachelor's and Diploma Thesis Guide}
+\otsikko{TODO: Kandidaatintyön ja diplomityön teko-ohjeet}
+
+\firstname{Author}
+\lastname{One}
+
+%Names of other authors can be added here
+\firstnametwo{Author}
+\lastnametwo{Two}
+\firstnamethree{Author}
+\lastnamethree{Three}
+%Do not remove or comment the extra names if you do not need them, leave them empty instead
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\headertitlecap automatically creates headers with TitleCaps
+% (Capitalizes the First Letter in Each Word except "Small" Ones)
+% for H0, H2, and H3. Words not to be capitalized can be
+% changed in di.sty.
+% This only has effect in English. in Finnish headers follow
+% the normal Finnish rules of capitalization.
+% Also this doesn't affect the PDF metadata, so you should
+% correctly title case headings in your .tex files anyway.
+\headertitlecap
+
+% Add your bibliographies here. You can use several
+\addbibresource{citations.bib}
+
+\begin{document}
+
+\hypersetup{pageanchor=false}
+\maketitlepage
+    \pagenumbering{arabic}
+    \setcounter{page}{1}
+    \hypersetup{pageanchor=true}
+    \makecopyrightpage
+    \selectlanguage{finnish}
+    \copyrighttext%
+        {\copyrightstring\ \allrightsreservedfin}%
+        {%
+          \copyrightstring\ \allrightsreservedfin
+          \crpar
+          Työn yksityiskäyttö on sallittu. Kuvien uudelleenjulkaisu ja
+          muokkaus ilman lupaa kielletty.
+          \crpar
+          Tästä ehdosta poikkeavien kuvien ehdot on esitetty kuvateksteissä ja alla. Näiden kuvien uudelleenjulkaisu tai muokkaaminen on sallittu kyseisten ehtojen mukaisesti.
+          \crpar
+          Kuva~5 on kopioitu lähteestä [x] lähdeviittausoikeuden nojalla \\
+          Kuva~6 on tässä vain oikean muotoilun näyttämiseksi.
+        }
+    \makecopyrightpage
+
+    \copyrighttext{\copyrightstring. Except otherwise noted, the reuse of this document is authorized under a Creative Commons 4.0 International (CC-BY-4.0) license.}
+  {%
+    \copyrightstring
+    \doclicenseThis % CC logo, needs transparency removed
+    \crpar
+    The license of images that differ from this is indicated in the figure captions and are listed below.\par
+  }
+  \makecopyrightpage
+  \selectlanguage{finnish}
+  \makeatletter\input{doclicense-finnish.ldf}\makeatother
+    \copyrighttext{\copyrightstring. Jos ei toisin mainita, tämän dokumentin käyttö on sallittu Creative Commons 4.0 Kansainvälinen (CC-BY-4.0) lisenssin mukaisesti.}%
+  {%
+    \copyrightstring
+    \doclicenseThis % CC logo, needs transparency removed
+    \crpar
+    Some figures in this thesis have a license or permission statuses that differ from this. These figures are clearly attributed and include license information in the corresponding captions. Reproduction or modification of such figures is allowed under the terms of their respective licenses.
+  }
+  \makecopyrightpage
+  \selectlanguage{english}
+    \chapter{Thesis writing instructions}
+        \label{implementation}
+        \input{implementation-imagecronly}
+    \printbibliography[heading=bibnumbered, title=\mybibname]    
+\end{document}
