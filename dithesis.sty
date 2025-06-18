@@ -119,9 +119,15 @@
 }
 
 % Copyright strings
-\newcommand{\copyrightstring}{Copyright \textcopyright\ \number\year\ \getauthorslist.}
-\newcommand{\allrightsreservedeng}{All rights reserved. Private use of this thesis is permitted.}
-\newcommand{\allrightsreservedfin}{Kaikki oikeudet pidätetään. Työn yksityiskäyttö on sallittu.}
+% Syntax: 
+% \copyrigthtext{metadata text}{text visible on the page}
+% \copyrightstring is common for all languages and licenses.
+% Copyright (C) year Author(s)
+\newcommand{\copyrightstring}{Copyright \textcopyright~\number\year\ \getauthorslist.}
+\newcommand{\allrightsreservedeng}{All rights reserved.}
+\newcommand{\allrightsreservedfin}{Kaikki oikeudet pidätetään.}
+\newcommand{\blockpar}{\vspace{1\baselineskip}\par\noindent}
+
 % Algorithms
 \usepackage[linesnumbered, ruled]{algorithm2e}
 
@@ -185,13 +191,6 @@
 \newcommand{\enabletocdots}{
   \addtocontents{toc}{\protect\renewcommand{\protect\cftchapleader}{\protect\cftdotfill{\cftdotsep}}}
 }
-% Instead of \cftchapaftersnum{.}, directly control the numbering style:
-
-\renewcommand{\thechapter}{\arabic{chapter}.}
-\renewcommand{\thesection}{\thechapter\arabic{section}.}
-\renewcommand{\thesubsection}{\thesection\arabic{subsection}.}
-\renewcommand{\thesubsubsection}{\thesubsection\arabic{subsubsection}.}
-
 
 % Chapter
 % Chapters are set in 14pt bold (bfseries), centered, uppercase.
@@ -199,7 +198,7 @@
 \titleformat{\chapter}
   [hang]
   {\normalfont\bfseries\fontsize{14}{17}\selectfont\centering}
-  {\thechapter}
+  {\thechapter.}
   {1em}
   {\MakeUppercase}
 
@@ -209,7 +208,7 @@
 \titleformat{\section}
   [hang]
   {\normalfont\bfseries\fontsize{12}{15}\selectfont\centering}
-  {\thesection}
+  {\thesection.}
   {1em}
   {}
 
@@ -219,7 +218,7 @@
 \titleformat{\subsection}
   [hang]
   {\normalfont\bfseries\itshape\centering}
-  {\thesubsection}
+  {\thesubsection.}
   {1em}
   {}
 \setcounter{secnumdepth}{2} % numbers up to \subsection by default
