@@ -119,9 +119,15 @@
 }
 
 % Copyright strings
-\newcommand{\copyrightstring}{Copyright \textcopyright\ \number\year\ \getauthorslist.}
-\newcommand{\allrightsreservedeng}{All rights reserved. Private use of this thesis is permitted.}
-\newcommand{\allrightsreservedfin}{Kaikki oikeudet pidätetään. Työn yksityiskäyttö on sallittu.}
+% Syntax: 
+% \copyrigthtext{metadata text}{text visible on the page}
+% \copyrightstring is common for all languages and licenses.
+% Copyright (C) year Author(s)
+\newcommand{\copyrightstring}{Copyright \textcopyright~\number\year\ \getauthorslist.}
+\newcommand{\allrightsreservedeng}{All rights reserved.}
+\newcommand{\allrightsreservedfin}{Kaikki oikeudet pidätetään.}
+\newcommand{\blockpar}{\vspace{1\baselineskip}\par\noindent}
+
 % Algorithms
 \usepackage[linesnumbered, ruled]{algorithm2e}
 

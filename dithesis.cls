@@ -302,7 +302,7 @@
 
 \newenvironment{thesisabstract}[1]{%
   \selectlanguage{#1}%
-  \setcounter{NAppdxPages}{\value{NAllPages}-\value{NMainTxtPages}}%
+  \setcounter{NAppdxPages}{\numexpr\value{NAllPages}-\value{NMainTxtPages}\relax}
   \renewcommand*{\spc}{, }
 
   \cleardoublepage
@@ -312,7 +312,9 @@
   {\centering\bfseries\fontsize{14}{17}\selectfont\MakeUppercase{\abstracttitle}\par}%
   \addtocontents{toc}{\protect\contentsline{chapter}{\abstracttitle}{}{page.\thepage}}
   \vspace{1\baselineskip}
+  \makeatletter
   \@afterindentfalse\@afterheading
+  \makeatother
   \begingroup
   \bfseries
   }{%

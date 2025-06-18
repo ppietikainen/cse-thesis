@@ -21,31 +21,10 @@
 %% must be visible in the work. Write here the copyright text you want using the
 %% macro \copyrighttext, which writes the text into the metadata of the pdf file
 %% as well.
-%%
-%% Syntax:
-%% \copyrigthtext{metadata text}{text visible on the page}
-%% \copyrightstring is common for all languages and licenses.
-%% Copyright (C) year Author(s)
-%\copyrighttext%
-%{\copyrightstring\ \allrightsreservedeng}%
-%{%
-%  \copyrightstring\ \allrightsreservedeng
-%}
-% Only include if you want to use a Creative Commons license,
-% since otherwise undesisred information may be included in the PDF metadata.
-\usepackage[type={CC}, modifier={by}, version={4.0}]{doclicense-di}
+%% Uncommenting the following will automatically create a copyright page
 
-\copyrighttext
-  {\copyrightstring. Except otherwise noted, the reuse of this document is authorized under a Creative Commons 4.0 International (CC-BY-4.0) license.}
-  %{\copyrightstring. Jos ei toisin mainita, tämän dokumentin käyttö on sallittu Creative Commons 4.0 Kansainvälinen (CC-BY-4.0) lisenssin mukaisesti.}%
-  {%
-    \textcopyright{}
-    \number\year\ \getauthorslist.\par
-    \doclicenseThis % CC logo, needs transparency removed
-    \par\noindent
-    The licenses of images and other media in this document may differ from the license of the text. The licenses are mentioned in the captions of the images and media, or in the text where they are referenced.\par
-    % Kuvien ja muiden medioiden lisenssit voivat poiketa tekstin lisenssistä. Lisenssit mainitaan kuvien ja medioiden kuvateksteissä tai tekstissä, jossa niitä viitataan.\par
-  }
+%\input{copyright-allrightsreserved}
+\input{copyright-ccby40.tex}
 
 % Abstracts are placed in the metadata of the PDF file, 
 % so they cannot contain empty lines or special characters.
@@ -112,8 +91,9 @@
     \pagenumbering{arabic}
     \setcounter{page}{1}
     \hypersetup{pageanchor=true}
+    % Does nothing if copyright is not set
     \makecopyrightpage
-  
+
     \IfLang{\MainLang}{finnish}{
       \input{Chapters/tiivistelma}
       \input{Chapters/abstract}
