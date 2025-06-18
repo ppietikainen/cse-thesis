@@ -48,17 +48,17 @@ text ends with a full stop. A short caption is centered, while a long
 caption extending to a several lines is justified on both sides. 
 
 If no outside source is referred to in the caption, it is assumed that
-the author of the thesis is also the author and copyright owner (not necessarily the author) of the figure, and the license of the figure is the same as the document (Default: ``All rights reserved''). This is discussed further in Section~\secref{copyright}.
+the author of the thesis is also the author and copyright owner (not necessarily the author) of the figure, and the license of the figure is the same as the document (Default: ``All rights reserved''). This is discussed further in \secref{copyright}.
 
 Figures and tables should be given an alternative text that summarises
 the information they contain for the reader. This is discussed further
 in~\secref{accessibility}. Unfortunately support for this in
 \LaTeX\ is still work in progress, and the alternative text will
-currently not end up in the final PDF. A suitable alt text
+currently not end up in the final PDF. A suitable alternative text
 for~\figref{fig:work_packages} could be:
 
 \begin{quote}
-  Diagram showing interactions between work packages WP1 to WP5, all inside WP6, which is itself inside WP7. WP3 (left) sends outputs to WP1, WP2, and WP4. WP1 and WP2 are bidirectionally linked. WP1, WP2, and WP4 send outputs to WP5 (right). A curved arrow shows WP3 also directly feeding into WP5''.
+  Diagram showing interactions between work packages WP1 to WP5, all inside WP6, which is itself inside WP7. WP3 (left) sends outputs to WP1, WP2, and WP4. WP1 and WP2 are bidirectionally linked. WP1, WP2, and WP4 send outputs to WP5 (right). A curved arrow shows WP3 also directly feeding into WP5.
 \end{quote} 
 
 The final thesis will be published as a PDF/A file, and this LaTeX
@@ -95,22 +95,33 @@ Your thesis is also a copyrighted work. If no license is explicitly
 stated, the license is "All rights reserved," meaning it can only be
 used in limited ways under copyright law. The Federation of Finnish
 Open Science Coordination in Finland and the University of Oulu
-recommend publishing theses as open access and under a CC-BY license,
+recommend publishing theses as open access and under a CC-BY 4.0 license,
 or if warranted, another CC license~\cite{coordination_open_2024}.
-CC-BY allows reuse, including commercial use, of your work as long as
+CC-BY 4.0 allows reuse, including commercial use, of your work as long as
 the author is credited.
 
-Among the various types of works protected by copyright, images present particular challenges and considerations. Images are frequently used to illustrate concepts, present data, or enhance the visual appeal of academic texts. However, their use is subject to specific copyright restrictions, and improper use can lead to legal and ethical issues.
-For this reason, figures found on the Internet, for example, may not be freely used in theses without proper permission or licensing. 
+Among the various types of works protected by copyright, images
+present particular challenges and considerations. Images are
+frequently used to illustrate concepts, present data, or enhance the
+visual appeal of academic texts. However, their use is subject to
+specific copyright restrictions, and improper use can lead to legal
+and ethical issues.  For this reason, figures found on the Internet,
+for example, may not be freely used in theses without proper
+permission or licensing.
 
 It is good practice to explicitly state the copyright owners and
 license for all images in your thesis. This can be done via a blanket
 statement on a separate copyright page, or for every image separately
 in the caption. All exceptions to the main license of your thesis
-(e.g., ``All rights reserved'' or ``CC-BY 4.0'') should \textbf{always} be
-included in the image captions. If your use of external images is extensive and is a central part of your thesis, it is good to also mention explicitly on 
-them on the copyright page, e.g., "Figure 5 is reproduced from [x] under the provisions of copyright law allowing use with appropriate citation."
-and also discuss their use with your thesis supervisor at an early stage.
+(e.g., ``All rights reserved'' or ``CC-BY 4.0'') should
+\textbf{always} be included in the image captions.
+
+If your use of external images is extensive and is a central part of
+your thesis, it is good to also explicitly list them on the copyright
+page or in an appendix, e.g., "Figure 5 is reproduced from [x] under
+the provisions of copyright law allowing use with appropriate
+citation." and also discuss their use with your thesis supervisor at
+an early stage and acquire the necessary permissions.
 
 According to the copyright enactments, you must always have the
 permission from the copyright holder to use their figure in your
@@ -129,20 +140,20 @@ photographs), if possible.
 It is a good practice to mark the photographer in the photos
 (e.g. “Photographer first name last name year.”) If you are not the
 photographer, ask permission and keep the permission (e.g., email
-correspondence) safe. In addition, keep any other licences you have
-received, including those under the CC licence, safe. Often
-publications under a CC licence mention the CC licence on the front
+correspondence) safe. In addition, keep any other licenses you have
+received, including those under the CC license, safe. Often
+publications under a CC license mention the CC license on the front
 page and the figure is on page z. Save at least the page explaining
-the CC licence from the publication from which you have taken the
+the CC license from the publication from which you have taken the
 photo.
 
 As mentioned, in case the figure has been taken from elsewhere, the
 author needs to have a permission from the copyright holder. Usually
-this is based on a licence that gives permission to use the work with
-some conditions. The most common example would be a CC-BY licence,
+this is based on a license that gives permission to use the work with
+some conditions. The most common example would be a CC-BY license,
 such as the one used in \figref{fig:ccbypic}. If the figure is from a
-publication you are citing, ”CC-BY 4.0 from [x].” would
- be appropriate.
+publication you are citing, ``CC-BY 4.0 from [x].'' would be
+appropriate. In Finnish, use ``CC-BY 4.0 lähteestä [x].''
 
 \begin{figure}[H]
   \begin{center}
@@ -152,20 +163,20 @@ publication you are citing, ”CC-BY 4.0 from [x].” would
     \label{fig:ccbypic}
 \end{figure}
 
-If you use figures made by others, you must have permission from the
-copyright owner to use the figure. For instance, IEEE and many other
-publishers have an automated system for granting permission for
-theses. Mark the permission in the caption as requested by the right
-holder, e.g., “Reprinted with permission from [x] \textcopyright\ IEEE, 2022.”.
+The permission can also be from the publisher. For instance, IEEE
+and many other publishers have an automated system for granting
+permission for theses. Mark the permission in the caption as requested
+by the right holder, e.g., “Reprinted with permission from [x]
+\textcopyright\ IEEE, 2022.”.
 
 Not all figures exceed the threshold of originality. These include,
 for example, scientific diagrams and flowcharts. Good research
 practices require that even in this case, the source is cited in the
-caption ("Figure from source [x]."). However, it would be best to ask
-for permission or at least redraw the image. Images with a CC license 
-are free to use, so long as the terms of use are followed~\cite{about_cc_licenses}. Even then, the
-caption must mention the source (article, website, etc.) and that the
-image is CC-licensed.
+caption ("Figure from [x]."). However, it would be best to ask
+for permission or at least redraw the image. Images with a CC license
+are free to use, so long as the terms of use are
+followed~\cite{about_cc_licenses}. Even then, the caption must mention
+the source (article, website, etc.) and that the image is CC-licensed.
 
 Based on the right to quote, it is possible to take a photocopy,
 screenshot or photograph of a work (not the original file) and publish
@@ -179,18 +190,18 @@ Sometimes you may want to use someone else's original image idea as a
 basis for your own work. Permission is not required provided that your
 work clearly an amply edited version of the original. However, in
 accordance with good research practices the type of modification
-(“Modified/Adapted/Redrawn from/Based on/Created using
-data from") and source "from [x]" must be declared in
-the caption. Should you only make minor edits to the original,
-separate permission is required. The University of Oulu Acta Oulu
-publishing guide~\cite{ronkainen_copyright, ronkainen_tekijanoikeus}
-has more details on this topic.
+(“Modified/Adapted/Redrawn from/Based on/Created using data from") and
+source "from [x]" must be declared in the caption. Should you only
+make minor edits to the original, separate permission is required. The
+University of Oulu Acta Oulu publishing
+guide~\cite{ronkainen_copyright} has more details on this topic, also
+the wordings in Finnish~\cite{ronkainen_tekijanoikeus}.
 
 When searching for images through an internet image search, it is not
 always easy to find the rights holder from whom to request permission
 for use. Hunting for a permit can be a demanding task. The easiest way
-is to use images and figures from scientific articles (or with open licenses) as in these the
-rights holders are clearly declared.
+is to use images and figures from scientific articles (or with open
+licenses) as in these the rights holders are clearly declared.
 
 \section{Accessibility}
 \label{accessibility}
