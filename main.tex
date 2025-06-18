@@ -1,4 +1,7 @@
-% Template for Degree Programme in Computer Science and Engineering Diploma Thesis v1.3.2019
+% Template for M. Sc. (Tech.) degree programmes at the
+% Faculity of Information Technology and Electical Engineering
+% at University of Oulu (CSE/BME/BA)
+% 
 % Authors: Mika Korhonen (original author), Pekka Pietikäinen, Christian Wieser, Teemu Tokola, Juha Kylmänen, Tuomas Holmberg and Tuomas Varanka.
 % If you make any improvements to this template, please contact teemu.tokola@oulu.fi
 %
@@ -7,38 +10,42 @@
 % 2023-06-15: Improvements to avoid missing filling in some details: TODO's added to template (TTo)
 % 2023-06-15: Changes to foreword, clarifications to indicate template is also for Bachelor thesis  (TTo)
 % 2023-06-15: Example of a CC-BY figure added with reference in the footnotes (TTo)
+% 2025-06-12: Major refactoring of the template
+% Valid options english/finnish, cse/bme/ba, master/bachelor
+\documentclass[english, cse, master]{dithesis}
 
-% Valid options english/finnish, cse/bme, master/bachelor
-\documentclass[english,cse]{csethesis}
-
-\usepackage[type={CC}, modifier={by}, version={4.0}]{doclicense-csetemplate}
 \copyrighttext
-  {Copyright \textcopyright\ \number\year\ \getauthorslist. Except otherwise noted, the reuse of this document is authorized under a Creative Commons 4.0 International (CC-BY-4.0) license.}
+  {\copyrightstring. Except otherwise noted, the reuse of this document is authorized under a Creative Commons 4.0 International (CC-BY-4.0) license.}
+  %{\copyrightstring. Jos ei toisin mainita, tämän dokumentin käyttö on sallittu Creative Commons 4.0 Kansainvälinen (CC-BY-4.0) lisenssin mukaisesti.}%
   {%
     \textcopyright{}
     \number\year\ \getauthorslist.\par
     \doclicenseThis % CC logo, needs transparency removed
-    Exception: The figures  are not included in the license.
+    \par\noindent
+    The licenses of images and other media in this document may differ from the license of the text. The licenses are mentioned in the captions of the images and media, or in the text where they are referenced.\par
+    % Kuvien ja muiden medioiden lisenssit voivat poiketa tekstin lisenssistä. Lisenssit mainitaan kuvien ja medioiden kuvateksteissä tai tekstissä, jossa niitä viitataan.\par
   }
 
 % Abstracts are placed in the metadata of the PDF file, 
 % so they cannot contain empty lines or special characters.
 % Mathematic symbols should be fine (mathxmp option for pdfx package),
 \abstract{This document provides general guidance for a degree student
-  of Computer Science and Engineering in preparing his/her master's
-  thesis. This guide defines the role of a thesis in the
-  M.Sc. Degree, presents the actions to be taken in different phases
-  of the thesis procedure and introduces the way that master’s thesis
-  is written. The document has been formatted based on these
+  in the technical degree programmes of Computer Science and Engineering, 
+  Biomedical Engineering and Business Analytics (Tech.) at the faculty of 
+  Information Technology and Electical Engineering at the University of Oulu
+  in preparing his/her Bachelor's or Master's thesis. This guide defines the role of a
+  thesis in the M.Sc. (Tech.) Degree, presents the actions 
+  to be taken in different phases of the thesis procedure and introduces the way
+  that the thesis is written. The document has been formatted based on these
   guidelines to serve as an example how the thesis should look like.}
 
 \tiivistelma{Näissä ohjeissa opastetaan valmistumisvaiheessa olevaa
-  opiskelijaa diplomityön tekemisessä. Ohjeissa selvitetään työn asema
+  opiskelijaa kandidaatin- ja diplomityön tekemisessä. Ohjeissa selvitetään työn asema
   diplomi-insinööritutkinnossa, kerrotaan toimenpiteet, joihin työn
   tekijän on ryhdyttävä työn eri vaiheissa, sekä määritellään
-  yksityiskohtaisesti diplomityön kirjallinen rakenne. Ohje on
+  yksityiskohtaisesti kandidaatin- ja diplomitöiden kirjallinen rakenne. Ohje on
   muotoiltu noudattaen näitä kirjoitusohjeita ja toimii siten
-  esimerkkinä, miltä diplomityön tulisi näyttää.}
+  esimerkkinä, miltä lopputyön tulisi näyttää.}
 
 % Keywords are also included in the PDF metadata, and cannot contain any
 % special characters. Separate them with \spc
@@ -64,7 +71,14 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\headertitlecap automatically creates headers with TitleCaps (Capitalizes the First Letter in Each Word) for H0, H2, and H3. Words not to be capitalized can be changed in di.sty
+%\headertitlecap automatically creates headers with TitleCaps
+% (Capitalizes the First Letter in Each Word except "Small" Ones)
+% for H0, H2, and H3. Words not to be capitalized can be
+% changed in di.sty.
+% This only has effect in English. in Finnish headers follow
+% the normal Finnish rules of capitalization.
+% Also this doesn't affect the PDF metadata, so you should
+% correctly title case headings in your .tex files anyway.
 \headertitlecap
 
 % Add your bibliographies here. You can use several
@@ -77,7 +91,7 @@
     \pagenumbering{arabic}
     \setcounter{page}{1}
     \hypersetup{pageanchor=true}
-    \makecopyrightpage{}
+    \makecopyrightpage
   
     \IfLang{\MainLang}{finnish}{
       \input{Chapters/tiivistelma}
