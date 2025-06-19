@@ -111,44 +111,33 @@ done when following the model of this \LaTeX\ template:
     \setlength\itemsep{0pt}
     \setlength\parskip{0pt}
   \item Table structure and the different fonts used in different
-    instances are explained in
-    \tabref{tab:sample_table}.
+    instances are explained in \tabref{tab:sample_table}.
   \item In tables, the heading has to be placed above the table. The
-    table heading should
-    not end in a full stop. The permission to publish a table copied
-    from another
-    source has to be mentioned as part of the table heading. Many
-    publishers inform
-    the correct form to write this permission when such a permission has been
+    table heading should not end in a full stop. The permission to
+    publish a table copied from another source has to be mentioned as
+    part of the table heading. Many publishers inform the correct
+    form to write this permission when such a permission has been
     granted. The table must be in text format – not an image.
   \item If necessary, the caption should be separated from the figure
     with a single line spacing for reasons of clarity. A figure and a
-    short caption are centred. However, a caption spanning multiple
+    short caption are centered. However, a caption spanning multiple
     lines is justified at both ends. The necessary references are
-    included in the figure captions. Copyright information is
-    also added to the end of the caption. The copyright issues and
-    citation practices of images
-    are further discussed in~\secref{copyright}. An example of the
-    use of a CC-licensed image can
-    be found later in \figref{fig:ccbypic}. The permission to
-    publish a figure copied form another source has to be mentioned
-    as part of the
-    figure text. Many publishers inform the correct form to write
-    this permission
-    when such a permission has been granted.
+    included in the figure captions. Copyright information is also
+    added to the end of the caption. The permission to publish a
+    figure copied form another source has to be mentioned as part of
+    the figure text. Many publishers inform the correct form to write
+    this permission when such a permission has been granted.  The
+    copyright issues and citation practices of images are further
+    discussed in~\secref{copyright}.
   \item Do not start a chapter with a figure, but embed it in the
-    text content. A figure is
-    supposed to always appear in the text after its reference. If
-    there is not enough
-    space for the figure directly after the first reference, the word
-    processor moves the
-    figure automatically to the next page. In such case, the figure can be moved
-    forward so that text originally after the figure fills the empty
-    space. However, a
-    figure should always be placed in the same chapter---hence sometimes empty
-    space at the bottom of some chapters cannot be avoided (the same
-      rules applies for the
-    tables).
+    text content. A figure is supposed to always appear in the text
+    after its reference. If there is not enough space for the figure
+    directly after the first reference, the word processor moves the
+    figure automatically to the next page. In such case, the figure
+    can be moved forward so that text originally after the figure
+    fills the empty space. However, a figure should always be placed
+    in the same chapter---hence sometimes empty space at the bottom
+    of some chapters cannot be avoided (the same rules applies for the tables).
 \end{itemize}
 
 \begin{table}[!ht]
@@ -195,7 +184,8 @@ done when following the model of this \LaTeX\ template:
     \end{tabular}
     \vspace{6pt}
 
-  \raggedright \ \space \textsuperscript{1)} Each full chapter should  start on a new page.
+  \raggedright \ \space \textsuperscript{1)} Each full chapter should
+  start on a new page.
 \end{center}
 \end{table}
 
@@ -206,54 +196,16 @@ should not be used). Should the need arise for further decimalization
 the following method below (a \textbf{bolded}, unnumbered heading
 that does not appear in the table of contents) should be applied:
 
-\subsubsection{Formatting the figure captions} Figures, tables and
-appendices are a part of the written presentation. All these need to
-be referenced to in the text body, preferably before the figure is
-placed in the text---i.e., first the referring text, then the figure
-or table. Figures and tables have a running number through the
-document---or chapter wise, if there are plenty of figures.
-
-\figref{fig:work_packages} serves as an example of a figure and a
+\subsubsection{Formatting the figure captions}
+Figures, tables and appendices are a part of the written
+presentation. All these need to be referenced to in the text body,
+preferably before the figure is placed in the text---i.e., first the
+referring text, then the figure or table. Figures and tables have a
+running number through the document---or chapter wise, if there are
+plenty of figures. \figref{fig:work_packages} serves as an example of a figure and a
 text referring to it. Figure captions are below the figure, and the
 caption text ends with a full stop. A short caption is centered,
 while a long caption extending to a several lines is justified on both sides.
-
-Figures and tables should be given an alternative text that summarises
-the information they contain for the reader. This is discussed further
-in~\secref{accessibility}. Unfortunately support for this in
-\LaTeX\ is still work in progress, and the alternative text will
-currently not end up in the final PDF. A suitable alt text
-for~\figref{fig:work_packages} could be:
-\begin{quote}
-  Diagram showing interactions between work packages WP1 to WP5, all
-  inside WP6, which is itself inside WP7. WP3 (left) sends outputs to
-  WP1, WP2, and WP4. WP1 and WP2 are bidirectionally linked. WP1, WP2,
-  and WP4 send outputs to WP5 (right). A curved arrow shows WP3 also
-  directly feeding into WP5''.
-\end{quote}
-
-According to the copyright enactments, you must always have the
-permission from the copyright holder to use the figure in your work.
-This is discussed more in~\secref{copyright}. To summarize:
-\textbf{Copyright infringement may lead to legal actions and
-penalties, and in those cases the author is responsible.} The writer
-should grow towards to mainly using figures of his own in the thesis.
-In other words: if no outside source is referred to, it is assumed
-that the author of the thesis is also the author of the figure.
-\textbf{ \figref{fig:work_packages} serves as an example of authors'
-own production, thus requiring no reference or footnotes.}  Often it
-is necessary to redraw the figure and cite the original source.
-
-Still, it is good practice to explicitly state the copyright owners and
-license, such as CC BY 4.0 for your images, in a separate copyright
-page or with the image captions. See~\secref{copyright} and the
-university instructions on further instructions on copyright issues.
-
-The final thesis will be published as a PDF/A file, and this LaTeX
-template produces files in that format directly (There is no need to
-use Muuntaja). Be sure to remove all transparency in your source
-images to ensure the end result is also compliant. Instructions on doing this
-are included with the thesis template.
 
 % Pictures in .pdf, .png or .jpg. No need to specify the extension.
 % Transparent images are not allowed with PDF/A.
@@ -266,38 +218,52 @@ are included with the thesis template.
 % -sDEVICE=pdfwrite -dPDFACompatibilityPolicy=2
 % -sOutputFile=output.pdf input.pdf
 \begin{figure}[ht]
-  \begin{center}
-    \includegraphics*[width=0.7\textwidth]{WP}
-  \end{center}
-  \caption{Connections between work packages (WP).
-    \copyrightstring\ \href{https://creativecommons.org/licenses/by/4.0/}{CC
-  BY 4.0}.}
-  \alt{Diagram showing interactions between work packages WP1 to WP5,
-    all inside WP6, which is itself inside WP7. WP3 (left) sends outputs
-    to WP1, WP2, and WP4. WP1 and WP2 are bidirectionally linked. WP1,
-    WP2, and WP4 send outputs to WP5 (right). A curved arrow shows WP3
-  also directly feeding into WP5.}
-  \label{fig:work_packages}
+\begin{center}
+  \includegraphics*[width=0.7\textwidth]{WP}
+\end{center}
+\caption{Connections between work packages (WP).
+  \copyrightstring\ \href{https://creativecommons.org/licenses/by/4.0/}{CC
+BY 4.0}.}
+\alt{Diagram showing interactions between work packages WP1 to WP5,
+  all inside WP6, which is itself inside WP7. WP3 (left) sends
+  outputs to WP1, WP2, and WP4. WP1 and WP2 are bidirectionally
+  linked. WP1, WP2, and WP4 send outputs to WP5 (right). A curved
+arrow shows WP3 also directly feeding into WP5.}
+\label{fig:work_packages}
 \end{figure}
 
-As mentioned, in case the figure has been taken from elsewhere, the
-author needs to have a permission from the copyright holder. Usually
-this is based on a licence that gives permission to use the work with
-some conditions. The most common example would be a CC-BY licence,
-such as the one used in \figref{fig:ccbypic}. Note how the footnote
-is used instead of a citation to point to the original source.
+If no external source is mentioned in the caption, it is assumed that
+the thesis author is also the creator and copyright holder of the
+figure (noting that authorship and copyright ownership are not always
+the same). In such cases, the figure is licensed under the same terms
+as the document itself (default: “All rights reserved”). This is
+further discussed in \secref{copyright}. For figures that constitute
+significant contributions — and may therefore be of interest for
+reuse — it is advisable to explicitly state the copyright and
+licensing information, even if it has already been included on a separate
+copyright page.
 
-\begin{figure}[H]
-  \begin{center}
-    \includegraphics[width=12cm]{Figures/ccby.jpg}
-  \end{center}
-  \caption{"\href{https://openverse.org/image/110032f8-1a7a-421f-86b1-88fdfde2e44f
-    }{Stephen Crane, Author, Red Badge of Courage}"
-    by~\href{https://www.flickr.com/photos/tonythemisfit/}{Tony Fischer
-    Photography} is licensed under
-  \href{https://creativecommons.org/licenses/by/2.0/}{CC BY 2.0}.}
-  \label{fig:ccbypic}
-\end{figure}
+Figures and tables should be given an alternative text that summarises
+the information they contain for the reader. This is discussed further
+in~\secref{accessibility}. Unfortunately support for this in
+\LaTeX\ is still work in progress, and the alternative text will
+currently not end up in the final PDF. A suitable alternative text
+for~\figref{fig:work_packages} could be:
+
+\begin{quote}
+Diagram showing interactions between work packages WP1 to WP5, all
+inside WP6, which is itself inside WP7. WP3 (left) sends outputs to
+WP1, WP2, and WP4. WP1 and WP2 are bidirectionally linked. WP1,
+WP2, and WP4 send outputs to WP5 (right). A curved arrow shows WP3
+also directly feeding into WP5.
+\end{quote}
+
+The final thesis will be published as a PDF/A file, and this LaTeX
+template produces files in that format directly. Be sure to remove all 
+transparency in your source images to ensure the end result is also 
+compliant. Instructions on doing this are included with the thesis template.
+If you have done this for all of your images, there is no need to
+Muuntaja.
 
 \subsection{Algorithms}
 Algorithms can be implemented simply using \LaTeX. An example of an
@@ -311,27 +277,27 @@ pseudocode compared to one in Algorithm \ref{alg:examplealg}.
 % http://ftp.acc.umu.se/mirror/CTAN/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf
 \vspace{7mm}
 \begin{algorithm}[H]
-  \SetAlgoLined
-  \DontPrintSemicolon
-  \SetKwData{min}{min}
-  \SetKwFunction{swap}{swap}
-  \SetKwInOut{Input}{Input}
-  \SetKwInOut{Output}{Output}
-  \Input{An unsorted list $\textbf{a}$  of size $n$}
-  \Output{A sorted list $\textbf{a}$  of size $n$}
-  \For{$i \leftarrow 0$ \KwTo $n - 1$}{
-    \min $\leftarrow i$ \;
-    \For{$j \leftarrow i + 1$ \KwTo $n$}{
-      \If{$\textbf{a}[j] < \textbf{a}[\min]$}{
-        \min $\leftarrow j$\;
-      }
-    }
-    \If{\min $\neq i$}{
-      \swap $( \textbf{a}[i], \textbf{a}[\min])$\;
+\SetAlgoLined
+\DontPrintSemicolon
+\SetKwData{min}{min}
+\SetKwFunction{swap}{swap}
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+\Input{An unsorted list $\textbf{a}$  of size $n$}
+\Output{A sorted list $\textbf{a}$  of size $n$}
+\For{$i \leftarrow 0$ \KwTo $n - 1$}{
+  \min $\leftarrow i$ \;
+  \For{$j \leftarrow i + 1$ \KwTo $n$}{
+    \If{$\textbf{a}[j] < \textbf{a}[\min]$}{
+      \min $\leftarrow j$\;
     }
   }
-  \caption{Selection Sort}
-  \label{alg:examplealg}
+  \If{\min $\neq i$}{
+    \swap $( \textbf{a}[i], \textbf{a}[\min])$\;
+  }
+}
+\caption{Selection Sort}
+\label{alg:examplealg}
 \end{algorithm}
 
 \section{Clarifying contributions and Using AI}
@@ -371,10 +337,10 @@ is necessary in cases when the thesis is completed, for example, in a
 project with multiple contributors. Second, the section must detail
 the specific AI tools that were used, the purposes for which they
 were used, and in which parts of the thesis. For example: \textit{The
-  author of this thesis designed the artifact, conducted all the
-  research, and prepared the thesis. In preparing the thesis, ChatGPT
-  (GPT-4) was used to correct grammar in all chapters. Additionally,
-  Claude 3.5 Sonnet was used to help implement the evaluated artifacts
+author of this thesis designed the artifact, conducted all the
+research, and prepared the thesis. In preparing the thesis, ChatGPT
+(GPT-4) was used to correct grammar in all chapters. Additionally,
+Claude 3.5 Sonnet was used to help implement the evaluated artifacts
 and to describe the code functionality in Chapter 3.}
 
 \section{Practical advice}
@@ -383,7 +349,7 @@ On average, it takes between two to three months of full-time work to
 write a Master’s thesis---around one finalized page per day. You
 might be able to write a thesis in a shorter time, but you should
 understand that \textbf{it takes much longer than you think to edit
-  and re-edit a thesis, considering both structure and presentation
+and re-edit a thesis, considering both structure and presentation
 style.} In the following we have listed some practical advice, which
 serves the purpose of making it easier to start the writing phase.
 
@@ -398,9 +364,7 @@ part into clearly defined units and chapters at an early stage. Once
 you have done this and you know where you are going, you will have a
 much more secure feeling of the scope of your thesis.
 
-\subsection{Discuss in detail with your supervisor before you start
-  writing and design a
-body for your thesis}
+\subsection{Discuss in detail with your supervisor before you start writing and design a body for your thesis}
 
 It is in the best interest of the supervisor that the student
 graduates as fast as possible and is left without wider difficulties.
@@ -498,15 +462,15 @@ in the same situation as you are now, and yet they were still able to graduate.
 %Pictures in .eps if you use latex, .pdf or .png if you use pdflatex.
 % Don't specify the extension so you can use both!
 \begin{figure}[ht]
-  \begin{center}
-    \includegraphics*[width=0.9\textwidth]{unto_uneksija}
-  \end{center}
-  \caption{Writing angst and the pain of creation. “Writing your thesis
-    can sometimes
-    make you run outside and howl at the moon. --- It’s already the
-    fourth week and I
-  haven’t been able to write anything else besides my name down.”}
-  \label{fig:unto_uneksija}
+\begin{center}
+  \includegraphics*[width=0.9\textwidth]{unto_uneksija}
+\end{center}
+\caption{Writing angst and the pain of creation. “Writing your thesis
+  can sometimes
+  make you run outside and howl at the moon. --- It’s already the
+  fourth week and I
+haven’t been able to write anything else besides my name down.”}
+\label{fig:unto_uneksija}
 \end{figure}
 
 \subsection{Hints for editing}
@@ -596,73 +560,140 @@ and attach the cover to the printout that you have brought with you.
 The color of the cover has to be black. The text has to be printed on
 the cover, i.e., stickers should not be applied!
 
-\section{Use of images: Intellectual Property Rights}
+\section{Copyright, Licenses and the Use of images}
 \label{copyright}
-Intellectual property rights (IPR) protect works, i.e. the authors
+Intellectual property rights (IPR) protect works, i.e., the authors
 and rights-holders of literary or artistic works that exceed the
-threshold of originality. These works include for instance texts,
-images, music and computer software codes. For this reason, figures
-found on the Internet, for example, may not be freely used in theses.
-This section explains how they can be used and provides examples.
+threshold of originality. These works include, for instance, texts,
+images, music, and computer software code. This section explains the
+related issues, especially concerning images, and provides guidelines
+for dealing with copyright matters in your thesis.
+
+Your thesis is also a copyrighted work. If no license is explicitly
+stated, the license is "All rights reserved," meaning it can only be
+used in limited ways under copyright law. The Federation of Finnish
+Open Science Coordination in Finland and the University of Oulu
+recommend publishing theses as open access and under a CC-BY 4.0 license,
+or if warranted, another CC license~\cite{coordination_open_2024}.
+CC-BY 4.0 allows reuse, including commercial use, of your work as long as
+the author is credited.
+
+Among the various types of works protected by copyright, images
+present particular challenges and considerations. Images are
+frequently used to illustrate concepts, present data, or enhance the
+visual appeal of academic texts. However, their use is subject to
+specific copyright restrictions, and improper use can lead to legal
+and ethical issues.  For this reason, figures found on the Internet,
+for example, may not be freely used in theses without proper
+permission or licensing.
+
+According to the copyright enactments, you must always have
+permission from the copyright holder, which is not necessarily the
+author, to use their figure in your work. To summarize:
+\textbf{Copyright infringement may lead to legal actions and
+penalties, and in those cases the author is responsible.} The writer
+should grow towards to mainly using figures of his own in the
+thesis. Often it is necessary to redraw the figure and cite the
+original source.
+
+It is good practice to explicitly state the copyright owners and
+license for all images in your thesis. This can be done via a blanket
+statement on a separate copyright page that explicitly mentions
+images, or for every image separately in the caption. All exceptions
+to the main license of your thesis (e.g., ``All rights reserved'' or
+``CC-BY 4.0'') should \textbf{always} be included in the image
+captions.
+
+If your use of external images is extensive and is a central part of
+your thesis, it is good to also explicitly list them on the copyright
+page or in an appendix, e.g., "Figure 5 is reproduced from [x] under
+the provisions of copyright law allowing use with appropriate
+citation." and also discuss their use with your thesis supervisor at
+an early stage and acquire the necessary permissions.
 
 The starting point is that the figures must be related to the text,
-i.e. the text must explain why the figure has been presented. The
-text must contain a reference to the figure. Use self-made figures
+i.e, the text must explain why the figure has been presented. The text
+must contain a reference to the figure. Use self-made figures
 (drawings, schematics, simulation or measurement result figures,
 photographs), if possible.
 
-It is a good practice to mark the photographer in the photos (e.g.
-“Photographer first name last name year.”) If you are not the
+It is a good practice to mark the photographer in the photos
+(e.g. “Photographer first name last name year.”) If you are not the
 photographer, ask permission and keep the permission (e.g., email
-correspondence) safe. In addition, keep any other licences you have
-received, including those under the CC licence, safe. Often
-publications under a CC licence mention the CC licence on the front
+correspondence) safe. In addition, keep any other licenses you have
+received, including those under the CC license, safe. Often
+publications under a CC license mention the CC license on the front
 page and the figure is on page z. Save at least the page explaining
-the CC licence
-from the publication from which you have taken the photo.
+the CC license from the publication from which you have taken the
+photo. For this reason, we recommend mentioning the license explicitly
+for your own significant contributions, even if it is the same as
+the main license.
 
-If you use figures made by others, you must have permission from the
-copyright owner to use the figure. For instance, IEEE and many other
-publishers have an automated system for granting permission for
-theses. Mark the permission in the caption as requested by the right
-holder, e.g. “Reprinted with permission from [x] \textcopyright\ IEEE, 2022.”.
+As mentioned, in case the figure has been taken from elsewhere, the
+author needs to have a permission from the copyright holder. Usually
+this is based on a license that gives permission to use the work with
+some conditions. The most common example would be a CC-BY license,
+such as the one used in \figref{fig:ccbypic}. If the figure is from a
+publication you are citing, ``Under/Reprinted/Adapted CC BY 4.0 license
+picture from [x] \textcopyright 20xx Author.'' would be
+appropriate. In Finnish, use ``[Muokattu] CC BY 4.0 lisenssin alainen
+kuva lähteestä [x]. \textcopyright Vuosi Tekijä.''
+
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[width=12cm]{Figures/ccby.jpg}
+\end{center}
+\caption{"\href{https://openverse.org/image/110032f8-1a7a-421f-86b1-88fdfde2e44f
+  }{Stephen Crane, Author, Red Badge of Courage}"
+  by~\href{https://www.flickr.com/photos/tonythemisfit/}{Tony Fischer
+  Photography} is licensed under
+\href{https://creativecommons.org/licenses/by/2.0/}{CC BY 2.0}.}
+\label{fig:ccbypic}
+\end{figure}
+
+The permission can also be from the publisher. For instance, IEEE and
+many other publishers have an automated system for granting permission
+for theses. Mark the permission in the caption as requested by the
+right holder, e.g., “\textcopyright 2022 IEEE. Reprinted, with
+permission, from [x].''
 
 Not all figures exceed the threshold of originality. These include,
 for example, scientific diagrams and flowcharts. Good research
 practices require that even in this case, the source is cited in the
-caption ("Figure from source [x]."). However, it would be best to ask
-for permission. Images with a CC licence are free to use, so long as
-the terms of use are followed~\cite{about_cc_licenses}. Even then,
-the caption must mention the source (article, website, etc.) and that
-the image is CC-licensed, for example. ”CC BY 4.0 licensed image from
-source [x].”.
+caption ("Figure from [x]."). However, it would be best to ask
+for permission or at least redraw the image. Images with a CC license
+are free to use, so long as the terms of use are
+followed~\cite{about_cc_licenses}. Even then, the caption must mention
+the source (article, website, etc.) and that the image is CC-licensed.
 
 Based on the right to quote, it is possible to take a photocopy,
-screenshot or photograph of a work (not the original file) and
-publish it, citing the original source in the caption. A critical
-aspect of the right to quote is that the use of the image is relevant
-to the work, i.e. the image must be related to the subject, and it
-must be explained in the text (this applies to all images).
-Similarly, the source must be cited in text citations.
+screenshot or photograph of a work (not the original file) and publish
+it, citing the original source in the caption. A critical aspect of
+the right to quote is that the use of the image is relevant to the
+work, i.e., the image must be related to the subject, and it must be
+explained in the text (this applies to all images). Similarly, the
+source must be cited in text citations.
 
 Sometimes you may want to use someone else's original image idea as a
-basis for your own work. Permission is not required provided that
-your work clearly an amply edited version of the original. However,
-in accordance with good research practices the source must be
-declared in the caption (“Modified/Adapted/Redrawn from/Based
-on/Created using data from [x].”), depending on the extent of
-modification done to the original image. Should you only make minor
-edits to the original, separate permission is required.
+basis for your own work. Permission is not required provided that your
+work clearly an amply edited version of the original. However, in
+accordance with good research practices the type of modification and
+source (“Modified/Adapted/Redrawn/Based on/Created using data from
+[x]") and must be declared in the caption. Should you only make minor
+edits to the original, separate permission is required. The University
+of Oulu Acta Oulu publishing guide~\cite{ronkainen_copyright} has more
+details on this topic, and also the proper wordings in
+Finnish~\cite{ronkainen_tekijanoikeus}.
 
 When searching for images through an internet image search, it is not
 always easy to find the rights holder from whom to request permission
-for use. Hunting for a permit can be a demanding task. The easiest
-way is to use images and figures from scientific articles as in these
-the rights holders are clearly declared.
+for use. Hunting for a permit can be a demanding task. The easiest way
+is to use images and figures from scientific articles (or with open
+licenses) as in these the rights holders are clearly declared.
 
 \section{Accessibility}
 \label{accessibility}
-Put effort into the accessibility of your Master’s thesis. The
+Put effort into the accessibility of your thesis. The
 structure of an accessible document is clear, and the wording is as
 understandable as possible. Figures and tables should be given an
 alternative text that summarises the information they contain for the
