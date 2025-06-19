@@ -188,9 +188,17 @@
 \renewcommand*\l@chapter[2]{\oldl@chapter{\MakeUppercase{#1}}{#2}}
 \makeatother
 
-\newcommand{\enabletocdots}{
+\makeatletter
+\def\ps@plain{\ps@myheadings} % plain pages like chapters also top right
+\makeatother
+
+\newcommand{\mainmatter}{
+  \clearpage
+  \pagestyle{myheadings}
   \addtocontents{toc}{\protect\renewcommand{\protect\cftchapleader}{\protect\cftdotfill{\cftdotsep}}}
 }
+
+
 
 % Chapter
 % Chapters are set in 14pt bold (bfseries), centered, uppercase.
