@@ -3,7 +3,8 @@
 % at University of Oulu (CSE/BME/BA)
 % 
 % Authors: Mika Korhonen (original author), Pekka Pietikäinen, Christian Wieser, Teemu Tokola, Juha Kylmänen, Tuomas Holmberg and Tuomas Varanka.
-% If you make any improvements to this template, please contact teemu.tokola@ou lu.fi
+% If you make any improvements to this template, submit them via
+% https://github.com/ouspg/cse-thesis
 %
 % CHANGELOG
 % 2023-01-31: Track changes has been turned on - TTo
@@ -18,13 +19,27 @@
 %% whether the copyright mark is explicitly in the work or not. You may, if you
 %% wish---we encourage you to do so---publish your work under a Creative
 %% Commons license (see creativecommons.org), in which case the license text
-%% must be visible in the work. Write here the copyright text you want using the
-%% macro \copyrighttext, which writes the text into the metadata of the pdf file
-%% as well.
+%% must be visible in the work.
 
 % Uncommenting one of the following will automatically create a copyright page
 %\input{copyright-allrightsreserved}
 \input{copyright-ccby40.tex}
+
+%%%%%%%%%%%%%%%%%%%%% SET YOUR INFORMATION HERE %%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{TODO: Bachelor's and Diploma Thesis Guide}
+\otsikko{TODO: Kandidaatintyön ja diplomityön teko-ohjeet}
+
+\firstname{Author}
+\lastname{One}
+
+% Names of other authors can be added here
+\firstnametwo{Author}
+\lastnametwo{Two}
+\firstnamethree{Author}
+\lastnamethree{Three}
+% Do not remove or comment the extra names if you do not need them,
+% leave them empty instead
 
 % Abstracts are placed in the metadata of the PDF file, 
 % so they cannot contain empty lines or special characters.
@@ -53,88 +68,69 @@
 \keywords{M.Sc. degree\spc master’s thesis instructions\spc structure of a master’s thesis}
 \avainsanat{diplomi-insinöörin tutkinto\spc diplomityön ohjeet\spc diplomityön rakenne}
 
-%%%%%%%%%%%%%%%%%%%%% SET YOUR INFORMATION HERE %%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{TODO: Bachelor's and Diploma Thesis Guide}
-\otsikko{TODO: Kandidaatintyön ja diplomityön teko-ohjeet}
-
-\firstname{Author}
-\lastname{One}
-
-%Names of other authors can be added here
-\firstnametwo{Author}
-\lastnametwo{Two}
-\firstnamethree{Author}
-\lastnamethree{Three}
-%Do not remove or comment the extra names if you do not need them, leave them empty instead
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\headertitlecap automatically creates headers with TitleCaps
 % (Capitalizes the First Letter in Each Word except "Small" Ones)
 % for H0, H2, and H3. Words not to be capitalized can be
-% changed in di.sty.
+% changed in dithesis.sty.
 % This only has effect in English. in Finnish headers follow
 % the normal Finnish rules of capitalization.
 % Also this doesn't affect the PDF metadata, so you should
 % correctly title case headings in your .tex files anyway.
 \headertitlecap
 
-% Add your bibliographies here. You can use several
+% Add your bibliographies here. You can use several with BibLaTeX.
 \addbibresource{citations.bib}
 
 \begin{document}
-
-\hypersetup{pageanchor=false}
+\pagestyle{empty}
 \maketitlepage
-    \pagenumbering{arabic}
-    \setcounter{page}{1}
-    \hypersetup{pageanchor=true}
-    % Does nothing if copyright is not set
-    \makecopyrightpage
+\makecopyrightpage
+    
+\IfLang{\MainLang}{finnish}{
+  \input{Chapters/tiivistelma}
+  \input{Chapters/abstract}
+  \selectlanguage{finnish}
+} {
+  \input{Chapters/abstract}
+  \input{Chapters/tiivistelma}
+  \selectlanguage{english}
+}
 
-    \IfLang{\MainLang}{finnish}{
-      \input{Chapters/tiivistelma}
-      \input{Chapters/abstract}
-      \selectlanguage{finnish}
-    } {
-      \input{Chapters/abstract}
-      \input{Chapters/tiivistelma}
-      \selectlanguage{english}
-    }
-    \contents %Insert table of contents
-    \input{Chapters/foreword}
-    \input{Chapters/abbreviations}
+\contents %Insert table of contents
+\input{Chapters/foreword}
+\input{Chapters/abbreviations}
     
-    %sets the dots for numbered chapters in table of contents
-    \enabletocdots
+% Enables page numbers and sets the dots for numbered chapters in 
+% table of contents
+\mainmatter
 
-    \chapter{Introduction} %Set the name of a new chapter
-        \label{introduction} %Create a label for referencing purposes (\charef{.})
-        \pagenumbers
-        \input{Chapters/introduction} %Input the contents of the chapter from a separate file
+\chapter{Introduction} %Set the name of a new chapter
+  \label{introduction} %Create a label for referencing purposes (\charef{.})
+  \input{Chapters/introduction} %Input the contents of the chapter from a separate file
     
-    \chapter{General outline for thesis projects}
-        \label{relatedwork}
-        \input{Chapters/relatedwork}
+\chapter{General outline for thesis projects}
+  \label{relatedwork}
+  \input{Chapters/relatedwork}
     
-    \chapter{Thesis writing instructions}
-        \label{implementation}
-        \input{Chapters/implementation}
+\chapter{Thesis writing instructions}
+  \label{implementation}
+  \input{Chapters/implementation}
     
-    \chapter{The literary structure of a thesis}
-        \label{experiments}
-        \input{Chapters/experiments}
+\chapter{The literary structure of a thesis}
+  \label{experiments}
+  \input{Chapters/experiments}
     
-    \chapter{Summary}
-        \label{summary}
-        \input{Chapters/summary}
+\chapter{Summary}
+  \label{summary}
+  \input{Chapters/summary}
     
-    \printbibliography[heading=bibnumbered, title=\mybibname]
+\printbibliography[heading=bibnumbered, title=\mybibname]
 
-    \startappendix
-    \chapter{Appendices}
-        \input{Chapters/appendices}
+\startappendix
+\chapter{Appendices}
+  \input{Chapters/appendices}
 
 \end{document}
