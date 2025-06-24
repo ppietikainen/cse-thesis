@@ -176,22 +176,14 @@
 }%
 %
 
-
-
-\newcommand{\firstname}[1]{\gdef\@firstname{#1}}
-\newcommand{\lastname}[1]{\gdef\@lastname{#1}}
-\newcommand{\firstnametwo}[1]{\gdef\@firstnametwo{#1}}
-\newcommand{\lastnametwo}[1]{\gdef\@lastnametwo{#1}}
-\newcommand{\firstnamethree}[1]{\gdef\@firstnamethree{#1}}
-\newcommand{\lastnamethree}[1]{\gdef\@lastnamethree{#1}}
+\newcommand{\firstname}[1]{\def\firstnameA{#1}}
+\newcommand{\lastname}[1]{\def\lastnameA{#1}}
+\newcommand{\firstnametwo}[1]{\def\firstnameB{#1}}
+\newcommand{\lastnametwo}[1]{\def\lastnameB{#1}}
+\newcommand{\firstnamethree}[1]{\def\firstnameC{#1}}
+\newcommand{\lastnamethree}[1]{\def\lastnameC{#1}}
 \newcommand{\otsikko}[1]{\gdef\@otsikko{#1}}
 
-\newcommand{\getfirstname}{\@firstname}
-\newcommand{\getlastname}{\@lastname}
-\newcommand{\getfirstnametwo}{\@firstnametwo}
-\newcommand{\getlastnametwo}{\@lastnametwo}
-\newcommand{\getfirstnamethree}{\@firstnamethree}
-\newcommand{\getlastnamethree}{\@lastnamethree}
 \newcommand{\getotsikko}{\@otsikko}
 \newcommand{\gettitle}{\@title}
 
@@ -328,62 +320,61 @@
   \addtocontents{toc}{\protect\contentsline{chapter}{#1}{}{page.\thepage} }
 }
 
-%get authors for the title page
-\newcommand{\getauthorstitle}{
-  \begin{tabular}[t]{c}
-  \getauthors{\\}%   
-  \end{tabular}
-}
-
-
-\newcommand{\getauthorsmetadata}{
-  \getauthors{\spc }%
-}
-
-\newcommand{\getauthorslist}{
-  \getauthors{, }%
-}
-
 % Helper macro to get first initial from a name
 \newcommand{\getfirstinitial}[1]{\StrChar{#1}{1}.}
 
 % Returns the list of authors, separated by \sep
 \newcommand{\getauthors}[1]{%
-  \@ifempty{\@firstnametwo}{%
-    \getfirstname\ \getlastname%
-  }{%
-    \@ifempty{\@firstnamethree}{%
-      \getfirstname\ \getlastname#1\getfirstnametwo\ \getlastnametwo%
-    }{%
-      \getfirstname\ \getlastname#1\getfirstnametwo\ \getlastnametwo#1\getfirstnamethree\ \getlastnamethree%
-    }%
-  }%
+  \ifdefined\firstnameB
+    \ifdefined\firstnameC
+      \firstnameA\ \lastnameA#1%
+      \firstnameB\ \lastnameB#1%
+      \firstnameC\ \lastnameC%
+    \else
+      \firstnameA\ \lastnameA#1%
+      \firstnameB\ \lastnameB%
+    \fi
+  \else
+    \firstnameA\ \lastnameA%
+  \fi
+}
+\newcommand{\getauthorsmetadata}{\getauthors{\spc }}
+\newcommand{\getauthorslist}{\getauthors{, }}
+\newcommand{\getauthorstitle}{
+  \begin{tabular}[t]{c}
+  \getauthors{\\}
+  \end{tabular}
 }
 
 %get authors for the abstract (Acta style: Surname F.)
 \newcommand{\getauthorsabstractacta}{%
-  \ifthenelse{\equal{\@firstnametwo}{}}%
-    {\@lastname\ \getfirstinitial{\@firstname}}%
-    {\ifthenelse{\equal{\@firstnamethree}{}}%
-      {\@lastname\ \getfirstinitial{\@firstname},\ %
-        \@lastnametwo\ \getfirstinitial{\@firstnametwo}}%
-      {\@lastname\ \getfirstinitial{\@firstname},\ %
-        \@lastnametwo\ \getfirstinitial{\@firstnametwo},\ %
-        \@lastnamethree\ \getfirstinitial{\@firstnamethree}}%
-    }%
+  \ifdefined\firstnameB
+    \ifdefined\firstnameC
+      \lastnameA\ \getfirstinitial{\firstnameA},\ %
+      \lastnameB\ \getfirstinitial{\firstnameB},\ %
+      \lastnameC\ \getfirstinitial{\firstnameC}%
+    \else
+      \lastnameA\ \getfirstinitial{\firstnameA},\ %
+      \lastnameB\ \getfirstinitial{\firstnameB}%
+    \fi
+  \else
+    \lastnameA\ \getfirstinitial{\firstnameA}%
+  \fi
 }
-
 %get authors for the abstract (IEEE style: F. Lastname)
 \newcommand{\getauthorsabstractieee}{%
-  \ifthenelse{\equal{\@firstnametwo}{}}%
-    {\getfirstinitial{\@firstname}\ \@lastname}%
-    {\ifthenelse{\equal{\@firstnamethree}{}}%
-      {\getfirstinitial{\@firstname}\ \@lastname,\ %
-        \getfirstinitial{\@firstnametwo}\ \@lastnametwo}%
-      {\getfirstinitial{\@firstname}\ \@lastname,\ %
-        \getfirstinitial{\@firstnametwo}\ \@lastnametwo,\ %
-        \getfirstinitial{\@firstnamethree}\ \@lastnamethree}%
-    }%
+  \ifdefined\firstnameB
+    \ifdefined\firstnameC
+      \getfirstinitial{\firstnameA}\ \lastnameA,\ %
+      \getfirstinitial{\firstnameB}\ \lastnameB,\ %
+      \getfirstinitial{\firstnameC}\ \lastnameC%
+    \else
+      \getfirstinitial{\firstnameA}\ \lastnameA,\ %
+      \getfirstinitial{\firstnameB}\ \lastnameB%
+    \fi
+  \else
+    \getfirstinitial{\firstnameA}\ \lastnameA%
+  \fi
 }
 
 %signature at the bottom of foreword
