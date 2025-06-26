@@ -3,7 +3,6 @@
 % at University of Oulu (CSE/BME/BA)
 % 
 \ProvidesPackage{dithesis}
-\usepackage{lmodern}
 \usepackage{newtxtext, newtxmath}
 \usepackage[english,finnish]{babel}
 \usepackage[english=nohyphenation,finnish=nohyphenation]{hyphsubst}
@@ -82,7 +81,7 @@
   \renewcommand{\mybibname}{Viitteet}
   \renewcommand{\cityname}{Oulussa }
   \renewcommand{\countryname}{Suomi}
-  \renewcommand{\keywordsline}{Avainsanat: \keywordsmetadata}
+  \renewcommand{\keywordsline}{Avainsanat: \avainsanatmetadata}
   \renewcommand{\universitylogo}{Figures/logo-fi.png}
 }
 \addto\captionsenglish{%
@@ -110,7 +109,7 @@
   \renewcommand{\universityname}{University of Oulu}
   \renewcommand{\universitynameieee}{Univ. of Oulu}
   \renewcommand{\pagelabel}{p.}
-  \renewcommand{\keywordsline}{Keywords: \avainsanatmetadata}
+  \renewcommand{\keywordsline}{Keywords: \keywordsmetadata}
   \renewcommand{\abstracttitle}{ABSTRACT}
   \renewcommand{\headerforeword}{FOREWORD}
   \renewcommand{\headerabbreviations}{LIST OF ABBREVIATIONS AND SYMBOLS}
