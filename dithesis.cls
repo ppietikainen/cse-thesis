@@ -39,6 +39,7 @@
 % Footnotes in longtable require it to be loaded before pdfx, otherwise
 % should be in .sty
 \usepackage{longtable}
+\usepackage{xcolor}
 \usepackage[a-1b,latxmp, mathxmp]{pdfx}[2017/05/18]
 \hypersetup{
   unicode=true,
