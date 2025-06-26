@@ -34,12 +34,11 @@
 \lastname{One}
 
 % Names of other authors can be added here
-\firstnametwo{Author}
-\lastnametwo{Two}
-\firstnamethree{Author}
-\lastnamethree{Three}
-% Do not remove or comment the extra names if you do not need them,
-% leave them empty instead
+%\firstnametwo{}
+%\lastnametwo{}
+%\firstnamethree{}
+%\lastnamethree{}
+% Remove or comment the extra names if you do not need them
 
 % Abstracts are placed in the metadata of the PDF file, 
 % so they cannot contain empty lines or special characters.
@@ -72,7 +71,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\headertitlecap automatically creates headers with TitleCaps
-% (Capitalizes the First Letter in Each Word except "Small" Ones)
+% (Capitalizes the First Letter in Each Word except ``Small'' Ones)
 % for H0, H2, and H3. Words not to be capitalized can be
 % changed in dithesis.sty.
 % This only has effect in English. in Finnish headers follow
@@ -88,8 +87,7 @@
 \pagestyle{empty}
 \maketitlepage
 \makecopyrightpage
-    
-\IfLang{\MainLang}{finnish}{
+  \IfLang{\MainLang}{finnish}{
   \input{Chapters/tiivistelma}
   \input{Chapters/abstract}
   \selectlanguage{finnish}
