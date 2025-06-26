@@ -115,13 +115,37 @@ You should refer to original sources of the data---for example, to a book and no
 
 The references are mostly cited in your own words, and direct quoting is used only if you want to emphasis the source. In this case you place the quote in hyphens, for example saying that the original phrasing of Moore’s law is  “The complexity for minimum component costs has increased at a rate of roughly a factor of two per year (see graph on next page). Certainly over the short term this rate can be expected to continue, if not to increase. Over the longer term, the rate of increase is a bit more uncertain, although there is no reason to believe it will not remain nearly constant for at least 10 years.”~\cite{moore}.  Correct referencing is  important as the archiving of electronic makes them easily accessible (either in library or in the Internet, depending on the publicity level selected by the thesis author).
 
-The list of references is written according to the instructions of the IEEE Transactions series~\cite{ieeetransactions}; using the running numbering. Referencing is easiest to do using \LaTeX\ for writing the thesis and following the model given in these instructions. You should add your own references to the file \textit{citations.bib}. Following the instructions automatically creates the list of references in the order in which they appear in the text. References in the text are then indicated with a reference number, e.g.,~\cite{lappalainen} or~\cite{lappalainen, acta, korpela}. References to books should include also page number, for example~\cite[p.~15]{lappalainen} or~\cite[pp.~15--17]{lappalainen}.
+The sources are cited and the bibliography is compiled according to
+the IEEE model~\cite{ieeetransactions}.  Sources are numbered in
+increasing order and listed in the order in which they appear in the
+text. The initials of the author's first names are written first,
+followed by the last name. References in the text are then indicated
+with a reference number, e.g.,~\cite{lappalainen}
+or~\cite{lappalainen, acta, korpela}. References to books should
+also include page number, for example~\cite[p.~15]{lappalainen}
+or~\cite[pp.~15--17]{lappalainen}.
+
+When the reference relates to the content of a single sentence, the
+reference is added to the end of the sentence in question prior to the
+period. If, on the other hand, the reference refers to the information
+presented in the entire paragraph, the reference is placed at the end
+of the paragraph after the period of the last sentence. To refer to a
+specific page or pages, figure, equation, etc., the formatting
+is~\cite[p. 14]{lappalainen},~\cite[pp. 14--15]{lappalainen},
+\cite[Fig. 3]{lappalainen} or \cite[eq. (3)]{lappalainen}.
+
+Referencing is easiest to do using \LaTeX\ for writing the thesis and
+following the model given in these instructions. You should add your
+own references to the file \textit{citations.bib}. A bibliography
+manager, such as Zotero~\cite{zotero,uniouluzotero}, is strongly
+recommended, as it often automatically fills in the required fields
+of the references. 
 
 References need to be presented so that it is clear what information is from a source and what is created by the author. Also the sources of equations, figures, and tables need to be given, when not created by the author her/himself. In addition, permissions need to be asked for tables and figures. Special attention needs to be paid to web sources, as web content can have a short life cycle. Hence, the date of downloading referenced web content should always be mentioned in the reference.
 
-Examples below illustrate correct references. All authors should be listed, the names of journals and series should be written completely without abbreviations, and only the first letter of the title and proper nouns in the title should have uppercase letters. The DOI (Digital Object Identifier) of the publication should be included in the reference, when possible. This identifier locates the publication in an unambiguous fashion and hence facilitates the work of a reader searching the reference. DOI can be found from the publications front page or from publishers’ databases (e.g. IEEE Xplore, Springer Link, ACM Digital Library).
+Examples below illustrate correct references. All authors should be listed, the names of journals and series should be written completely without abbreviations, and only the first letter of the title and proper nouns in the title should have uppercase letters. The DOI (Digital Object Identifier) of the publication should be included in the reference, when possible. This identifier locates the publication in an unambiguous fashion and hence facilitates the work of a reader searching the reference. The DOI can be found from the publications front page or from publishers’ databases (e.g. IEEE Xplore, Springer Link, ACM Digital Library).
 
-The \textit{citations.bib} file in Overleaf ITEE MSc thesis template should guide you to use correct citation formats. If you are using other text preparation tools such as Microsoft Word, you should cite articles in journals  as~\cite{ojala:2002}, in series as~\cite{riekki:1998}, and in books as~\cite{pietikainen:2011}. A section of compiled work should be cited as~\cite{cvejic:2005}, and articles in conference proceedings as~\cite{heikkila:1997}. The citation to a thesis should look like~\cite{heikkinen:2011}, and patents should be cited in the manner of~\cite{toivonen:2004}. In some cases it is necessary to cite a source in the Internet~\cite{korpela}, and publications that lack a known author~\cite{asuntoliitto_asumistaso_1969}. Please, see the References Chapter for the models.
+The \textit{citations.bib} file in Overleaf ITEE MSc thesis template should guide you to use correct citation formats. If you are using other text preparation tools such as Microsoft Word, you should cite articles in journals  as~\cite{ojala:2002}, in series as~\cite{riekki:1998}, and in books as~\cite[p. 55]{pietikainen:2011}. A section of compiled work should be cited as~\cite{cvejic:2005}, and articles in conference proceedings as~\cite{heikkila:1997}. The citation to a thesis should look like~\cite{heikkinen:2011}, and patents should be cited in the manner of~\cite{toivonen:2004}. In some cases it is necessary to cite a source in the Internet~\cite{korpela}, and publications that lack a known author~\cite{asuntoliitto_asumistaso_1969}. Please, see the References Chapter for the models.
 
 \section{Appendices}
 \label{sec:appendices}
