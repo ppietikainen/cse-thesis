@@ -113,26 +113,44 @@ The literature survey should be close to exhaustive, and this means that most of
 
 You should refer to original sources of the data---for example, to a book and not the handouts made based on the book. Be careful when referencing: the things you state really need to be found from the reference.
 
-The references are mostly cited in your own words, and direct quoting is used only if you want to emphasis the source. In this case you place the quote in hyphens, for example saying that the original phrasing of Moore’s law is  “The complexity for minimum component costs has increased at a rate of roughly a factor of two per year (see graph on next page). Certainly over the short term this rate can be expected to continue, if not to increase. Over the longer term, the rate of increase is a bit more uncertain, although there is no reason to believe it will not remain nearly constant for at least 10 years.”~\cite{moore}.  Correct referencing is  important as the archiving of electronic makes them easily accessible (either in library or in the Internet, depending on the publicity level selected by the thesis author).
+The references are mostly cited in your own words, and direct quoting is used only if you want to emphasis the source. In this case you place the quote in quotation marks, for example saying that the original phrasing of Moore’s law is  ``The complexity for minimum component costs has increased at a rate of roughly a factor of two per year (see graph on next page).''~\cite{moore}. Longer
+quotations (several lines) are placed in an indented paragraph (omit quotation marks). As Moore stated:
+\begin{quote}
+Certainly over the short term this rate can be expected to continue, if not to increase. Over the longer term, the rate of increase is a bit more uncertain, although there is no reason to believe it will not remain nearly constant for at least 10 years.~\cite{moore}
+\end{quote}
+Correct referencing is important as the archiving of electronic theses makes them easily accessible (either in the library or in the Internet, depending on the publicity level selected by the thesis author). The reader must be able
+to easily find the original source to both assess your work and for the
+authors of the reference to be properly credited.
 
 The sources are cited and the bibliography is compiled according to
-the IEEE model~\cite{ieeetransactions}.  Sources are numbered in
+the IEEE style~\cite{ieeetransactions}.  Sources are numbered in
 increasing order and listed in the order in which they appear in the
-text. The initials of the author's first names are written first,
-followed by the last name. References in the text are then indicated
-with a reference number, e.g.,~\cite{lappalainen}
-or~\cite{lappalainen, acta, korpela}. References to books should
-also include page number, for example~\cite[p.~15]{lappalainen}
-or~\cite[pp.~15--17]{lappalainen}.
+text.  References in the text are then indicated with a reference
+number, e.g.,~\cite{lappalainen} or~\cite{lappalainen, acta, korpela},
+which is placed inside square brackets, inside sentence punctuation
+with a (non-breaking) space before the bracket. References to books
+should also include the page number, for
+example~\cite[p.~15]{lappalainen} or~\cite[pp.~15--17]{lappalainen}.
+Figures and equations can be cited using:~\cite[Fig.~3]{lappalainen};
+\cite[eq.~(3)]{lappalainen}. When writing in Finnish, you should adapt the IEEE guidelines, e.g., \cite[s.~15]{lappalainen};\cite[s.~15--17]{lappalainen};
+\cite[Kuva~3]{lappalainen};~\cite[Yhtälö~(3)]{lappalainen}.
 
-When the reference relates to the content of a single sentence, the
-reference is added to the end of the sentence in question prior to the
-period. If, on the other hand, the reference refers to the information
-presented in the entire paragraph, the reference is placed at the end
-of the paragraph after the period of the last sentence. To refer to a
-specific page or pages, figure, equation, etc., the formatting
-is~\cite[p. 14]{lappalainen},~\cite[pp. 14--15]{lappalainen},
-\cite[Fig. 3]{lappalainen} or \cite[eq. (3)]{lappalainen}.
+The reference is placed immediately where it is used or at the end of
+the sentence it relates to. Grammatically it can treated as a noun or
+a footnote, i.e., ``As shown by Lappalainen~\cite{lappalainen}'' or
+``As shown in~\cite{lappalainen}''. The authors are only named if they
+are relevant for the sentence. \textbf{If no citation is mentioned,
+the sentence is assumed to be your own idea}.
+
+If multiple sentences refer to the same source, the citation should be
+repeated for each sentence, or at least it should be obvious that the
+same source continues (Futhermore..., According to the author...).
+If the entire paragraph is paraphrased (repeated in your own words)
+from one source you can also place the reference after the period of
+the last sentence in the paragraph. Paraphrasing entire paragraphs is
+generally discouraged in scientific writing, but can be appropriate in
+a Bachelor's or Master's thesis literature survey, where entire
+subsections are devoted to work done by others.~\cite{lappalainen}
 
 Referencing is easiest to do using \LaTeX\ for writing the thesis and
 following the model given in these instructions. You should add your
@@ -141,11 +159,28 @@ manager, such as Zotero~\cite{zotero,uniouluzotero}, is strongly
 recommended, as it often automatically fills in the required fields
 of the references. 
 
-References need to be presented so that it is clear what information is from a source and what is created by the author. Also the sources of equations, figures, and tables need to be given, when not created by the author her/himself. In addition, permissions need to be asked for tables and figures. Special attention needs to be paid to web sources, as web content can have a short life cycle. Hence, the date of downloading referenced web content should always be mentioned in the reference.
+References need to be presented so that it is clear what information
+is from a source and what is created by the author. Also the sources
+of equations, figures, and tables need to be given, when not created
+by the author her/himself. In addition, permissions need to be asked
+for tables and figures. Special attention needs to be paid to web
+sources, as web content can have a short life cycle. Hence, the date
+of downloading referenced web content should always be mentioned in
+the reference.
 
-Examples below illustrate correct references. All authors should be listed, the names of journals and series should be written completely without abbreviations, and only the first letter of the title and proper nouns in the title should have uppercase letters. The DOI (Digital Object Identifier) of the publication should be included in the reference, when possible. This identifier locates the publication in an unambiguous fashion and hence facilitates the work of a reader searching the reference. The DOI can be found from the publications front page or from publishers’ databases (e.g. IEEE Xplore, Springer Link, ACM Digital Library).
+The examples below illustrate correct references. All authors should
+be listed, the names of journals and series should be written
+completely without abbreviations, and only the first letter of the
+title and proper nouns in the title should have uppercase letters. The
+DOI (Digital Object Identifier) of the publication should be included
+in the reference, when possible. This identifier locates the
+publication in an unambiguous fashion and hence facilitates the work
+of a reader searching the reference. The DOI can be found from the
+publications front page or from publishers’ databases (e.g. IEEE
+Xplore, Springer Link, ACM Digital Library). When the reference has a
+DOI, you do not have to include an URL for it.
 
-The \textit{citations.bib} file in Overleaf ITEE MSc thesis template should guide you to use correct citation formats. If you are using other text preparation tools such as Microsoft Word, you should cite articles in journals  as~\cite{ojala:2002}, in series as~\cite{riekki:1998}, and in books as~\cite[p. 55]{pietikainen:2011}. A section of compiled work should be cited as~\cite{cvejic:2005}, and articles in conference proceedings as~\cite{heikkila:1997}. The citation to a thesis should look like~\cite{heikkinen:2011}, and patents should be cited in the manner of~\cite{toivonen:2004}. In some cases it is necessary to cite a source in the Internet~\cite{korpela}, and publications that lack a known author~\cite{asuntoliitto_asumistaso_1969}. Please, see the References Chapter for the models.
+The \textit{citations.bib} file in Overleaf ITEE MSc thesis template should guide you to use correct citation formats. The initials of the author's first names are written first, followed by the last name. If you are using other text preparation tools such as Microsoft Word, you should cite articles in journals  as~\cite{ojala:2002}, in series as~\cite{riekki:1998}, and in books as~\cite[p. 55]{pietikainen:2011}. A section of compiled work should be cited as~\cite{cvejic:2005}, and articles in conference proceedings as~\cite{heikkila:1997}. The citation to a thesis should look like~\cite{heikkinen:2011}, and patents should be cited in the manner of~\cite{toivonen:2004}. In some cases it is necessary to cite a source in the Internet~\cite{korpela}, and publications that lack a known author~\cite{asuntoliitto_asumistaso_1969}. Please, see the References Chapter for the models.
 
 \section{Appendices}
 \label{sec:appendices}
