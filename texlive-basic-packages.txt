@@ -37,6 +37,7 @@ enumitem
 ccicons
 doclicense
 everyshi
+fontaxes
 ifmtarg
 ifnextok
 newfile
