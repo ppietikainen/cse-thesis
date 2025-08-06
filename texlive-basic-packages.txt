@@ -36,12 +36,17 @@ fmtcount
 enumitem
 ccicons
 doclicense
-newfile
-xifthen
+everyshi
+fontaxes
 ifmtarg
 ifnextok
+ifoddpage
+newfile
+relsize
+xifthen
 xurl
-everyshi
+xmpincl
+xpatch
 
 # This gets pulled by hyperref randomly depending on environment
 greek-fontenc
