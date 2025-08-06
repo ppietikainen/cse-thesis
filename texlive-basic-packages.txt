@@ -43,6 +43,7 @@ newfile
 xifthen
 xurl
 xmpincl
+xpatch
 
 # This gets pulled by hyperref randomly depending on environment
 greek-fontenc
