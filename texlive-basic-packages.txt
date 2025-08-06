@@ -39,6 +39,7 @@ doclicense
 newfile
 xifthen
 ifmtarg
+ifnextok
 xurl
 
 # This gets pulled by hyperref randomly depending on environment
