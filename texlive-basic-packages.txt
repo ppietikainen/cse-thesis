@@ -41,6 +41,7 @@ xifthen
 ifmtarg
 ifnextok
 xurl
+everyshi
 
 # This gets pulled by hyperref randomly depending on environment
 greek-fontenc
