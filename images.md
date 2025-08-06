@@ -1,4 +1,4 @@
-== PDF/A and removing transparency from images
+## PDF/A and removing transparency from images
 
 The PDF/A-1b standard does not allow transparency for images. This affects both .png and .pdf images. You can use the Linux command file to recognize .png files with transparency. "PNG image data, 64 x 64, 8-bit/color RGBA, non-interlaced". Images that do not have transparency (alpha channel) are listed as "RGB".
 

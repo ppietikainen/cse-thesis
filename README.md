@@ -11,7 +11,7 @@ writing a diploma thesis.
 The current version of the template produces PDF/A-1b compliant PDF file,
 which can directly be uploaded to Laturi (Muuntaja is NOT required).
 This requires that transparency is removed from all images in your thesis.
-Instructions for doing this are included in [[images.md]].
+Instructions for doing this are included in [images.md](images.md).
 
 We kindly ask for students using this template to improve this template,
 and share the improvements, so that others may benefit.
