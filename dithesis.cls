@@ -1,5 +1,5 @@
 % Template for M. Sc. (Tech.) degree programmes at the
-% Faculity of Information Technology and Electical Engineering
+% Faculty of Information Technology and Electrical Engineering
 % at University of Oulu (CSE/BME/BA)
 % 
 % Authors: Mika Korhonen (original author), Pekka Pietikäinen,
@@ -25,10 +25,6 @@
 \usepackage{xstring}
 
 % --- Essential formatting packages needed for document structure ---
-\usepackage[
-  left=4.5cm, right=2.0cm, top=2.5cm, bottom=3.0cm
-]{geometry}
-
 \usepackage[noindentafter]{titlesec}
 \usepackage{titlecaps}
 \usepackage{chngcntr}
@@ -39,7 +35,6 @@
 % Footnotes in longtable require it to be loaded before pdfx, otherwise
 % should be in .sty
 \usepackage{longtable}
-\usepackage{xcolor}
 \usepackage[a-1b,latxmp, mathxmp]{pdfx}[2017/05/18]
 \hypersetup{
   unicode=true,
@@ -65,6 +60,13 @@
   \renewcommand*{\OtherLangs}{english}%
 }
 
+\DeclareOption{print}{%
+  \PassOptionsToPackage{left=4.5cm, right=2.0cm, top=2.5cm, bottom=3.0cm}{geometry}
+}
+\DeclareOption{online}{%
+  \PassOptionsToPackage{left=2.5cm, right=2.5cm, top=2.5cm, bottom=3.0cm}{geometry}
+}
+\ExecuteOptions{online}
 \newcommand{\degreeprogrammeselection}{cse} % default to 'cse' (Tietotekniikka)
 \newcommand{\thesistype}{Master} % default to 'Master' (Diplomityö)
 
@@ -81,6 +83,8 @@
 }
 \ExecuteOptions{master} % default to 'master' (Diplomi-insinööri)
 \ProcessOptions\relax
+
+\RequirePackage{geometry}
 
 \newcommand*{\IfEng}[3]{\ifdefstring{#1}{english}{#2}{#3}}%
 \newcommand*{\IfFin}[3]{\ifdefstring{#1}{finnish}{#2}{#3}}%
@@ -142,7 +146,7 @@
 	\openoutputfile{\jobname.xmpdata}{xmpdata}%
 	\addtostream{xmpdata}{\noexpand\Title {\metadatatitle}}%
 	\addtostream{xmpdata}{\noexpand\Author {\getauthorsmetadata}}%
-  \addtostream{xmpdata}{\noexpand\Copyright {\MetaCopyrightText}}%%
+        \addtostream{xmpdata}{\noexpand\Copyright {\MetaCopyrightText}}%
  	\addtostream{xmpdata}{\noexpand\CopyrightURL {\pdfCopyrightURL}}
 		\IfFin{\MainLang}{%
           \addtostream{xmpdata}{\noexpand\Subject {\tiivistelmametadata}}%
