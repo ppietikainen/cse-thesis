@@ -18,8 +18,12 @@
 \LoadClass[12pt,a4paper]{report}
 
 % --- Core packages only (minimal set) ---
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
+% inputenc/fontenc are pdflatex-isms; lualatex uses fontspec for encoding
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+\fi
 \usepackage{etoolbox}
 \usepackage{ifthen}
 \usepackage{xstring}
@@ -28,34 +32,27 @@
 \usepackage[noindentafter]{titlesec}
 \usepackage{titlecaps}
 \usepackage{chngcntr}
-\usepackage[useregional=text, british]{datetime2}
 \usepackage{appendix}
 \usepackage{newfile}
 
 % Footnotes in longtable require it to be loaded before pdfx, otherwise
 % should be in .sty
 \usepackage{longtable}
-\usepackage[a-1b,latxmp, mathxmp]{pdfx}[2017/05/18]
-\hypersetup{
-  unicode=true,
-  pdfencoding=auto,
-  hidelinks
-}
-% Compatibility with older TeX distributions, make it a 
-% no-op if not already defined. Some day alt-text will
-% end up in the PDF.
-\providecommand{\alt}[1]{}
+\usepackage{graphicx}
+
 % --- Language option processing ---
 \newcommand*{\MainLang}{}
 \newcommand*{\OtherLangs}{}
 
 \DeclareOption{english}{%
   \PassOptionsToPackage{main=english, finnish}{babel}%
+  \PassOptionsToPackage{useregional=text, warn=false, british}{datetime2}
   \renewcommand*{\MainLang}{english}%
   \renewcommand*{\OtherLangs}{finnish}%
 }
 \DeclareOption{finnish}{%
   \PassOptionsToPackage{main=finnish, english}{babel}%
+  \PassOptionsToPackage{useregional=text, warn=false, finnish}{datetime2}
   \renewcommand*{\MainLang}{finnish}%
   \renewcommand*{\OtherLangs}{english}%
 }
@@ -85,6 +82,7 @@
 \ProcessOptions\relax
 
 \RequirePackage{geometry}
+\RequirePackage{datetime2}
 
 \newcommand*{\IfEng}[3]{\ifdefstring{#1}{english}{#2}{#3}}%
 \newcommand*{\IfFin}[3]{\ifdefstring{#1}{finnish}{#2}{#3}}%
@@ -249,11 +247,12 @@
 %Title page
 \newcommand{\maketitlepage}{
   \sloppy
-
+  \DTMlangsetup{showdayofmonth=false}
   \selectlanguage{\MainLang}
   {
     \centering
-    \includegraphics*[width=0.22\textwidth]{\universitylogo}\\
+    \includegraphics*[width=0.22\textwidth,
+      alt={University of Oulu logo}]{\universitylogo}\\
     {\sffamily\fontsize{8}{10pt}\selectfont \MakeUppercase{\facultyname} \\}
     \vspace{70 mm}
     {\textbf{\fontsize{16}{19pt}\selectfont \getauthorstitle}\\}
@@ -265,6 +264,8 @@
     \vspace{1cm}
   \clearpage
   }
+  \DTMlangsetup{showdayofmonth=true}
+
 }  
 
 \newcommand{\makecopyrightpage}{%
@@ -274,7 +275,12 @@
     \newpage
     \thispagestyle{empty}%
     \noindent
+    % NoHyper suppresses link annotations on this page, avoiding a tagpdf 1.0b
+    % off-by-one bug where the first annotation StructParent collides with the
+    % last page's StructParents value in the ParentTree.
+    \begin{NoHyper}%
     \CopyrightText\par%
+    \end{NoHyper}%
     \cleardoublepage
   \fi
 }%
@@ -296,7 +302,7 @@
 
 
 \newcommand{\abstractauthors}{%
-  {\textbf{\getauthorsabstractacta\ (\the\year) \thesistitle.} \universityname, \facultyname, \degreeprogramme, \thesistypetitle, \shownumberofpages~p.}
+  {\textbf{\getauthorsabstractacta\ (\the\year) \thesistitle.} \universityname, \facultyname, \degreeprogramme, \thesistypetitle, \shownumberofpages~\pagelabel}
 }
 
 \newcommand{\abstractauthorsieee}{%

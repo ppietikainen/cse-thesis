@@ -8,7 +8,6 @@
 \usepackage[english=nohyphenation,finnish=nohyphenation]{hyphsubst}
 
 \usepackage{enumitem}
-\usepackage{graphicx}
 \usepackage{float}
 \usepackage{placeins}
 \usepackage{tabularx}
@@ -28,6 +27,7 @@
 
 \usepackage[backend=biber,
   style=ieee,
+  citestyle=numeric-comp,
   doi=true,
   urldate=long,
   url=true]{biblatex}
@@ -132,6 +132,10 @@
 
 % Algorithms
 \usepackage[linesnumbered, ruled]{algorithm2e}
+% algorithm2e has no tagpdf support — suspend tagging for the float to avoid
+% invalid P→P structure violations in tagged/UA-2 output.
+\AddToHook{env/algorithm/begin}{\SuspendTagging{algorithm2e}}
+\AddToHook{env/algorithm/end}{\ResumeTagging{algorithm2e}}
 
 % --- Package configurations ---
 \tolerance=500
@@ -208,51 +212,46 @@
 
 
 
-% Chapter
-% Chapters are set in 14pt bold (bfseries), centered, uppercase.
-% No space before, one baseline skip after.
+\setcounter{secnumdepth}{2} % numbers up to \subsection by default
+
+% latex-lab-testphase-sec fires a class/after hook that can override titlesec's
+% \@makechapterhead (newer TL snapshots added sec-template.sty with default
+% sectioning templates). Defer all \titleformat/\titlespacing to \AtBeginDocument
+% so they win regardless of which latex-lab version the engine runs.
+\AtBeginDocument{%
+% Chapter: 14pt bold, centered, uppercase. No space before, one baseline skip after.
 \titleformat{\chapter}
   [hang]
   {\normalfont\bfseries\fontsize{14}{17}\selectfont\centering}
   {\chapnumformat}
   {1em}
   {\MakeUppercase}
-
-% Section
-% Sections are 12pt bold (bfseries), left-aligned, normal font.
-% 2 baseline skips before and 1 after.
+% Section: 12pt bold, centered. 2 baseline skips before and 1 after.
 \titleformat{\section}
   [hang]
   {\normalfont\bfseries\fontsize{12}{15}\selectfont\centering}
   {\secnumformat}
   {1em}
   {}
-
-% Subsection
-% Subsections are bold italic (bfseries, itshape), normal font size,
-% with 2 baseline skips before and 1 after.
+% Subsection: bold italic, centered. 2 baseline skips before and 1 after.
 \titleformat{\subsection}
   [hang]
   {\normalfont\bfseries\itshape\centering}
   {\subsecnumformat}
   {1em}
   {}
-\setcounter{secnumdepth}{2} % numbers up to \subsection by default
-
-% Subsubsection
-% Subsubsections are italic (itshape), normal font size,
-% with 2 baseline skips before and 1 after.
+% Subsubsection: italic, centered. 2 baseline skips before and 1 after.
 \titleformat{\subsubsection}
   [hang]
   {\normalfont\itshape\centering}
   {\subsubsecformat}
   {1em}
   {}
-
 \titlespacing*{\chapter}{0pt}{0pt}{\baselineskip}
 \titlespacing*{\section}{0pt}{2\baselineskip}{\baselineskip}
 \titlespacing*{\subsection}{0pt}{2\baselineskip}{\baselineskip}
 \titlespacing*{\subsubsection}{0pt}{2\baselineskip}{\baselineskip}
+}
 
 % Bullet configuration
 \setlist[itemize,1]{label=\raisebox{0.2ex}{\tiny$\bullet$}}
@@ -287,7 +286,3 @@ versus via with within without}
 }
 \makeatother
 
-% Decimal comma
-%\DeclareMathSymbol{\decimal}{\mathord}{letters}{"3A}
-\DeclareMathSymbol{,}{\mathpunct}{letters}{"3B}
-\DeclareMathSymbol{.}{\mathord}{letters}{"3B}

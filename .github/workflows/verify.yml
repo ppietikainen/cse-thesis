@@ -1,14 +1,16 @@
-name: Verify PDF/A-1B compatibility
+name: Verify PDF compatibility
 
 on:
   push:
     branches:
       - main
       - devel
+      - legacy
   pull_request:
     branches:
       - main
       - devel
+      - legacy
 
 jobs:
   build_latex:
@@ -16,22 +18,55 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+
+      - name: Set build configuration
+        run: |
+          # GITHUB_HEAD_REF is set for pull_request events (source branch);
+          # fall back to GITHUB_REF suffix for push events.
+          BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF##*/}}"
+          if [ "$BRANCH" = "devel" ]; then
+            echo "COMPILER=lualatex" >> "$GITHUB_ENV"
+            echo "PDF_FLAVORS=4f" >> "$GITHUB_ENV"
+          else
+            echo "COMPILER=pdflatex" >> "$GITHUB_ENV"
+            echo "PDF_FLAVORS=1b" >> "$GITHUB_ENV"
+          fi
+
       - name: Install TexLive and dependencies
         uses: zauguin/install-texlive@v4
         with:
           package_file: texlive-basic-packages.txt
-      - name: Compile LaTeX document
+
+      - name: Compile LaTeX document (1st pass)
+        run: $COMPILER -halt-on-error main.tex
+
+      - name: Run bibliography tool
         run: |
-          pdflatex -halt-on-error main.tex
-          biber --validate-datamodel main
-          pdflatex -halt-on-error main.tex
+          case "${GITHUB_REF##*/}" in
+            legacy)
+              echo "Running bibtex..."
+              bibtex main
+              ;;
+            *)
+              echo "Running biber..."
+              biber --validate-datamodel main
+              ;;
+          esac
+
+      - name: Compile LaTeX document (2nd pass)
+        run: $COMPILER -halt-on-error main.tex
+
       - name: Verify PDF
         run: |
           if [ "$ACT" = "true" ]; then
             echo "No docker in ACT"
           else
-            docker run --rm -t -v "$(pwd):/data" ghcr.io/verapdf/cli:latest -f 1b main.pdf
+            for flavor in $PDF_FLAVORS; do
+              echo "--- Validating PDF/$flavor ---"
+              docker run --rm -t -v "$(pwd):/data" docker.io/verapdf/cli:v1.30.2 -f "$flavor" main.pdf
+            done
           fi
+
       - name: Upload PDF
         uses: actions/upload-artifact@v4
         with:

@@ -72,22 +72,16 @@ and~\cite{reportwriting, englishlanguage} in English.
 In the text typography, you need to use the following guidelines and rules:
 
 \begin{itemize}
-    \setlength\itemsep{0pt}
-    \setlength\parskip{0pt}
   \item Font: Times New Roman
   \item Page margin settings (exception: physical, bound copies use different settings; see Section~\ref{boundversion}):
-    \begin{itemize}[wide=0pt]
-        \setlength\itemsep{0pt}
-        \setlength\parskip{0pt}
+    \begin{itemize}
       \item Left margin: 2,5 cm
       \item Right margin: 2,5 cm
       \item Top margin: 2,5 cm
       \item Bottom margin: 3,0 cm
     \end{itemize}
   \item Spacing:
-    \begin{itemize}[wide=0pt]
-        \setlength\itemsep{0pt}
-        \setlength\parskip{0pt}
+    \begin{itemize}
       \item Before a heading: 2 empty rows
       \item After a heading: 1 empty row
       \item Between two headings: 1 empty row
@@ -219,16 +213,16 @@ while a long caption extending to a several lines is justified on both sides.
 % -sOutputFile=output.pdf input.pdf
 \begin{figure}[ht]
 \begin{center}
-  \includegraphics*[width=0.7\textwidth]{WP}
+  \includegraphics*[width=0.7\textwidth,
+    alt={Diagram showing interactions between work packages WP1 to WP5,
+    all inside WP6, which is itself inside WP7. WP3 (left) sends
+    outputs to WP1, WP2, and WP4. WP1 and WP2 are bidirectionally
+    linked. WP1, WP2, and WP4 send outputs to WP5 (right). A curved
+    arrow shows WP3 also directly feeding into WP5.}]{WP}
 \end{center}
 \caption{Connections between work packages (WP).
   \copyrightstring\ \href{https://creativecommons.org/licenses/by/4.0/}{CC
 BY 4.0}.}
-\alt{Diagram showing interactions between work packages WP1 to WP5,
-  all inside WP6, which is itself inside WP7. WP3 (left) sends
-  outputs to WP1, WP2, and WP4. WP1 and WP2 are bidirectionally
-  linked. WP1, WP2, and WP4 send outputs to WP5 (right). A curved
-arrow shows WP3 also directly feeding into WP5.}
 \label{fig:work_packages}
 \end{figure}
 
@@ -300,7 +294,7 @@ pseudocode compared to one in Algorithm~\ref{alg:examplealg}.
 \label{alg:examplealg}
 \end{algorithm}
 
-\section{Clarifying contributions and Using AI}
+\section{Clarifying contributions and using AI}
 \label{AI}
 Since a thesis is an independent work, it is important to clarify how
 much of the work was done by the author, how much by potential
@@ -463,7 +457,8 @@ in the same situation as you are now, and yet they were still able to graduate.
 % Don't specify the extension so you can use both!
 \begin{figure}[ht]
 \begin{center}
-  \includegraphics*[width=0.9\textwidth]{unto_uneksija}
+  \includegraphics*[width=0.9\textwidth,
+    alt={Cartoon of a person running outside at night howling at the moon in frustration.}]{unto_uneksija}
 \end{center}
 \caption{Writing angst and the pain of creation. “Writing your thesis
   can sometimes
@@ -536,10 +531,7 @@ website of the University of Oulu at
 \url{https://www.oulu.fi/en/news/want-improve-your-academic-writing-and-achieve-better-results}.
 
 Students can utilize the Turnitin similarity checking independently.
-The tool can be found in Moodle
-\url{https://moodle.oulu.fi/course/view.php?id=26689} (Course key:
-Turnitin2025). The thesis is checked individually, so the originality
-of the text can be confirmed.
+The tool can be found in Moodle \url{https://moodle.oulu.fi/enrol/index.php?id=31794} (Link valid for 2026). The thesis is checked individually, so the originality of the text can be confirmed.
 
 More information can be found from the degree programme web pages
 ~\cite{mscstudies} and from Laturi’s web pages: \url{http://laturi.oulu.fi}.
@@ -568,7 +560,7 @@ also produce and attach the cover to the printout that you
 provide. The cover must be black, and the text must be printed
 directly on it; stickers are not allowed.
 
-\section{Copyright, Licenses and the Use of images}
+\section{Copyright, licenses and the use of images}
 \label{copyright}
 Intellectual property rights (IPR) protect works, i.e., the authors
 and rights-holders of literary or artistic works that exceed the
@@ -649,7 +641,8 @@ kuva lähteestä [x]. \textcopyright Vuosi Tekijä.''
 
 \begin{figure}[H]
 \begin{center}
-  \includegraphics[width=12cm]{Figures/ccby.jpg}
+  \includegraphics[width=12cm,
+    alt={Black and white portrait photograph of Stephen Crane.}]{Figures/ccby.jpg}
 \end{center}
 \caption{``\href{https://openverse.org/image/110032f8-1a7a-421f-86b1-88fdfde2e44f
   }{Stephen Crane, Author, Red Badge of Courage}''
@@ -659,10 +652,7 @@ kuva lähteestä [x]. \textcopyright Vuosi Tekijä.''
 \label{fig:ccbypic}
 \end{figure}
 
-The permission can also be from the publisher. For instance, IEEE and
-many other publishers have an automated system for granting permission
-for theses. Mark the permission in the caption as requested by the
-right holder, e.g., “\textcopyright 2022 IEEE. Reprinted, with
+The permission can also come from the publisher or, if applicable, your employer (in cases where they hold the copyright). For instance, IEEE and many other publishers have an automated system for granting permission for theses. Mark the permission in the caption as requested by the right holder, e.g., “\textcopyright 2022 IEEE. Reprinted, with
 permission, from [x].''
 
 Not all figures exceed the threshold of originality. These include,
