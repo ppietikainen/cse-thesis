@@ -189,16 +189,28 @@
 \setlength{\cftaftertoctitleskip}{8mm}
 \renewcommand{\cftdotsep}{0.2}
 
-% Add dot to toc entries if option turned on
-\makeatletter
-\renewcommand{\numberline}[1]{%
-  \hb@xt@\@tempdima{#1\sectionnamedot\hfil}}
-\makeatother
+% testphase-toc: \numberline is registered in the LaTeX3 text module as
+% \use_none:n (strips the number) inside a \group_begin:/\group_end: block so
+% that \text_purify:n can build a plain-text tag title without the number.
+% Because \tl_set:cn is LOCAL, the registration reverts after each group ends.
+% We declare \numberline unexpanded HERE (load time = effectively global) so
+% \MakeUppercase in contentsline@text@0@format preserves the number token,
+% which the typesetting \renewcommand below then renders as "N. ".
+% IMPORTANT: must be at load level with ExplSyntaxOn active, NOT inside
+% \AtBeginDocument{...} where the argument is tokenized at read time.
+\ExplSyntaxOn
+\text_declare_expand_equivalent:Nn \numberline { \exp_not:n { \numberline } }
+\ExplSyntaxOff
 
-\makeatletter
-\let\oldl@chapter\l@chapter
-\renewcommand*\l@chapter[2]{\oldl@chapter{\MakeUppercase{#1}}{#2}}
-\makeatother
+\AtBeginDocument{%
+  \makeatletter
+  \renewcommand{\numberline}[1]{#1\sectionnamedot\enspace}%
+  % testphase-toc calls \csname contentsline@text@0@format\endcsname {title}
+  % for level-0 (chapter) entries. The macro expands to code that prefixes
+  % the title; \MakeUppercase then receives {title} as its own argument.
+  \ExpandArgs{c}\def{contentsline@text@0@format}{\bfseries\MakeUppercase}%
+  \makeatother
+}
 
 \makeatletter
 \def\ps@plain{\ps@myheadings} % plain pages like chapters also top right
