@@ -205,10 +205,12 @@
 \AtBeginDocument{%
   \makeatletter
   \renewcommand{\numberline}[1]{#1\sectionnamedot\enspace}%
-  % testphase-toc calls \csname contentsline@text@0@format\endcsname {title}
-  % for level-0 (chapter) entries. The macro expands to code that prefixes
-  % the title; \MakeUppercase then receives {title} as its own argument.
-  \ExpandArgs{c}\def{contentsline@text@0@format}{\bfseries\MakeUppercase}%
+  % tocloft's \l@chapter uses {\cftchapfont #1} — it does not call
+  % contentsline@text@0@format. Wrap \l@chapter to uppercase before
+  % passing to tocloft. \text_declare_expand_equivalent above ensures
+  % \MakeUppercase preserves \numberline so the number survives.
+  \let\oldl@chapter\l@chapter
+  \renewcommand*\l@chapter[2]{\oldl@chapter{\MakeUppercase{#1}}{#2}}%
   \makeatother
 }
 
