@@ -128,11 +128,16 @@
 % --- Miscellaneous ---
 
 \newcommand{\CopyrightText}{}% variable; used for printing on page
-\newcommand{\MetaCopyrightText}{}%
+\newcommand{\MetaCopyrightTextEn}{}% English dc:rights text
+\newcommand{\MetaCopyrightTextFi}{}% Finnish dc:rights text
 \newcommand{\pdfCopyrightURL}{}%
-\newcommand{\copyrighttext}[2]{%
-  \renewcommand{\MetaCopyrightText}{#1}%
-  \renewcommand{\CopyrightText}{#2}%
+% \copyrighttext{<English metadata>}{<Finnish metadata>}{<copyright-page text>}
+% The two metadata strings become a bilingual dc:rights in the PDF metadata;
+% the page text is shown on the copyright page in the document's main language.
+\newcommand{\copyrighttext}[3]{%
+  \renewcommand{\MetaCopyrightTextEn}{#1}%
+  \renewcommand{\MetaCopyrightTextFi}{#2}%
+  \renewcommand{\CopyrightText}{#3}%
   \makeatletter
   \@ifundefined{doclicenseURL}{}{\renewcommand{\pdfCopyrightURL}{\doclicenseURL}}%
   \makeatother
@@ -140,29 +145,76 @@
 
 \newcommand*{\spc}{, }%
 
-\newcommand{\makemetadata}{%
-  \IfLang{\MainLang}{finnish}{%
-    \renewcommand{\metadatatitle}{\getotsikko}%
-    \hypersetup{%
-      pdftitle={\metadatatitle},%
-      pdfauthor={\getauthorslist},%
-      pdfsubject={\tiivistelmametadata},%
-      pdfkeywords={\avainsanatmetadata; \keywordsmetadata},%
-      pdfcopyright={\MetaCopyrightText},%
-    }%
-  }{%
-    \renewcommand{\metadatatitle}{\gettitle}%
-    \hypersetup{%
-      pdftitle={\metadatatitle},%
-      pdfauthor={\getauthorslist},%
-      pdfsubject={\abstractmetadata},%
-      pdfkeywords={\keywordsmetadata; \avainsanatmetadata},%
-      pdfcopyright={\MetaCopyrightText},%
-    }%
-  }%
-}%
+\usepackage{xparse} % if not already loaded (LaTeX2e 2020+ has it built in)
 
-\AtBeginDocument{\makemetadata}%
+\ExplSyntaxOn
+% Global scratch tl used to carry the resolved text out of the local group in
+% \flattentext (a global assignment is not unwound at \group_end:).
+\tl_new:N \g__dithesis_flat_tl
+\NewDocumentCommand{\flattentext}{m m}{
+  % #1 = macro to receive the flattened, PDF-string-safe text
+  % #2 = macro containing the original abstract (e.g. \abstractmetadata)
+  %
+  % Produces a single-paragraph, plain-text version of the abstract for the XMP
+  % metadata (dc:description, set via pdfsubject in \makemetadata):
+  %   * \par and explicit line breaks become spaces;
+  %   * runs of spaces are collapsed and the ends trimmed;
+  %   * \texorpdfstring{<tex>}{<text>} is reduced to its <text> argument, so
+  %     inline math written as \texorpdfstring{$E=mc^2$}{E = mc^2} has a clean
+  %     text form in the metadata while the body keeps the real math.
+  % Expand #2 once so a macro name resolves to its stored token list.
+  \tl_set:No \l_tmpa_tl { #2 }
+  % Replace every break *token* with a space. (\s in the regex only sees
+  % character spaces, so these control sequences must be handled first.)
+  \tl_replace_all:Nnn \l_tmpa_tl { \par } { ~ }
+  \tl_replace_all:Nnn \l_tmpa_tl { \\ } { ~ }
+  \tl_replace_all:Nnn \l_tmpa_tl { \newline } { ~ }
+  \tl_replace_all:Nnn \l_tmpa_tl { \linebreak } { ~ }
+  \regex_replace_all:nnN { \s+ } { \ } \l_tmpa_tl
+  \tl_trim_spaces:N \l_tmpa_tl
+  % Resolve \texorpdfstring to its text argument and fully expand to plain text.
+  \group_begin:
+    \cs_set:Npn \texorpdfstring ##1##2 {##2}
+    \tl_gset:Ne \g__dithesis_flat_tl { \l_tmpa_tl }
+  \group_end:
+  \tl_set_eq:NN #1 \g__dithesis_flat_tl
+}
+\ExplSyntaxOff
+
+\newcommand{\abstractflat}{}
+\newcommand{\tiivistelmaflat}{}
+
+\newcommand{\makemetadata}{%
+  % Flatten the abstracts to PDF-string-safe, single-paragraph plain text.
+  \flattentext\abstractflat\abstractmetadata
+  \flattentext\tiivistelmaflat\tiivistelmametadata
+  \hypersetup{%
+    pdftitle={[fi]\getotsikko,
+      [en]\gettitle},%
+    pdfauthor={\getauthorslist},%
+    % pdfsubject becomes dc:description. The value is read as a comma list to
+    % support the [lang] tags, so each abstract is wrapped in braces to protect
+    % the commas in its text; otherwise it is shredded into bogus rdf:li lines.
+    pdfsubject={[en]{\abstractflat},[fi]{\tiivistelmaflat}},%
+    pdfkeywords={[fi]\avainsanatmetadata,
+                 [en]\keywordsmetadata},%
+  }%
+}
+\AtBeginDocument{\makemetadata}
+
+% pdfcopyright becomes dc:rights (a comma-separated langalt, so each language's
+% text is braced to protect its internal commas, like pdfsubject above).
+% This must run in begindocument/end, AFTER pdfmanagement-firstaid's own
+% \AtBeginDocument hook, which -- when doclicense is loaded with hyperxmp
+% disabled -- sets pdfcopyright to the single-language \doclicenseLongTextForHyperref
+% and would otherwise overwrite ours. Setting it later lets us provide a proper
+% bilingual dc:rights for both the CC and all-rights-reserved cases.
+\AddToHook{begindocument/end}{%
+  \ifdefempty{\MetaCopyrightTextEn}{}{%
+    \hypersetup{pdfcopyright={[en]{\MetaCopyrightTextEn},%
+                              [fi]{\MetaCopyrightTextFi}}}%
+  }%
+}
 
 \newcommand{\firstname}[1]{\def\firstnameA{#1}}
 \newcommand{\lastname}[1]{\def\lastnameA{#1}}
