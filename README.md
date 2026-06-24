@@ -61,12 +61,13 @@ Contributors to the template include:
    * This file.
 
 ### LoC
- * 2026-06-10 Pekka Pietikäinen
+ * 2026-06-24 Pekka Pietikäinen
    * PDF/A-4f + PDF/UA-2 output via pdfmanagement/tagpdf, replacing pdfx
      * \DocumentMetadata enables full tagged PDF (tagging=on, mathml-SE)
      * Metadata (title, author, abstract, keywords, copyright) written via
        \hypersetup; .xmpdata file approach removed
      * LuaLaTeX supported (lualatex on devel branch, pdflatex on main)
+     * Abstract can now include multiple paragraphs and math metadata + body text, the code automatically makes it work for both
    * Alt text for figures via alt= key in \includegraphics (PDF/UA-2 req.)
      * Alt text now documented in the accessibility section
    * Transparency in images is now allowed (PDF/A-4f/2b support it)
@@ -75,6 +76,9 @@ Contributors to the template include:
    * algorithm2e: suspend/resume tagging to avoid UA-2 structure errors
    * Decimal comma math hack removed (broke \vdots and similar)
    * CI: verapdf updated to v1.30.2, validates PDF/A-4f and PDF/UA-2
+
+ * 2026-06-02 Pekka Pietikäinen
+    * Clarify that Finnish abstract is also required for international students (This changed a while back but was not changed in the instructions)
 
  * 2026-04-01 Pekka Pietikäinen
    * Update Turnitin link for 2026 (and note it changes annually)
