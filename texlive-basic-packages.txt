@@ -17,7 +17,9 @@ import                # Supports modular document structure; enables nested \inp
 multirow              # Allows multi-row cells in tables; still widely needed.
 newtx                 # ✅ Modern Times-like font package; supersedes 'times', includes text+math.
 nth                   # Adds support for ordinal suffixes (e.g., 1st, 2nd); small but helpful.
-pdfx                  # Enables PDF/A and PDF/X output; useful for archival documents.
+pdfmanagement-testphase # pdfmanagement-testphase.sty; required by \DocumentMetadata (PDF/A-4f, UA-2)
+tagpdf                # Tagged PDF support; required by \DocumentMetadata tagging=on
+latex-lab             # LaTeX laboratory testphase modules (toc, sec, graphic, etc.)
 placeins              # Prevents floats from escaping their sections; useful with \FloatBarrier.
 titlecaps             # Capitalizes titles (e.g., sections); niche but functional.
 titlesec              # Provides control over section title formatting; useful for custom layouts.
@@ -41,11 +43,9 @@ fontaxes
 ifmtarg
 ifnextok
 ifoddpage
-newfile
 relsize
 xifthen
 xurl
-xmpincl
 xpatch
 
 # This gets pulled by hyperref randomly depending on environment
@@ -56,4 +56,4 @@ fontspec              # Font selection for LuaLaTeX/XeLaTeX; loaded automaticall
 luaotfload            # OpenType font loader for LuaTeX; runtime dependency of fontspec
 lualatex-math         # Fixes math-mode behaviour differences between pdflatex and lualatex (newtxmath compatibility)
 luamml                # LuaLaTeX MathML generation; required by DocumentMetadata tagging-setup=mathml-SE
-hyperxmp              # Embeds XMP metadata (including license) into PDF; required by doclicense for metadata
+# hyperxmp is disabled by pdfmanagement (incompatible); XMP handled internally by pdfmanagement

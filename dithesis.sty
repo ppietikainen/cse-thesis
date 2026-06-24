@@ -120,11 +120,18 @@
 }
 
 % Copyright strings
-% Syntax: 
-% \copyrigthtext{metadata text}{text visible on the page}
+% Syntax:
+% \copyrighttext{English metadata}{Finnish metadata}{text visible on the page}
 % \copyrightstring is common for all languages and licenses.
 % Copyright (C) year Author(s)
-\newcommand{\copyrightmetastring}{Copyright \noexpand\textcopyright\ \number\year\ \getauthorslist.}
+%
+% Copyright symbol for the PDF metadata (dc:rights). The XMP value is written
+% as plain Unicode by detokenising, so \textcopyright would leak through as the
+% literal string "\textcopyright". A literal U+00A9 works under Unicode engines
+% (LuaTeX/XeTeX); under pdfTeX it is an active inputenc character that does not
+% survive into the metadata, so fall back to "(C)" there.
+\newcommand{\copyrightsymbolmeta}{\ifPDFTeX(C)\else©\fi}
+\newcommand{\copyrightmetastring}{Copyright \copyrightsymbolmeta\ \number\year\ \getauthorslist.}
 \newcommand{\copyrightstring}{Copyright \textcopyright~\number\year\ \getauthorslist.}
 \newcommand{\allrightsreservedeng}{All rights reserved.}
 \newcommand{\allrightsreservedfin}{Kaikki oikeudet pidätetään.}
