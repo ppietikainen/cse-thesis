@@ -29,7 +29,6 @@
 \usepackage{xstring}
 
 % --- Essential formatting packages needed for document structure ---
-\usepackage[noindentafter]{titlesec}
 \usepackage{titlecaps}
 \usepackage{chngcntr}
 \usepackage{appendix}
@@ -121,9 +120,6 @@
 
 \newcommand{\sectionnamedot}{\ifwithdot.\fi}
 \newcommand{\chapnumformat}{\thechapter\sectionnamedot}
-\newcommand{\secnumformat}{\thesection\sectionnamedot}
-\newcommand{\subsecnumformat}{\thesubsection\sectionnamedot}
-\newcommand{\subsubsecnumformat}{\thesubsubsection\sectionnamedot}
 
 % --- Miscellaneous ---
 
@@ -161,14 +157,16 @@
 \newcommand{\getotsikko}{\@otsikko}
 \newcommand{\gettitle}{\@title}
 
-\newcommand{\headertitlecap}{
+% Deferred so that it wraps the heading definitions dithesis.sty makes at
+% \begin{document}; applied in the preamble, those would replace the wrapper.
+\newcommand{\headertitlecap}{\AtBeginDocument{%
   \IfLang{\MainLang}{english}{
     \let\oldsection\section
     \let\oldsubsection\subsection
     \renewcommand{\section}[1]{\oldsection{\texorpdfstring{\titlecap{##1}}{##1}}}
     \renewcommand{\subsection}[1]{\oldsubsection{\texorpdfstring{\titlecap{##1}}{##1}}}
   }{}
-}
+}}
 
 \newcommand{\keywordsmetadata}{}%
 \newcommand{\keywords}[1]{\renewcommand*{\keywordsmetadata}{#1}}
