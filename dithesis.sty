@@ -4,8 +4,7 @@
 % 
 \ProvidesPackage{dithesis}
 % Kernel- and package-version workarounds live in one place so they can be
-% dropped as upstream catches up. Loaded first: it decides which tocloft to
-% load, and the rest of it only takes effect at \begin{document}.
+% dropped as upstream catches up. Most of it takes effect at \begin{document}.
 \RequirePackage{dithesis-compat}
 \usepackage{newtxtext, newtxmath}
 \usepackage[english,finnish]{babel}
@@ -18,7 +17,6 @@
 \usepackage{subcaption}
 \usepackage{multirow}
 \usepackage{caption}
-\dithesis@loadtocloft
 
 \usepackage{amsfonts}
 \usepackage{amsmath}
@@ -279,26 +277,24 @@
   % skip=\baselineskip
 }
 
-% TOC configuration
+% TOC configuration. The guides only require that the front-matter entries
+% have no page numbers; the rest matches what both CSE and ECE theses look
+% like. Plain kernel code, which is what latex-lab's TOC tagging is built on.
+% The title is report's \chapter*{\contentsname}, so it looks like the other
+% front-matter headings.
 \setcounter{tocdepth}{2}
-% The TOC title font. How the title is centered depends on the kernel, see
-% dithesis-compat.sty.
-\newcommand*\dithesis@toctitlefont{\normalfont\large\bfseries}
-\renewcommand{\cftchapfont}{}
-\renewcommand{\cftchappagefont}{}
-\setlength{\cftbeforechapskip}{0mm}
-\setlength{\cftbeforetoctitleskip}{0mm}
-\setlength{\cftaftertoctitleskip}{8mm}
-\renewcommand{\cftdotsep}{0.2}
+\renewcommand\@dotsep{0.2}% dense dot leaders (in mu)
+% Front-matter chapter entries have no page number and no leader; \mainmatter
+% writes \dithesis@tocdots into the .toc to start the leaders at Introduction.
+\newcommand*\dithesis@tocleader{\hfill}
+\newcommand*\dithesis@tocdots{%
+  \def\dithesis@tocleader{\leaders\hbox{$\m@th\mkern\@dotsep mu\hbox{.}\mkern\@dotsep mu$}\hfill}}
 
 \AtBeginDocument{%
   \renewcommand{\numberline}[1]{#1\sectionnamedot\enspace}%
-  % tocloft's \l@chapter uses {\cftchapfont #1} — it does not call
-  % contentsline@text@0@format. Wrap \l@chapter to uppercase before
-  % passing to tocloft. Item B2 in dithesis-compat.sty ensures
-  % \MakeUppercase preserves \numberline so the number survives.
-  \let\oldl@chapter\l@chapter
-  \renewcommand*\l@chapter[2]{\oldl@chapter{\MakeUppercase{#1}}{#2}}%
+  % The chapter line (regular weight, uppercase, dot leaders from
+  % Introduction on) is item B2 in dithesis-compat.sty.
+  \dithesis@tocchapterline
 }
 
 \def\ps@plain{\ps@myheadings} % plain pages like chapters also top right
@@ -306,7 +302,7 @@
 \newcommand{\mainmatter}{
   \clearpage
   \pagestyle{myheadings}
-  \addtocontents{toc}{\protect\renewcommand{\protect\cftchapleader}{\protect\cftdotfill{\cftdotsep}}}
+  \addtocontents{toc}{\protect\dithesis@tocdots}
 }
 
 

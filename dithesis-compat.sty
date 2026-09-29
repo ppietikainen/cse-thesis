@@ -11,9 +11,7 @@
 
 % True when latex-lab builds headings from `heading' template instances
 % (2026-06 kernel, tagging on or off). This checks for the feature rather
-% than the kernel date. It is evaluated when used: at load time for C1, at
-% \begin{document} for the headings. latex-lab is loaded by \DocumentMetadata,
-% before the class, so the answer is the same at both points.
+% than the kernel date. It is evaluated when used, at \begin{document}.
 \newcommand*\dithesis@IfTemplateHeadingsTF[2]{%
   \ifdefined\IfInstanceExistsTF
     \IfInstanceExistsTF{heading}{chapter}{#1}{#2}%
@@ -25,8 +23,8 @@
 % Called by dithesis.sty at \begin{document}.
 \newcommand*\dithesis@setupheadings{%
   \dithesis@IfTemplateHeadingsTF
-    {\dithesis@headinginstances\dithesis@templatetoctitle}%
-    {\dithesis@legacyheadings\dithesis@legacytoctitle}%
+    {\dithesis@headinginstances}%
+    {\dithesis@legacyheadings}%
 }
 
 %% ---------------------------------------------------------------------------
@@ -64,92 +62,17 @@
   \def\@seccntformat##1{\csname the##1\endcsname\sectionnamedot\hspace{1em}}%
 }
 
-% A2. tocloft sets the TOC title as a paragraph of its own, so it is centered
-% with fills. The closing pair is uneven on purpose: this is the layout the
-% template has always had.
-\newcommand*\dithesis@legacytoctitle{%
-  \renewcommand{\cfttoctitlefont}{\hfill\dithesis@toctitlefont}%
-  \renewcommand{\cftaftertoctitle}{\hfill\hfill}%
-}
-
-% A3. The TOC title sets no anchor of its own here, so the TOC's own entry
+% A2. The TOC title sets no anchor of its own here, so the TOC's own entry
 % (\frontmattertocentry after \tableofcontents) would pick up whatever anchor
 % came last, such as a footnote. Called by \contents before \tableofcontents;
 % with heading templates the title's anchor replaces this one.
 \newcommand*\dithesis@tocanchor{\phantomsection}
 
 %% ---------------------------------------------------------------------------
-%% C. Packages shipped with the template, in vendor/. A shipped copy is loaded
-%% by path, and only when it is newer than the system copy, so an up-to-date
-%% TeX installation wins without anyone having to delete files. Each item has
-%% its own DROP WHEN; dropping means deleting the vendor/ file and loading the
-%% package normally.
-%% ---------------------------------------------------------------------------
-
-% The date of the first \ProvidesPackage{<name>} line in <file>, as the
-% integer YYYYMMDD in #3, or 0 if the file is missing or has no dated line.
-\ExplSyntaxOn
-\ior_new:N \g__dithesis_date_ior
-\seq_new:N \l__dithesis_date_seq
-\cs_new_protected:Npn \dithesis@filedate #1#2#3
-  {
-    \int_zero:N #3
-    \ior_open:NnT \g__dithesis_date_ior {#1}
-      {
-        \ior_str_map_inline:Nn \g__dithesis_date_ior
-          {
-            \regex_extract_once:nnNT
-              { ProvidesPackage\{#2\}\[(\d{4})[-/](\d{2})[-/](\d{2}) }
-              {##1} \l__dithesis_date_seq
-              {
-                \int_set:Nn #3
-                  { \seq_item:Nn \l__dithesis_date_seq {2}
-                    \seq_item:Nn \l__dithesis_date_seq {3}
-                    \seq_item:Nn \l__dithesis_date_seq {4} }
-                \ior_map_break:
-              }
-          }
-        \ior_close:N \g__dithesis_date_ior
-      }
-  }
-\ExplSyntaxOff
-\newcount\dithesis@systemdate
-\newcount\dithesis@vendordate
-
-% C1. tocloft 3.0 (2026-09) sets list titles through the kernel's heading
-% templates, so the TOC title is tagged as a heading; tocloft 2.3i, which
-% Overleaf's TeX Live 2026 has, bails out under tagging. 3.0 fails outright
-% on kernels without heading templates, so the shipped copy is only used
-% where they exist.
-% DROP WHEN: Overleaf's TeX Live has tocloft 3.0 or newer (the log then
-% shows the system copy being loaded).
-\newcommand*\dithesis@loadtocloft{%
-  \dithesis@filedate{tocloft.sty}{tocloft}\dithesis@systemdate
-  \dithesis@filedate{vendor/tocloft.sty}{tocloft}\dithesis@vendordate
-  \dithesis@IfTemplateHeadingsTF
-    {\ifnum\dithesis@vendordate>\dithesis@systemdate
-       \RequirePackage{vendor/tocloft}%
-     \else
-       \RequirePackage{tocloft}%
-     \fi}%
-    {\RequirePackage{tocloft}}%
-}
-
-%% ---------------------------------------------------------------------------
 %% B. Gaps in current packages. Each item has its own DROP WHEN.
 %% ---------------------------------------------------------------------------
 
-% B1. tocloft with heading templates sets the TOC title as a \chapter, with
-% \cfttoctitlefont as its heading declarations, where the \hfill centering of
-% A2 would push it right; a declaration centers it instead.
-% DROP WHEN: tocloft no longer sets the title through \cfttoctitlefont (then
-% check the TOC title on page 5 of the guide).
-\newcommand*\dithesis@templatetoctitle{%
-  \renewcommand{\cfttoctitlefont}{\dithesis@toctitlefont\centering}%
-  \renewcommand{\cftaftertoctitle}{}%
-}
-
-% B2. testphase-toc registers \numberline in the LaTeX3 text module as
+% B1. testphase-toc registers \numberline in the LaTeX3 text module as
 % \use_none:n (strips the number) inside a \group_begin:/\group_end: block so
 % that \text_purify:n can build a plain-text tag title without the number.
 % Because \tl_set:cn is LOCAL, the registration reverts after each group ends.
@@ -162,6 +85,45 @@
 \ExplSyntaxOn
 \text_declare_expand_equivalent:Nn \numberline { \exp_not:n { \numberline } }
 \ExplSyntaxOff
+
+% B2. The chapter line of the table of contents. latex-lab-toc replaces
+% report's \l@chapter with one that runs the contentsline hooks, which is
+% where the TOC link and its tagging are attached, so a plain copy of report's
+% code loses them. This is latex-lab-toc's version (2026-04-28) with our
+% layout: regular weight, uppercase like the chapter headings, no 1em space
+% above, and \dithesis@tocleader (dots from Introduction on) instead of \hfil.
+% Without tagging the hooks are empty and hyperref puts the link inside #1.
+% DROP WHEN: the kernel offers keys for the chapter line's font, space and
+% leader, or the template accepts report's default TOC look.
+\newcommand*\dithesis@tocchapterline{%
+  \renewcommand*\l@chapter[2]{%
+    \ifnum \c@tocdepth >\m@ne
+      \addpenalty{-\@highpenalty}%
+      \setlength\@tempdima{1.5em}%
+      \begingroup
+        \parindent \z@ \rightskip \@pnumwidth
+        \parfillskip -\@pnumwidth
+        \leavevmode
+        \advance\leftskip\@tempdima
+        \hskip -\leftskip
+        \UseHookWithArguments{contentsline/text/before}{4}
+          {\toclevel@chapter}{##1}{##2}{\@contentsline@destination}%
+        \csname contentsline@text@0@format\endcsname
+          {\MakeUppercase{##1}}%
+        \UseHookWithArguments{contentsline/text/after}{4}
+          {\toclevel@chapter}{##1}{##2}{\@contentsline@destination}%
+        \nobreak\dithesis@tocleader
+        \nobreak\hb@xt@\@pnumwidth{\hss
+          \UseHookWithArguments{contentsline/page/before}{4}
+            {\toclevel@chapter}{##1}{##2}{\@contentsline@destination}%
+          ##2%
+          \UseHookWithArguments{contentsline/page/after}{4}
+            {\toclevel@chapter}{##1}{##2}{\@contentsline@destination}%
+          \kern-\p@\kern\p@}\par
+        \penalty\@highpenalty
+      \endgroup
+    \fi}%
+}
 
 % B3. algorithm2e has no tagpdf support; suspend tagging for the float to
 % avoid invalid P→P structure violations in tagged/UA-2 output.

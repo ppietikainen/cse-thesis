@@ -20,7 +20,6 @@ tagpdf                # Tagged PDF support; required by \DocumentMetadata taggin
 latex-lab             # LaTeX laboratory testphase modules (toc, sec, graphic, etc.)
 placeins              # Prevents floats from escaping their sections; useful with \FloatBarrier.
 titlecaps             # Capitalizes titles (e.g., sections); niche but functional.
-tocloft               # Customizes ToC/LoF/LoT layout; powerful but can be complex.
 xstring               # String manipulation utilities for macro authors; still useful.
 
 # collection-latex-recommended
